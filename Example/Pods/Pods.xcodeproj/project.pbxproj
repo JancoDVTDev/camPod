@@ -1,0 +1,770 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		204E9FE5A9D9551C57A1CEBC6AE8F9EB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
+		54D4715FFB77722C2AC7FFCD686DD433 /* camPod-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F4BFD93F7676F008C1BED52F584BEBA /* camPod-dummy.m */; };
+		5F156C4767347943C8C0C7870C813FF6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
+		8DEAB36F7B62E8175504D24A4EB1FEE8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
+		9349D1662157714EAF0D0F4A10C3CAE3 /* Pods-camPod_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E523A920FD434AB75225EF8CB4CAB245 /* Pods-camPod_Tests-dummy.m */; };
+		ADFAC7F56F08C9ED727FE39F340F48C3 /* camPod-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 554393BD36B1F987A830882EB9DAD138 /* camPod-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA83AC2BEF526769AAD9C12648F76E31 /* Pods-camPod_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D2E3B9C56A893D053A1E82E9CB2B8F72 /* Pods-camPod_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C183A1F975EF27CD62ECD9EBD91A6C36 /* Pods-camPod_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A20D2AFCC6C5E9166FB787D4AE616CAB /* Pods-camPod_Example-dummy.m */; };
+		C85A3EC932E9DE5FAFA999982C896FD0 /* Pods-camPod_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = AB23E2FCA4AABB11740593674BA067BC /* Pods-camPod_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CBC962AFDA6F4306436188788D5412DD /* ReplaceMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9F11A03EA48E03E13B0E257C858F5 /* ReplaceMe.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		16641BE84212ECF2315E784E5710D8C8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7ABACAE246BD6F0DBFFC714D9B486FEF;
+			remoteInfo = "Pods-camPod_Example";
+		};
+		DB6123BDFFACFA53E95D944755BC7EFD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A23636397F4C0B2DFEFF279E7D417FD7;
+			remoteInfo = camPod;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		00EA71C037A9D1FDF1935DCA363E88CC /* camPod.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = camPod.modulemap; sourceTree = "<group>"; };
+		0644A2FA94C9155BC2C167F2A7924B48 /* Pods-camPod_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-camPod_Example-frameworks.sh"; sourceTree = "<group>"; };
+		2D18E03D2008696CF7390C54A3E62C07 /* camPod-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "camPod-prefix.pch"; sourceTree = "<group>"; };
+		2DE9F11A03EA48E03E13B0E257C858F5 /* ReplaceMe.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReplaceMe.swift; path = camPod/Classes/ReplaceMe.swift; sourceTree = "<group>"; };
+		3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		38197A4B5DA2500D1CAA1C7F591446D3 /* camPod.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = camPod.framework; path = camPod.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A84A8365554B71F708750AEDD1687D1 /* Pods-camPod_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-camPod_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		3F4BFD93F7676F008C1BED52F584BEBA /* camPod-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "camPod-dummy.m"; sourceTree = "<group>"; };
+		40AF8E4B3AD031C93219F5BE04C68CDF /* Pods-camPod_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-camPod_Example-acknowledgements.plist"; sourceTree = "<group>"; };
+		44DE27196D8B87C58C71F70E4C61F8AA /* Pods_camPod_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_camPod_Tests.framework; path = "Pods-camPod_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5364478F5AE52C45D686EC71B2D8F16D /* Pods-camPod_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-camPod_Example.modulemap"; sourceTree = "<group>"; };
+		554393BD36B1F987A830882EB9DAD138 /* camPod-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "camPod-umbrella.h"; sourceTree = "<group>"; };
+		633178EE68DFDFD57B80A51022924766 /* Pods-camPod_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-camPod_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		633AB81A71246F6BC5D03EB32B8D043A /* Pods-camPod_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-camPod_Example.release.xcconfig"; sourceTree = "<group>"; };
+		7B0201494C5D433E9289AF24960DE835 /* camPod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = camPod.xcconfig; sourceTree = "<group>"; };
+		7B34154710DC66BCEC9B74DB14BEF65E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		7C9443E1FF805B242A01B03C79AEA31E /* Pods-camPod_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-camPod_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
+		8A6ED244BF719C819FCB3698EACFD4E5 /* Pods-camPod_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-camPod_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		9285E3DC689A490687C0D85DE8E5DB32 /* Pods-camPod_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-camPod_Example-Info.plist"; sourceTree = "<group>"; };
+		9469E71A5AAF46146159DAA1EEDE4E34 /* camPod.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = camPod.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		949AAD248015831F17887F078C27A8FB /* Pods-camPod_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-camPod_Tests-Info.plist"; sourceTree = "<group>"; };
+		9C51B2A6BB066F83CF69F3ED4D7F2669 /* Pods_camPod_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_camPod_Example.framework; path = "Pods-camPod_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A20D2AFCC6C5E9166FB787D4AE616CAB /* Pods-camPod_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-camPod_Example-dummy.m"; sourceTree = "<group>"; };
+		AB23E2FCA4AABB11740593674BA067BC /* Pods-camPod_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-camPod_Example-umbrella.h"; sourceTree = "<group>"; };
+		B2044DCE89AF0F9CE2C65A1FCDE59540 /* camPod-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "camPod-Info.plist"; sourceTree = "<group>"; };
+		B916C5A44EA7242FFDEDEA6307D2DF5E /* Pods-camPod_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-camPod_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
+		BA08A23109FFA397BC00EE636FF94322 /* Pods-camPod_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-camPod_Tests.modulemap"; sourceTree = "<group>"; };
+		D2E3B9C56A893D053A1E82E9CB2B8F72 /* Pods-camPod_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-camPod_Tests-umbrella.h"; sourceTree = "<group>"; };
+		DF2ED849A800410A170B367A9FA08BCF /* Pods-camPod_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-camPod_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		E523A920FD434AB75225EF8CB4CAB245 /* Pods-camPod_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-camPod_Tests-dummy.m"; sourceTree = "<group>"; };
+		FDA6BD29812C87B35A28A0A668CA375D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		195F1BD4B18B359A35B7B3D449580EE7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				204E9FE5A9D9551C57A1CEBC6AE8F9EB /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		68D54EB155B539FB87AE709447D0C5A8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F156C4767347943C8C0C7870C813FF6 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84A017A28B555FD9342E5178CBFA7AA0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DEAB36F7B62E8175504D24A4EB1FEE8 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		01D509240BE3A390F2F152DCF52A1B10 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				38197A4B5DA2500D1CAA1C7F591446D3 /* camPod.framework */,
+				9C51B2A6BB066F83CF69F3ED4D7F2669 /* Pods_camPod_Example.framework */,
+				44DE27196D8B87C58C71F70E4C61F8AA /* Pods_camPod_Tests.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0FD5DCCAC988144CB9A446877DBDF4EC /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				231FE3300819ECA731BDA081AF1ABEBE /* camPod */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		231FE3300819ECA731BDA081AF1ABEBE /* camPod */ = {
+			isa = PBXGroup;
+			children = (
+				2DE9F11A03EA48E03E13B0E257C858F5 /* ReplaceMe.swift */,
+				960C772A4EF42607DEE68DCC4CBBDA03 /* Pod */,
+				9B06745391B6727142C8A8AF7EBF40D5 /* Support Files */,
+			);
+			name = camPod;
+			path = ../..;
+			sourceTree = "<group>";
+		};
+		41205C4149386347FFE39806CE5BF3CC /* Pods-camPod_Tests */ = {
+			isa = PBXGroup;
+			children = (
+				BA08A23109FFA397BC00EE636FF94322 /* Pods-camPod_Tests.modulemap */,
+				633178EE68DFDFD57B80A51022924766 /* Pods-camPod_Tests-acknowledgements.markdown */,
+				B916C5A44EA7242FFDEDEA6307D2DF5E /* Pods-camPod_Tests-acknowledgements.plist */,
+				E523A920FD434AB75225EF8CB4CAB245 /* Pods-camPod_Tests-dummy.m */,
+				949AAD248015831F17887F078C27A8FB /* Pods-camPod_Tests-Info.plist */,
+				D2E3B9C56A893D053A1E82E9CB2B8F72 /* Pods-camPod_Tests-umbrella.h */,
+				DF2ED849A800410A170B367A9FA08BCF /* Pods-camPod_Tests.debug.xcconfig */,
+				3A84A8365554B71F708750AEDD1687D1 /* Pods-camPod_Tests.release.xcconfig */,
+			);
+			name = "Pods-camPod_Tests";
+			path = "Target Support Files/Pods-camPod_Tests";
+			sourceTree = "<group>";
+		};
+		721435B46A2CA987A566A55E4AFE4629 /* Pods-camPod_Example */ = {
+			isa = PBXGroup;
+			children = (
+				5364478F5AE52C45D686EC71B2D8F16D /* Pods-camPod_Example.modulemap */,
+				7C9443E1FF805B242A01B03C79AEA31E /* Pods-camPod_Example-acknowledgements.markdown */,
+				40AF8E4B3AD031C93219F5BE04C68CDF /* Pods-camPod_Example-acknowledgements.plist */,
+				A20D2AFCC6C5E9166FB787D4AE616CAB /* Pods-camPod_Example-dummy.m */,
+				0644A2FA94C9155BC2C167F2A7924B48 /* Pods-camPod_Example-frameworks.sh */,
+				9285E3DC689A490687C0D85DE8E5DB32 /* Pods-camPod_Example-Info.plist */,
+				AB23E2FCA4AABB11740593674BA067BC /* Pods-camPod_Example-umbrella.h */,
+				8A6ED244BF719C819FCB3698EACFD4E5 /* Pods-camPod_Example.debug.xcconfig */,
+				633AB81A71246F6BC5D03EB32B8D043A /* Pods-camPod_Example.release.xcconfig */,
+			);
+			name = "Pods-camPod_Example";
+			path = "Target Support Files/Pods-camPod_Example";
+			sourceTree = "<group>";
+		};
+		960C772A4EF42607DEE68DCC4CBBDA03 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				9469E71A5AAF46146159DAA1EEDE4E34 /* camPod.podspec */,
+				FDA6BD29812C87B35A28A0A668CA375D /* LICENSE */,
+				7B34154710DC66BCEC9B74DB14BEF65E /* README.md */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		9B06745391B6727142C8A8AF7EBF40D5 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				00EA71C037A9D1FDF1935DCA363E88CC /* camPod.modulemap */,
+				7B0201494C5D433E9289AF24960DE835 /* camPod.xcconfig */,
+				3F4BFD93F7676F008C1BED52F584BEBA /* camPod-dummy.m */,
+				B2044DCE89AF0F9CE2C65A1FCDE59540 /* camPod-Info.plist */,
+				2D18E03D2008696CF7390C54A3E62C07 /* camPod-prefix.pch */,
+				554393BD36B1F987A830882EB9DAD138 /* camPod-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/camPod";
+			sourceTree = "<group>";
+		};
+		C0834CEBB1379A84116EF29F93051C60 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				0FD5DCCAC988144CB9A446877DBDF4EC /* Development Pods */,
+				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
+				01D509240BE3A390F2F152DCF52A1B10 /* Products */,
+				F95BE0DBABD3BF87F4404D56660AB41D /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C0834CEBB1379A84116EF29F93051C60 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F95BE0DBABD3BF87F4404D56660AB41D /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				721435B46A2CA987A566A55E4AFE4629 /* Pods-camPod_Example */,
+				41205C4149386347FFE39806CE5BF3CC /* Pods-camPod_Tests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		DC90A8473C83CE381D13F7237FB71E74 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA83AC2BEF526769AAD9C12648F76E31 /* Pods-camPod_Tests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E7F5046EE99F81B52BF6298D396136C6 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADFAC7F56F08C9ED727FE39F340F48C3 /* camPod-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F29BEBC315ACA046BAF09B6CBD3D2F13 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C85A3EC932E9DE5FAFA999982C896FD0 /* Pods-camPod_Example-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		604FD09356012E9D9B74149277AEE81F /* Pods-camPod_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 207EB35509EF238E26A245103E186D23 /* Build configuration list for PBXNativeTarget "Pods-camPod_Tests" */;
+			buildPhases = (
+				DC90A8473C83CE381D13F7237FB71E74 /* Headers */,
+				8BAF1B760EAA80E9AC40CB5C338204FB /* Sources */,
+				195F1BD4B18B359A35B7B3D449580EE7 /* Frameworks */,
+				8ED03A18F75ECFB87CC0572BD5AFACFD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				61F3925EE9DB73D80AB13F6621485951 /* PBXTargetDependency */,
+			);
+			name = "Pods-camPod_Tests";
+			productName = "Pods-camPod_Tests";
+			productReference = 44DE27196D8B87C58C71F70E4C61F8AA /* Pods_camPod_Tests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		7ABACAE246BD6F0DBFFC714D9B486FEF /* Pods-camPod_Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 404CD55BDE3AB273872B4BAEF1EBFE15 /* Build configuration list for PBXNativeTarget "Pods-camPod_Example" */;
+			buildPhases = (
+				F29BEBC315ACA046BAF09B6CBD3D2F13 /* Headers */,
+				36B62C42E4651B06ADE03DE39A2EF6F8 /* Sources */,
+				84A017A28B555FD9342E5178CBFA7AA0 /* Frameworks */,
+				BBFF0AB883B3D6A204C5D2F6C7D3F0F8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A5810F0FB2AABB18FE256F9D19DAE28D /* PBXTargetDependency */,
+			);
+			name = "Pods-camPod_Example";
+			productName = "Pods-camPod_Example";
+			productReference = 9C51B2A6BB066F83CF69F3ED4D7F2669 /* Pods_camPod_Example.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		A23636397F4C0B2DFEFF279E7D417FD7 /* camPod */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C55B64D71B5FF8696FB201804AEAA0A2 /* Build configuration list for PBXNativeTarget "camPod" */;
+			buildPhases = (
+				E7F5046EE99F81B52BF6298D396136C6 /* Headers */,
+				46BE862E97835D7884B1AC0C2BE70520 /* Sources */,
+				68D54EB155B539FB87AE709447D0C5A8 /* Frameworks */,
+				7128940E75CF83C28060AA23B620F2C4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = camPod;
+			productName = camPod;
+			productReference = 38197A4B5DA2500D1CAA1C7F591446D3 /* camPod.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1100;
+				LastUpgradeCheck = 1100;
+			};
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			productRefGroup = 01D509240BE3A390F2F152DCF52A1B10 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A23636397F4C0B2DFEFF279E7D417FD7 /* camPod */,
+				7ABACAE246BD6F0DBFFC714D9B486FEF /* Pods-camPod_Example */,
+				604FD09356012E9D9B74149277AEE81F /* Pods-camPod_Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7128940E75CF83C28060AA23B620F2C4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8ED03A18F75ECFB87CC0572BD5AFACFD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BBFF0AB883B3D6A204C5D2F6C7D3F0F8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		36B62C42E4651B06ADE03DE39A2EF6F8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C183A1F975EF27CD62ECD9EBD91A6C36 /* Pods-camPod_Example-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		46BE862E97835D7884B1AC0C2BE70520 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				54D4715FFB77722C2AC7FFCD686DD433 /* camPod-dummy.m in Sources */,
+				CBC962AFDA6F4306436188788D5412DD /* ReplaceMe.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8BAF1B760EAA80E9AC40CB5C338204FB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9349D1662157714EAF0D0F4A10C3CAE3 /* Pods-camPod_Tests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		61F3925EE9DB73D80AB13F6621485951 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-camPod_Example";
+			target = 7ABACAE246BD6F0DBFFC714D9B486FEF /* Pods-camPod_Example */;
+			targetProxy = 16641BE84212ECF2315E784E5710D8C8 /* PBXContainerItemProxy */;
+		};
+		A5810F0FB2AABB18FE256F9D19DAE28D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = camPod;
+			target = A23636397F4C0B2DFEFF279E7D417FD7 /* camPod */;
+			targetProxy = DB6123BDFFACFA53E95D944755BC7EFD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		03A21A49737C9DC389C8D8F92DC908EE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3A84A8365554B71F708750AEDD1687D1 /* Pods-camPod_Tests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-camPod_Tests/Pods-camPod_Tests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-camPod_Tests/Pods-camPod_Tests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		128C7322575F1D02BC701DE8F68C5880 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DF2ED849A800410A170B367A9FA08BCF /* Pods-camPod_Tests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-camPod_Tests/Pods-camPod_Tests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-camPod_Tests/Pods-camPod_Tests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		20037BB3A085E97F75DA8048C2837C5C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8A6ED244BF719C819FCB3698EACFD4E5 /* Pods-camPod_Example.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-camPod_Example/Pods-camPod_Example-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-camPod_Example/Pods-camPod_Example.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		33E583A45FCBF6E09DDFEAFD01B2FD75 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7B0201494C5D433E9289AF24960DE835 /* camPod.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/camPod/camPod-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/camPod/camPod-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/camPod/camPod.modulemap";
+				PRODUCT_MODULE_NAME = camPod;
+				PRODUCT_NAME = camPod;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		B0087CB4594321EF41619F3181FE120E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		B8BCBD0110C2658BB5DAADB9B7D97B92 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		C24DC2A31500FD8EE1921F97899012BE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7B0201494C5D433E9289AF24960DE835 /* camPod.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/camPod/camPod-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/camPod/camPod-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/camPod/camPod.modulemap";
+				PRODUCT_MODULE_NAME = camPod;
+				PRODUCT_NAME = camPod;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		F8151B009B4814B4481DB2837CA947CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 633AB81A71246F6BC5D03EB32B8D043A /* Pods-camPod_Example.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-camPod_Example/Pods-camPod_Example-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-camPod_Example/Pods-camPod_Example.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		207EB35509EF238E26A245103E186D23 /* Build configuration list for PBXNativeTarget "Pods-camPod_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				128C7322575F1D02BC701DE8F68C5880 /* Debug */,
+				03A21A49737C9DC389C8D8F92DC908EE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		404CD55BDE3AB273872B4BAEF1EBFE15 /* Build configuration list for PBXNativeTarget "Pods-camPod_Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				20037BB3A085E97F75DA8048C2837C5C /* Debug */,
+				F8151B009B4814B4481DB2837CA947CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B8BCBD0110C2658BB5DAADB9B7D97B92 /* Debug */,
+				B0087CB4594321EF41619F3181FE120E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C55B64D71B5FF8696FB201804AEAA0A2 /* Build configuration list for PBXNativeTarget "camPod" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C24DC2A31500FD8EE1921F97899012BE /* Debug */,
+				33E583A45FCBF6E09DDFEAFD01B2FD75 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+}

@@ -1,0 +1,16 @@
+PODS:
+  - camPod (0.1.0)
+
+DEPENDENCIES:
+  - camPod (from `../`)
+
+EXTERNAL SOURCES:
+  camPod:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  camPod: ae71d6bbebdceda44d1a7fd1932e0d3c813e5d75
+
+PODFILE CHECKSUM: 126a94ce46e793a3d3dc0e66208bd867c5609f24
+
+COCOAPODS: 1.8.4

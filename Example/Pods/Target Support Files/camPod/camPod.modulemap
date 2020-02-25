@@ -1,0 +1,6 @@
+framework module camPod {
+  umbrella header "camPod-umbrella.h"
+
+  export *
+  module * { export * }
+}

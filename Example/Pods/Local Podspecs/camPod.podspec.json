@@ -1,0 +1,22 @@
+{
+  "name": "camPod",
+  "version": "0.1.0",
+  "summary": "A short description of camPod.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/jerasmus@jhb.dvt.co.za/camPod",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "jerasmus@jhb.dvt.co.za": "jerasmus@jhb.dvt.co.za"
+  },
+  "source": {
+    "git": "https://github.com/jerasmus@jhb.dvt.co.za/camPod.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "camPod/Classes/**/*"
+}
