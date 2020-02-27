@@ -6,3 +6,15 @@
 //
 
 import Foundation
+
+public class CameraBehaviour {
+    
+    var userImages: [UIImage]!
+    public func openCamera() {
+        
+    }
+
+    public func savePicture(file image: UIImage) {
+        // Save the file to the users current album array of images
+    }
+}
