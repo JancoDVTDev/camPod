@@ -9,7 +9,8 @@ import Foundation
 
 public class CameraBehaviour {
     
-    var userImages: [UIImage]!
+    let user = User(with: "jancoera@gmail.com", and: "Password")
+    
     public func openCamera() {
         
     }
