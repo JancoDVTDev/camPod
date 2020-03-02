@@ -7,18 +7,30 @@
 
 import Foundation
 
-
 public class User {
 
+    public var name: String?
+    public var surname: String?
     public var email: String
     public var password: String
     
+    public var UID: String?
     public var albums: [Album]?
     
-    init(with email: String, and password: String) {
+    init(email: String, password: String) {
         self.email = email
         self.password = password
-        //Sign user in with firebase
+        
+        //Log user in with firebase and retrieving the data to set the other variables inside this class
+        //Func - Login
+    }
+    
+    init(name: String, and surname: String, with email: String, and password: String) {
+        self.name = name
+        self.surname = surname
+        self.email = email
+        self.password = password
+        //Create new user with firebase
     }
 }
 
