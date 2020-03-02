@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'camPod'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.summary          = 'Development pod for camshare'
 
 # This description is used to generate tags and improve search results.
@@ -43,4 +43,5 @@ Pod::Spec.new do |s|
   s.dependency 'Firebase/Auth'
   s.dependency 'Firebase/Database'
   s.dependency 'Firebase/Firestore'
+  s.dependency 'Firebase/Storage'
 end
