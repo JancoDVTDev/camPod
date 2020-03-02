@@ -9,31 +9,31 @@ import Foundation
 
 public class AlbumViewModel {
     
-    var Lyngens: [UIImage] = [UIImage(named: "LynOne")!,UIImage(named: "LynTwo")!,UIImage(named: "LynThree")!,
+    var lyngens: [UIImage] = [UIImage(named: "LynOne")!,UIImage(named: "LynTwo")!,UIImage(named: "LynThree")!,
                               UIImage(named: "LynFour")!,UIImage(named: "LynFive")!,UIImage(named: "LynSix")!,
                               UIImage(named: "LynSeven")!,UIImage(named: "LynEight")!,UIImage(named: "LynNine")!]
 
-    var Cairngorms: [UIImage] = [UIImage(named: "CairOne")!,UIImage(named: "CairTwo")!,UIImage(named: "CairThree")!,
+    var cairngorms: [UIImage] = [UIImage(named: "CairOne")!,UIImage(named: "CairTwo")!,UIImage(named: "CairThree")!,
                                  UIImage(named: "CairFour")!,UIImage(named: "CairFive")!,UIImage(named: "CairSix")!,
                                  UIImage(named: "CairSeven")!,UIImage(named: "CairEight")!]
 
-    var Mera: [UIImage] = [UIImage(named: "MeraOne")!,UIImage(named: "MeraTwo")!,UIImage(named: "MeraThree")!,
+    var mera: [UIImage] = [UIImage(named: "MeraOne")!,UIImage(named: "MeraTwo")!,UIImage(named: "MeraThree")!,
                            UIImage(named: "MeraFour")!,UIImage(named: "MeraFive")!,UIImage(named: "MeraSix")!,
                            UIImage(named: "MeraSeven")!,UIImage(named: "MeraEight")!,UIImage(named: "MeraNine")!,UIImage(named: "MeraTen")!]
     
-    var Other: [UIImage] = [UIImage(named: "image-1")!,UIImage(named: "image-2")!,UIImage(named: "image-3")!,UIImage(named: "image-4")!]
+    var other: [UIImage] = [UIImage(named: "image-1")!,UIImage(named: "image-2")!,UIImage(named: "image-3")!,UIImage(named: "image-4")!]
     
     var allAlbums: [Album] = []
     
     public init() {
-        let Lyn = Album(title: "Lyngens", thumbnail: self.Lyngens[0],images: self.Lyngens)
-        let Cair = Album(title: "Cair", thumbnail: self.Cairngorms[0],images: self.Cairngorms)
-        let Mera = Album(title: "Mera", thumbnail: self.Mera[0],images: self.Mera)
-        let other = Album(title: "Other", thumbnail: self.Other[1], images: self.Other)
+        let lyn = Album(title: "Lyngens", thumbnail: self.lyngens[0],images: self.lyngens)
+        let cair = Album(title: "Cair", thumbnail: self.cairngorms[0],images: self.cairngorms)
+        let mera = Album(title: "Mera", thumbnail: self.mera[0],images: self.mera)
+        let other = Album(title: "Other", thumbnail: self.other[1], images: self.other)
         
-        allAlbums.append(Lyn)
-        allAlbums.append(Cair)
-        allAlbums.append(Mera)
+        allAlbums.append(lyn)
+        allAlbums.append(cair)
+        allAlbums.append(mera)
         allAlbums.append(other)
     }
     

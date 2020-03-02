@@ -13,7 +13,7 @@ public class User {
     public var email: String
     public var password: String
     
-    public var albums: [album]?
+    public var albums: [Album]?
     
     init(with email: String, and password: String) {
         self.email = email
