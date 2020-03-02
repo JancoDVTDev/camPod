@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 public class User {
 
     public var name: String?
