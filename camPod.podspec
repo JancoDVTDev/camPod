@@ -30,7 +30,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '12.0'
 
-  s.source_files = 'camPod/Classes/**/*'
+  s.source_files = 'camPod/Classes/**/*.{swift, h, a}' #.{swift, h, a}
   
   # s.resource_bundles = {
   #   'camPod' => ['camPod/Assets/*.png']
@@ -39,9 +39,11 @@ Pod::Spec.new do |s|
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
+  #s.dependency 'Firebase'
   s.dependency 'Firebase/Auth'
-  s.dependency 'Firebase/Database'
-  s.dependency 'Firebase/Firestore'
   s.dependency 'Firebase/Analytics'
+  s.dependency 'Firebase/Database'
+  # s.dependency 'Firebase/Firestore'
+  # s.dependency 'FirebaseFirestoreSwift'
   s.dependency 'Firebase/Storage'
 end
