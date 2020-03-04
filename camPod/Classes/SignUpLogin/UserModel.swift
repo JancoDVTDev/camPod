@@ -28,7 +28,7 @@ public class UserModel {
             if err != nil {
                 print(err?.localizedDescription)
             } else {
-                
+                self.UID = result?.user.uid
             }
         }
         //Log user in with firebase and retrieving the data to set the other variables inside this class
@@ -46,11 +46,12 @@ public class UserModel {
                 print(err?.localizedDescription)
             } else {
                 let ref = Database.database().reference()
+                let storageRef = StorageReference()
                 self.UID = result?.user.uid
                 ref.child("Users").childByAutoId().setValue([
                     "firstName" : name,
                     "surname": surname,
-                    "uid": result!.user.uid]) 
+                    "uid": result!.user.uid])
             }
         }
         //Create new user with firebase

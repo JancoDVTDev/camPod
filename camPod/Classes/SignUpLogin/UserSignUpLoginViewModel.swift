@@ -16,7 +16,7 @@ public class UserSignUpLoginViewModel {
         let currentUser = UserModel(name: name, and: surname, with: email, and: password)
     }
     
-    public func login() {
-        
+    public func login(email: String, password: String) {
+        let currentUser = UserModel(email: email, password: password)
     }
 }
