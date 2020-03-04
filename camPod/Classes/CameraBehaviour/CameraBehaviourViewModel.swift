@@ -1,0 +1,33 @@
+//
+//  CameraBehaviourViewModel.swift
+//  camPod
+//
+//  Created by Janco Erasmus on 2020/03/03.
+//
+
+import Foundation
+import FirebaseStorage
+import FirebaseAuth
+
+public class CameraBehaviourViewModel {
+    public init() {
+        
+    }
+    // Note to self: When an albumis created write to the user the uniqueAlbumID and the albumName
+    public func saveTakenImage(image: UIImage) {
+        let userID = Auth.auth().currentUser?.uid
+        let randomPicName = UUID.init().uuidString
+        let uploadRef = Storage.storage().reference(withPath: "\(userID)/Holiday/\(randomPicName).jpg")
+        guard let imageData = image.jpegData(compressionQuality: 0.75) else { return }
+        let uploadMetaData = StorageMetadata.init()
+        uploadMetaData.contentType = "image/jpeg"
+        
+        uploadRef.putData(imageData, metadata: uploadMetaData) { (downloadMetadata, error) in
+            if let error = error {
+                print("Oh no error")
+            } else {
+                print("put is complete and I got this back: \(String(describing: downloadMetadata))")
+            }
+        }
+    }
+}

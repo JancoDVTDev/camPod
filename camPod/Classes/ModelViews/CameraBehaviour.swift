@@ -9,7 +9,7 @@ import Foundation
 
 public class CameraBehaviour {
     
-    let user = User(with: "jancoera@gmail.com", and: "Password")
+    //let user = User(with: "jancoera@gmail.com", and: "Password")
     
     public func openCamera() {
         
