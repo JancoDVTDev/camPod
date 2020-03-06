@@ -15,16 +15,6 @@ public class ShowingAllUserAlbumsViewModel {
         
     }
     public let user = Auth.auth().currentUser
-    public let userModelInfo = UserModel()
-    
-    public func downloadUserInfoFromFirebase(_ completion: @escaping () -> Void) {
-        //let result = userModelInfo.downloadUserInfo()
-//        if result {
-//            print("Data retrieved \(userModelInfo.albumIDs)")
-//        }else {
-//            print("Error with retrieving data")
-//        }
-    }
     
     public func addNewAlbum(newAlbumName: String) {
         let date = Date()

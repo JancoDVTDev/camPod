@@ -15,7 +15,8 @@ public class UserSignUpLoginViewModel {
         
     }
     
-    public func signUp(name: String, and surname: String, with email: String, and password: String, _ completion: @escaping (_ val: Bool) -> Void) {
+    public func signUp(name: String, and surname: String, with email: String, and password: String,
+                       _ completion: @escaping (_ val: Bool) -> ()) {
         do {
             try Auth.auth().signOut()
             print("User signed out")
@@ -31,7 +32,7 @@ public class UserSignUpLoginViewModel {
         
     }
     
-    public func login(email: String, password: String, completion: @escaping (_ val: Bool) -> Void) {
+    public func login(email: String, password: String, completion: @escaping (_ val: Bool) -> ()) {
         do {
             try Auth.auth().signOut()
             print("User signed out")
