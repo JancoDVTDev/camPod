@@ -4,6 +4,7 @@
 [![Version](https://img.shields.io/cocoapods/v/camPod.svg?style=flat)](https://cocoapods.org/pods/camPod)
 [![License](https://img.shields.io/cocoapods/l/camPod.svg?style=flat)](https://cocoapods.org/pods/camPod)
 [![Platform](https://img.shields.io/cocoapods/p/camPod.svg?style=flat)](https://cocoapods.org/pods/camPod)
+[![codecov](https://codecov.io/gh/JancoDVTDev/camPod/branch/master/graph/badge.svg)](https://codecov.io/gh/JancoDVTDev/camPod)
 
 ## Example
 
