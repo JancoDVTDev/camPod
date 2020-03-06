@@ -39,8 +39,6 @@ public class UserModel {
         self.password = password
     }
     
-    // MARK: Data send from class to class
-    
     public func signIn(_ completion: @escaping (_ val: Bool) -> Void){
         Auth.auth().signIn(withEmail: self.email!, password: self.password!) { (result, err) in
             if err != nil {
