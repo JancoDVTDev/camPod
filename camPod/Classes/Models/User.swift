@@ -31,27 +31,6 @@ public class User {
         self.surname = surname
         self.email = email
         self.password = password
-        //Create new user with firebase
-//        Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
-//            //check for errors
-//            if err != nil {
-//                //There was error creating the user
-//                self.showError("Error creating user")
-//            } else {
-//                //User was created succesfull
-//                let firebaseDb = Firestore.firestore()
-//                firebaseDb.collection("users").addDocument(data: [
-//                    "firstName": firstName,
-//                    "lastName": lastName,
-//                    "uid": result!.user.uid]) { (errOne) in
-//                    if errOne != nil {
-//                        self.showError("User couldn't be saved")
-//                    }
-//                }
-//                // Transition to the home screen
-//                self.transitionToHome()
-//            }
-//        }
     }
 }
 

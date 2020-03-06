@@ -14,23 +14,20 @@ public class UserModel {
 
     public var name: String?
     public var surname: String?
-    public var email: String
-    public var password: String
+    public var email: String?
+    public var password: String?
     
     public var UID: String?
-    public var albums: [Album]?
+    public var albumIDs: [String]?
+    public var albumNames: [String]?
+    
+    init() {
+        
+    }
     
     init(email: String, password: String) {
         self.email = email
         self.password = password
-        
-        Auth.auth().signIn(withEmail: email, password: password) { (result, err) in
-            if err != nil {
-                print(err?.localizedDescription)
-            } else {
-                self.UID = result?.user.uid
-            }
-        }
         //Log user in with firebase and retrieving the data to set the other variables inside this class
         //Func - Login
     }
@@ -40,40 +37,99 @@ public class UserModel {
         self.surname = surname
         self.email = email
         self.password = password
-        
-        Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
+    }
+    
+    // MARK: Data send from class to class
+    
+    public func signIn(_ completion: @escaping (_ val: Bool) -> Void){
+        Auth.auth().signIn(withEmail: self.email!, password: self.password!) { (result, err) in
             if err != nil {
-                print(err?.localizedDescription)
+                print(err?.localizedDescription as Any)
             } else {
-                let ref = Database.database().reference()
-                let storageRef = StorageReference()
                 self.UID = result?.user.uid
-                ref.child("Users").childByAutoId().setValue([
-                    "firstName" : name,
-                    "surname": surname,
-                    "uid": result!.user.uid])
+            }
+            self.retrieveAndSetUserInfo { (_ success) in
+                if success {
+                    print("User Model setted Values through create")
+                    completion(true)
+                }
             }
         }
-        //Create new user with firebase
-        //        Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
-        //            //check for errors
-        //            if err != nil {
-        //                //There was error creating the user
-        //                self.showError("Error creating user")
-        //            } else {
-        //                //User was created succesfull
-        //                let firebaseDb = Firestore.firestore()
-        //                firebaseDb.collection("users").addDocument(data: [
-        //                    "firstName": firstName,
-        //                    "lastName": lastName,
-        //                    "uid": result!.user.uid]) { (errOne) in
-        //                    if errOne != nil {
-        //                        self.showError("User couldn't be saved")
-        //                    }
-        //                }
-        //                // Transition to the home screen
-        //                self.transitionToHome()
-        //            }
-        //        }
+    }
+    
+    public func createUser(_ completion: @escaping (_ val: Bool) -> Void) {
+        Auth.auth().createUser(withEmail: email!, password: password!) { (result, err) in
+            if err != nil {
+                print(err?.localizedDescription as Any)
+            } else {
+                self.UID = result?.user.uid
+            }
+            self.createUserInRealtimeDatabase { (_ success) in
+                if success {
+                    print("User data written to Realtime Database")
+                    completion(true)
+                }
+            }
+        }
+    }
+    
+    func createUserInRealtimeDatabase(_ completion: @escaping (_ val: Bool) -> Void) {
+        let databaseRef = Database.database().reference()
+        databaseRef.child("Users").child(Auth.auth().currentUser!.uid).setValue(["firstName": self.name,
+                                                                                 "lastName": surname])
+        completion(true)
+    }
+    
+    func retrieveAndSetUserInfo(_ completion: @escaping (_ val: Bool) -> Void) {
+        let userID = Auth.auth().currentUser?.uid
+        let databaseRef: DatabaseReference = Database.database().reference()
+        databaseRef.child("Users").child(userID!).observeSingleEvent(of: .value, with: { (snapshot) in
+          // Get user value
+          let value = snapshot.value as? NSDictionary
+            self.name = value?["firstName"] as? String ?? ""
+            self.surname = value?["surname"] as? String ?? ""
+            self.getUserAlbumsArray { (array) in
+                self.albumIDs = array
+                self.getAlbumNamesFromDatabase(albumIDArray: self.albumIDs!) { (albumNamesFromDb) in
+                    self.albumNames = albumNamesFromDb
+                }
+            }
+          }) { (error) in
+            print(error.localizedDescription)
+        }
+        completion(true)
+    }
+    
+    public func getUserAlbumsArray(_ completion: @escaping (_ array: [String]) -> Void) {
+        var uniqueAlbumIdArray = [String]()
+        let databaseRef: DatabaseReference!
+        databaseRef = Database.database().reference()
+        databaseRef.child("Users").child(Auth.auth().currentUser!.uid).child("Albums").observeSingleEvent(of: .value) { (snapshot) in
+            for child in snapshot.children {
+                let snap = child as! DataSnapshot
+                let val = snap.value
+                print("UserModel - Fetched AlbumID: \(val ?? "Error")")
+                uniqueAlbumIdArray.append(val as! String)
+            }
+            completion(uniqueAlbumIdArray)
+        }
+    }
+    
+    public func getAlbumNamesFromDatabase(albumIDArray: [String], _ completion: @escaping (_ albumNamesArray: [String]) -> Void) {
+        let databaseRef: DatabaseReference = Database.database().reference()
+        var albumNames = [String]()
+        for item in albumIDArray {
+            databaseRef.child("AllAlbumsExisting").child(item).child("Name").observeSingleEvent(of: .value) { (snapshot) in
+                for child in snapshot.children {
+                    let snap = child as! DataSnapshot
+                    let name = snap.value
+                    print("UserModel - Fetched Album Name: \(name ?? "Error in name")")
+                    albumNames.append(name as! String)
+                }
+                completion(albumNames)
+            }
+        }
     }
 }
+
+
