@@ -48,7 +48,7 @@ public class ShowingAllUserAlbumsViewModel {
         }
     }
     
-    func generateUniqueAlbumID() -> String{
+    public func generateUniqueAlbumID() -> String {
         let uniqueString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0987654321abcdefghijklmnopqrstuvwxyz"
         let uniqueChars = Array(uniqueString)
         var compiledUniqueString: String = ""

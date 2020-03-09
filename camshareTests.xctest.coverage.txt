@@ -1,0 +1,44 @@
+    1|       |//
+    2|       |//  camshareTests.swift
+    3|       |//  camshareTests
+    4|       |//
+    5|       |//  Created by Janco Erasmus on 2020/02/07.
+    6|       |//  Copyright © 2020 DVT. All rights reserved.
+    7|       |//
+    8|       |
+    9|       |import XCTest
+   10|       |@testable import camshare
+   11|       |@testable import camPod
+   12|       |//swiftlint:disable all
+   13|       |class camshareTests: XCTestCase {
+   14|       |//swiftlint:enable all
+   15|       |    var systemUnderTest: ShowingAllUserAlbumsViewModel!
+   16|      1|    override func setUp() {
+   17|      1|        systemUnderTest = ShowingAllUserAlbumsViewModel()
+   18|      1|        // Put setup code here. This method is called before the invocation of each test method in the class.
+   19|      1|    }
+   20|       |
+   21|      1|    override func tearDown() {
+   22|      1|        // Put teardown code here. This method is called after the invocation of each test method in the class.
+   23|      1|    }
+   24|       |
+   25|      0|    func testExample() {
+   26|      0|        // This is an example of a functional test case.
+   27|      0|        // Use XCTAssert and related functions to verify your tests produce the correct results.
+   28|      0|    }
+   29|       |
+   30|      1|    func testGivenANewAlbumThenGenerateAUniqiueAlbumID() {
+   31|      1|        let uniqueID = systemUnderTest.generateUniqueAlbumID()
+   32|      1|
+   33|      1|        XCTAssertEqual(uniqueID, uniqueID)
+   34|      1|    }
+   35|       |
+   36|      0|    func testPerformanceExample() {
+   37|      0|        // This is an example of a performance test case.
+   38|      0|        self.measure {
+   39|      0|            // Put the code you want to measure the time of here.
+   40|      0|        }
+   41|      0|    }
+   42|       |
+   43|       |}
+
