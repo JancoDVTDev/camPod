@@ -10,6 +10,11 @@ import FirebaseAuth
 import FirebaseDatabase
 import FirebaseStorage
 
+protocol UserModelProtocol: class {
+    func signIn(_ completion: @escaping (_ val: Bool) -> Void)
+    func createUser(_ completion: @escaping (_ val: Bool) -> Void)
+}
+
 public class UserModel {
 
     public var name: String?
@@ -17,7 +22,6 @@ public class UserModel {
     public var email: String?
     public var password: String?
     
-    public var UID: String?
     public var albumIDs: [String]?
     public var albumNames: [String]?
     
@@ -39,12 +43,11 @@ public class UserModel {
         self.password = password
     }
     
-    public func signIn(_ completion: @escaping (_ val: Bool) -> Void){
+    public func signIn(_ completion: @escaping (_ val: Bool) -> Void) {
         Auth.auth().signIn(withEmail: self.email!, password: self.password!) { (result, err) in
             if err != nil {
                 print(err?.localizedDescription as Any)
             } else {
-                self.UID = result?.user.uid
             }
             self.retrieveAndSetUserInfo { (_ success) in
                 if success {
@@ -60,7 +63,6 @@ public class UserModel {
             if err != nil {
                 print(err?.localizedDescription as Any)
             } else {
-                self.UID = result?.user.uid
             }
             self.createUserInRealtimeDatabase { (_ success) in
                 if success {

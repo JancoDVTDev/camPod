@@ -8,9 +8,14 @@
 import Foundation
 import FirebaseAuth
 
+protocol UserSignUpLoginViewModelProtocol {
+    func signUp(name: String, and surname: String, with email: String, and password: String,
+    _ completion: @escaping (_ val: Bool) -> ())
+    func login(email: String, password: String, completion: @escaping (_ val: Bool) -> ())
+}
+
 public class UserSignUpLoginViewModel {
     var currentUserData = UserModel()
-    
     public init() {
         
     }

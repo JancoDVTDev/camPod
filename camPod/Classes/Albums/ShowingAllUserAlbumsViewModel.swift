@@ -15,10 +15,12 @@ public class ShowingAllUserAlbumsViewModel {
         
     }
     public let user = Auth.auth().currentUser
-    
+    public var allAlbumId = ["1","SomeID","AnotherID"]
     public func addNewAlbum(newAlbumName: String) {
         let date = Date()
         let calendar = Calendar.current
+        //read all albumId's from database and send them into ID generation for validation
+        allAlbumId = ["1","SomeID","AnotherID"]
         let uniqueAlbumID = generateUniqueAlbumID()
         getUserAlbumsArray { (array) in
             var newArray = array
@@ -52,21 +54,26 @@ public class ShowingAllUserAlbumsViewModel {
         let uniqueString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0987654321abcdefghijklmnopqrstuvwxyz"
         let uniqueChars = Array(uniqueString)
         var compiledUniqueString: String = ""
-
-        var uniqueStringExists = false
-
+        
         repeat {
             for _ in 0..<25 {
                 let randomNumber = Int.random(in: 0..<uniqueChars.count)
                 compiledUniqueString += String(uniqueChars[randomNumber])
             }
-            //unique Id should be captured in database and double checked so
-            //that therr would be no double
-            if compiledUniqueString == "1" { //Check from Database if this ID exists
-                uniqueStringExists = true
-            }
-        } while (uniqueStringExists == true)
-        
+        } while (isIDUnique(generatedID: compiledUniqueString) == false)
         return compiledUniqueString
+    }
+    
+    func isIDUnique(generatedID: String) -> Bool {
+        var generatedStringIsUnique = false
+        for item in allAlbumId {
+            if generatedID == item { //Check from Database if this ID exists
+                generatedStringIsUnique = false
+            }
+            else {
+                generatedStringIsUnique = true
+            }
+        }
+        return generatedStringIsUnique
     }
 }
