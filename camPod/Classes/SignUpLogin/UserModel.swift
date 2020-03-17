@@ -10,125 +10,89 @@ import FirebaseAuth
 import FirebaseDatabase
 import FirebaseStorage
 
-protocol UserModelProtocol: class {
-    func signIn(_ completion: @escaping (_ val: Bool) -> Void)
-    func createUser(_ completion: @escaping (_ val: Bool) -> Void)
+// Protocol means that this class must have at least the functions stated in the protocol
+public protocol UserModelProtocol: class {
+    func login(email: String, password: String, _ completion: @escaping (_ success: Bool, _ user: User?) -> Void)
+    func signUp(firstName: String, lastName: String, email: String, password: String,
+    _ completion: @escaping (_ user: User?) -> Void)
 }
 
-public class UserModel {
-
-    public var name: String?
-    public var surname: String?
-    public var email: String?
-    public var password: String?
+public class UserModel: UserModelProtocol {
     
-    public var albumIDs: [String]?
-    public var albumNames: [String]?
-    
-    init() {
+    public init() {
         
     }
-    
-    init(email: String, password: String) {
-        self.email = email
-        self.password = password
-        //Log user in with firebase and retrieving the data to set the other variables inside this class
-        //Func - Login
+
+    public func login(email: String, password: String, _ completion: @escaping (_ success: Bool, _ user: User?) -> Void) {
+        var albumNames = [String]()
+        Auth.auth().signIn(withEmail: email, password: password) { (result, err) in
+            if err != nil {
+                let alert = UIAlertController(title: "Error", message: "Cannot Log In", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { (_) in
+                    print(err?.localizedDescription as Any)
+                }))
+            } else { //If nothing happens take out of else statement
+                let ref: DatabaseReference = Database.database().reference()
+                ref.child("Users").child(Auth.auth().currentUser!.uid).observeSingleEvent(of: .value) { (snapshot) in
+                    let value = snapshot.value as! NSDictionary
+                    let firstName = value["firstName"] as? String ?? ""
+                    let lastName = value["lastName"] as? String ?? ""
+                    let albumIDs = value["Albums"] as? [String] ?? [""]
+                    
+                    for albumID in albumIDs {
+                        self.getAlbumNameFromFirebase(albumID: albumID) { (albumName) in
+                            albumNames.append(albumName)
+                            if albumNames.count == albumIDs.count {
+                                completion(true, User(firstName: firstName, lastName: lastName, email: email, albumIDs: albumIDs))
+                            }
+                        }
+                    }
+                }
+            }
+        } 
     }
     
-    init(name: String, and surname: String, with email: String, and password: String) {
-        self.name = name
-        self.surname = surname
-        self.email = email
-        self.password = password
-    }
-    
-    public func signIn(_ completion: @escaping (_ val: Bool) -> Void) {
-        Auth.auth().signIn(withEmail: self.email!, password: self.password!) { (result, err) in
+    public func signUp(firstName: String, lastName: String, email: String, password: String,
+                       _ completion: @escaping (_ user: User?) -> Void) {
+        Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
             if err != nil {
                 print(err?.localizedDescription as Any)
             } else {
-            }
-            self.retrieveAndSetUserInfo { (_ success) in
-                if success {
-                    print("User Model setted Values through create")
-                    completion(true)
+                self.createUserInRealtimeDatabase(firstName: firstName, lastName: lastName) { (success) in
+                    completion(User(firstName: firstName, lastName: lastName, email: email, albumIDs: [""]))
                 }
             }
         }
     }
-    
-    public func createUser(_ completion: @escaping (_ val: Bool) -> Void) {
-        Auth.auth().createUser(withEmail: email!, password: password!) { (result, err) in
-            if err != nil {
-                print(err?.localizedDescription as Any)
-            } else {
-            }
-            self.createUserInRealtimeDatabase { (_ success) in
-                if success {
-                    print("User data written to Realtime Database")
-                    completion(true)
-                }
-            }
-        }
-    }
-    
-    func createUserInRealtimeDatabase(_ completion: @escaping (_ val: Bool) -> Void) {
-        let databaseRef = Database.database().reference()
-        databaseRef.child("Users").child(Auth.auth().currentUser!.uid).setValue(["firstName": self.name,
-                                                                                 "lastName": surname])
-        completion(true)
-    }
-    
-    func retrieveAndSetUserInfo(_ completion: @escaping (_ val: Bool) -> Void) {
-        let userID = Auth.auth().currentUser?.uid
+
+    public func getAlbumNameFromFirebase(albumID: String, _ completion: @escaping (_ albumName: String) -> Void) {
         let databaseRef: DatabaseReference = Database.database().reference()
-        databaseRef.child("Users").child(userID!).observeSingleEvent(of: .value, with: { (snapshot) in
-          // Get user value
+        databaseRef.child("AllAlbumsExisting").child(albumID).observeSingleEvent(of: .value, with: { (snapshot) in
           let value = snapshot.value as? NSDictionary
-            self.name = value?["firstName"] as? String ?? ""
-            self.surname = value?["surname"] as? String ?? ""
-            self.getUserAlbumsArray { (array) in
-                self.albumIDs = array
-                self.getAlbumNamesFromDatabase(albumIDArray: self.albumIDs!) { (albumNamesFromDb) in
-                    self.albumNames = albumNamesFromDb
-                }
-            }
+          let albumName = value?["Name"] as? String ?? ""
+          completion(albumName)
           }) { (error) in
             print(error.localizedDescription)
         }
+    }
+    
+    func createUserInRealtimeDatabase(firstName: String, lastName: String, _ completion: @escaping (_ val: Bool) -> Void) {
+        let databaseRef = Database.database().reference()
+        databaseRef.child("Users").child(Auth.auth().currentUser!.uid).setValue(["firstName": firstName,
+                                                                                 "lastName": lastName,
+                                                                                 "Albums": [""]])
         completion(true)
     }
+}
+
+public struct User {
+    public let firstName: String
+    public let lastName: String
+    public let email: String
+    public var albumIDs: [String]
     
-    public func getUserAlbumsArray(_ completion: @escaping (_ array: [String]) -> Void) {
-        var uniqueAlbumIdArray = [String]()
-        let databaseRef: DatabaseReference!
-        databaseRef = Database.database().reference()
-        databaseRef.child("Users").child(Auth.auth().currentUser!.uid).child("Albums").observeSingleEvent(of: .value) { (snapshot) in
-            for child in snapshot.children {
-                let snap = child as! DataSnapshot
-                let val = snap.value
-                print("UserModel - Fetched AlbumID: \(val ?? "Error")")
-                uniqueAlbumIdArray.append(val as! String)
-            }
-            completion(uniqueAlbumIdArray)
-        }
-    }
-    
-    public func getAlbumNamesFromDatabase(albumIDArray: [String], _ completion: @escaping (_ albumNamesArray: [String]) -> Void) {
-        let databaseRef: DatabaseReference = Database.database().reference()
-        var albumNames = [String]()
-        for item in albumIDArray {
-            databaseRef.child("AllAlbumsExisting").child(item).child("Name").observeSingleEvent(of: .value) { (snapshot) in
-                for child in snapshot.children {
-                    let snap = child as! DataSnapshot
-                    let name = snap.value
-                    print("UserModel - Fetched Album Name: \(name ?? "Error in name")")
-                    albumNames.append(name as! String)
-                }
-                completion(albumNames)
-            }
-        }
+    public mutating func appendAlbumIDs(albumID: String) {
+        albumIDs.append(albumID)
     }
 }
 
