@@ -13,7 +13,9 @@ public class UserSignUpLoginViewModel {
     public weak var repo: UserModelProtocol?
     public var actualRepo = UserModel()
     
-    public init(repo: UserModelProtocol) {
+    public var user: User!
+    
+    public init(repo: UserModelProtocol) { //
         self.repo = repo
     }
     
@@ -21,8 +23,8 @@ public class UserSignUpLoginViewModel {
                       _ compeltion: @escaping (_ success: Bool, _ user: User?) -> Void) {
         actualRepo.login(email: email, password: password, { (success, user) in
             if success {
-                let User = user
-                compeltion(true, User) // can send complete user through
+                let user = user
+                compeltion(true, user) // can send complete user through
             }
         })
     }
@@ -34,5 +36,9 @@ public class UserSignUpLoginViewModel {
                 completion(true, user)
             }
         }
+    }
+    
+    public func getUser() -> User {
+        return self.user
     }
 }

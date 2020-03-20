@@ -11,35 +11,44 @@ import FirebaseAuth
 import FirebaseStorage
 
 public protocol AlbumModelProtocol: class {
-    func downloadAlbumFromFirebaseStorage(albumID: String,
-    _ completion: @escaping (_ album: SingleAlbum) -> Void)
+    func downloadAlbumFromFirebaseStorage(albumID: String, _ completion: @escaping (_ album: SingleAlbum) -> Void)
+    func addNewAlbum(user: User, albumID: String, albumName: String,
+    _ completion: @escaping (_ success: Bool, _ album: SingleAlbum) -> ())
 }
 
 public class AlbumModel: AlbumModelProtocol {
     
     var user: User!
     
-    init(user: User?) {
-        self.user = user
+    public init() {
+        
     }
-    
-    public func addNewAlbum(albumID: String, albumName: String,  _ completion: @escaping (_ success: Bool, _ album: SingleAlbum) -> ()) {
+
+    public func addNewAlbum(user: User, albumID: String, albumName: String,
+                            _ completion: @escaping (_ success: Bool, _ album: SingleAlbum) -> ()) {
         
         // Metadata
         let date = Date()
         let calendar = Calendar.current
-        
+        let defaultImagePath = UUID.init().uuidString
         let currentDate = "\(calendar.component(.day, from: date))/\(calendar.component(.month, from: date))/\(calendar.component(.year, from: date))"
         let currentTime = "\(calendar.component(.hour, from: date)):\(calendar.component(.minute, from: date))"
-        let album = SingleAlbum(albumID: albumID, name: albumName, dateCreated: currentDate, timeCreated: currentTime, createdBy: Auth.auth().currentUser!.uid, thumbnail: UIImage(named: "placeholder")!, images: [])
+        let album = SingleAlbum(albumID: albumID, name: albumName, dateCreated: currentDate, timeCreated: currentTime, createdBy: Auth.auth().currentUser!.uid, thumbnail: UIImage(named: "placeholder")!, imagePaths: [defaultImagePath], images: [])
         
         let ref = Database.database().reference()
         //Step 1 - album needs to be added to AllAlbumsExisting in Firebase and validated for existence
-        ref.child("AllAlbumsExisting").child(album.albumID).setValue(["Name" : album.name, "Created by": Auth.auth().currentUser!.uid, "Date": album.dateCreated, "Time": album.timeCreated])
+        ref.child("AllAlbumsExisting").child(album.albumID).setValue(["Name" : album.name,
+                                                                      "Created by": Auth.auth().currentUser!.uid,
+                                                                      "Date": album.dateCreated,
+                                                                      "Time": album.timeCreated,
+                                                                      "ImagePaths": album.imagePaths])
         
         //Step 2 - add new albumID to the list of the users albumIDs and saved to database
-        user.appendAlbumIDs(albumID: albumID)
-        ref.child("Users").child(Auth.auth().currentUser!.uid).setValue(["Albums": user.albumIDs]) {
+        if user.albumIDs.contains("") {
+            user.albumIDs.removeAll()
+        }
+        user.albumIDs.append(albumID)
+        ref.child("Users").child(Auth.auth().currentUser!.uid).child("Albums").setValue(user.albumIDs) {
           (error:Error?, ref:DatabaseReference) in
           if let error = error {
             print("Data could not be saved: \(error).")
@@ -49,19 +58,77 @@ public class AlbumModel: AlbumModelProtocol {
         }
         
         //Step 3 - albumID needs to be added as a storage url in Firebase Storage
-        Storage.storage().reference(withPath: "\(albumID)/")
-        completion(true, album)
+        let uploadRef = Storage.storage().reference(withPath: "\(albumID)/\(defaultImagePath)/\(defaultImagePath)")
+        guard let imageData = UIImage(named: "placeholder")?.jpegData(compressionQuality: 0.75) else {return}
+        let uploadMetadata = StorageMetadata.init()
+        uploadMetadata.contentType = "image/jpeg"
+        
+        uploadRef.putData(imageData, metadata: uploadMetadata) { (downloadMetadata, err) in
+            if let err = err {
+                print("Error creating reference to storage \(err.localizedDescription)")
+            } else {
+                completion(true, album)
+            }
+        }
     }
     
     public func downloadAlbumFromFirebaseStorage(albumID: String,
                                                  _ completion: @escaping (_ album: SingleAlbum) -> Void) {
         // Download all images that belong to albumID, on completion send back a SingleAlbum
         // If there are no images make the thumbnail default image
+        getAlbumMetaDataFromFirebase(albumID: albumID) { (albumName, date, time, createdBy, imagePaths) in
+            let imageCount = imagePaths.count
+            var thumbnail = UIImage()
+            var albumImages = [UIImage]()
+            for pathIndex in 0..<imageCount {
+                self.getImageFromFirebaseStorage(albumID: albumID, imagePath: imagePaths[pathIndex]) { (image) in
+                    albumImages.append(image)
+                    if pathIndex == 0 {
+                        thumbnail = image
+                    }
+                    if pathIndex == imageCount - 1 {
+                        completion(SingleAlbum(albumID: albumID, name: albumName, dateCreated: date, timeCreated: time, createdBy: createdBy, thumbnail: thumbnail, imagePaths: imagePaths, images: albumImages))
+                    }
+                }
+            }
+        }
+    }
+    
+    func getImageFromFirebaseStorage(albumID: String, imagePath: String,
+                                     _ completion: @escaping (_ image: UIImage) -> Void) {
+        let storageRef = Storage.storage().reference(withPath: "\(albumID)/\(imagePath)/\(imagePath).jpg")
+        storageRef.getData(maxSize: 4 * 1024 * 1024) { (data, error) in
+            if let data = data {
+                if let image = UIImage(data: data) {
+                    completion(image)
+                } else {
+                    print("No image found")
+                }
+            } else {
+                print("No data found")
+            }
+        }
+    }
+    
+    func getAlbumMetaDataFromFirebase(albumID: String, _ completion: @escaping (_ albumName: String,_ dateCreated: String,
+        _ timeCreated: String,_ createdBy: String,_ imagePaths: [String]) -> Void) {
+        let ref = Database.database().reference()
+        ref.child("AllAlbumsExisting").child(albumID).observeSingleEvent(of: .value, with: { (snapshot) in
+            // Get user value
+            let value = snapshot.value as? NSDictionary
+            let albumName = value?["Name"] as? String ?? ""
+            let dateCreated = value?["Date"] as? String ?? ""
+            let timeCreated = value?["Time"] as? String ?? ""
+            let createdBy = value?["Created by"] as? String ?? ""
+            let imagePaths = value?["ImagePaths"] as? [String] ?? [""]
+            completion(albumName, dateCreated, timeCreated, createdBy, imagePaths)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
     
     // MARK: HELPER FUNCTIONS
     func validateAlbumID(albumID: String) -> Bool {
-        var flag = false
         let ref = Database.database().reference()
         ref.child("AllExistingAlbums").observeSingleEvent(of: .value) { (snapshot) in
             let value = snapshot.value as! String
@@ -71,15 +138,4 @@ public class AlbumModel: AlbumModelProtocol {
         }
         return true
     }
-}
-
-public struct SingleAlbum {
-    
-    public let albumID: String
-    public let name: String
-    public let dateCreated: String
-    public let timeCreated: String
-    public let createdBy: String
-    public let thumbnail: UIImage
-    public let images: [UIImage]
 }
