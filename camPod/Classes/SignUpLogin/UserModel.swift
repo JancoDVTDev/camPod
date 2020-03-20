@@ -19,6 +19,8 @@ public protocol UserModelProtocol: class {
 
 public class UserModel: UserModelProtocol {
     
+    var user: User?
+    
     public init() {
         
     }
@@ -39,11 +41,17 @@ public class UserModel: UserModelProtocol {
                     let lastName = value["lastName"] as? String ?? ""
                     let albumIDs = value["Albums"] as? [String] ?? [""]
                     
-                    for albumID in albumIDs {
-                        self.getAlbumNameFromFirebase(albumID: albumID) { (albumName) in
-                            albumNames.append(albumName)
-                            if albumNames.count == albumIDs.count {
-                                completion(true, User(firstName: firstName, lastName: lastName, email: email, albumIDs: albumIDs))
+                    if albumIDs.contains("") && albumIDs.count == 1{
+                        print("User with now albums yet logged in")
+                        completion(true, self.user)
+                    } else {
+                        for albumID in albumIDs {
+                            self.getAlbumNameFromFirebase(albumID: albumID) { (albumName) in
+                                albumNames.append(albumName)
+                                if albumNames.count == albumIDs.count {
+                                    self.user = User(firstName: firstName, lastName: lastName, email: email, albumIDs: albumIDs)
+                                    completion(true, self.user)
+                                }
                             }
                         }
                     }
@@ -59,7 +67,9 @@ public class UserModel: UserModelProtocol {
                 print(err?.localizedDescription as Any)
             } else {
                 self.createUserInRealtimeDatabase(firstName: firstName, lastName: lastName) { (success) in
-                    completion(User(firstName: firstName, lastName: lastName, email: email, albumIDs: [""]))
+                    if success {
+                        completion(User(firstName: firstName, lastName: lastName, email: email, albumIDs: [""]))
+                    }
                 }
             }
         }
@@ -83,16 +93,9 @@ public class UserModel: UserModelProtocol {
                                                                                  "Albums": [""]])
         completion(true)
     }
-}
-
-public struct User {
-    public let firstName: String
-    public let lastName: String
-    public let email: String
-    public var albumIDs: [String]
     
-    public mutating func appendAlbumIDs(albumID: String) {
-        albumIDs.append(albumID)
+    public func getUser() -> User? {
+        return self.user
     }
 }
 
