@@ -27,6 +27,7 @@ public class UserModel: UserModelProtocol {
 
     public func login(email: String, password: String, _ completion: @escaping (_ success: Bool, _ user: User?) -> Void) {
         var albumNames = [String]()
+        
         Auth.auth().signIn(withEmail: email, password: password) { (result, err) in
             if err != nil {
                 let alert = UIAlertController(title: "Error", message: "Cannot Log In", preferredStyle: .alert)
