@@ -8,55 +8,37 @@
 import Foundation
 import FirebaseAuth
 
-protocol UserSignUpLoginViewModelProtocol {
-    func signUp(name: String, and surname: String, with email: String, and password: String,
-    _ completion: @escaping (_ val: Bool) -> ())
-    func login(email: String, password: String, completion: @escaping (_ val: Bool) -> ())
-}
-
 public class UserSignUpLoginViewModel {
-    var currentUserData = UserModel()
-    public init() {
-        
+    
+    public weak var repo: UserModelProtocol?
+    public var actualRepo = UserModel()
+    
+    public var user: User!
+    
+    public init(repo: UserModelProtocol) { //
+        self.repo = repo
     }
     
-    public func signUp(name: String, and surname: String, with email: String, and password: String,
-                       _ completion: @escaping (_ val: Bool) -> ()) {
-        do {
-            try Auth.auth().signOut()
-            print("User signed out")
-        }catch {
-            print("Print error Signing out")
-        }
-        let currentUser = UserModel(name: name, and: surname, with: email, and: password)
-        currentUser.createUser {_ in
-            print("User signed in from signUp")
-            self.currentUserData = currentUser
-            completion(true)
-        }
-        
+    public func login(with email: String, and password: String,
+                      _ compeltion: @escaping (_ success: Bool, _ user: User?) -> Void) {
+        actualRepo.login(email: email, password: password, { (success, user) in
+            if success {
+                let user = user
+                compeltion(true, user) // can send complete user through
+            }
+        })
     }
     
-    public func login(email: String, password: String, completion: @escaping (_ val: Bool) -> ()) {
-        do {
-            try Auth.auth().signOut()
-            print("User signed out")
-        }catch {
-            print("Print error Signing out")
-        }
-        let currentUser = UserModel(email: email, password: password)
-        currentUser.signIn {_ in
-            print("User signed in from login")
-            self.currentUserData = currentUser
-            completion(true)
+    public func signUp(firstName: String, lastName: String, email: String, password: String,
+                       _ completion: @escaping(_ success: Bool, _ user: User?) -> Void) {
+        actualRepo.signUp(firstName: firstName, lastName: lastName, email: email, password: password) { (user) in
+            if let user = user {
+                completion(true, user)
+            }
         }
     }
     
-    public func getUserAlbumNames() -> [String] {
-        if let albumNames = currentUserData.albumNames {
-            return albumNames
-        } else {
-            return [""]
-        }
+    public func getUser() -> User {
+        return self.user
     }
 }

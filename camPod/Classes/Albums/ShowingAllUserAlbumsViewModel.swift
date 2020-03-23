@@ -14,6 +14,7 @@ public class ShowingAllUserAlbumsViewModel {
     public init () {
         
     }
+    
     public let user = Auth.auth().currentUser
     public var allAlbumId = ["1","SomeID","AnotherID"]
     public func addNewAlbum(newAlbumName: String) {
