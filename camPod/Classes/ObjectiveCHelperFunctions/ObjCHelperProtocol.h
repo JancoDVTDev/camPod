@@ -17,5 +17,6 @@
                               : (NSString *) password;
 -(BOOL) validateLoginFields : (NSString *) email
                              : (NSString *) password;
+-(NSString *) getLoginErrorMessage:(NSString *)email :(NSString *)password;
 -(NSString *) validPassword:(NSString *)password isValid:(BOOL *)valid;
 @end

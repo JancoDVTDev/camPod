@@ -129,6 +129,9 @@ public class AlbumViewModel {
     }
     
     public func addNewAlbum(albumName: String, _ completion: @escaping (_ album: SingleAlbum) -> Void) {
+        let helpingHand: ObjcHelper = ObjcHelper()
+        let newAlbumIDFromObjC = helpingHand.generateUniqueID()
+        print(newAlbumIDFromObjC as Any)
         let newAlbumID = generateUniqueAlbumID()
         getUserData { (success, isNewUser, user) in
             self.actualAlbumModelRepo.addNewAlbum(user: user, albumID: newAlbumID, albumName: albumName, { (success, album) in
