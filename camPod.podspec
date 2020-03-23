@@ -30,7 +30,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '12.0'
 
-  s.source_files = 'camPod/Classes/**/*.{swift, h, a}' #.{swift, h, a}
+  s.source_files = 'camPod/Classes/**/*' #.{swift, h, a}
   
   # s.resource_bundles = {
   #   'camPod' => ['camPod/Assets/*.png']

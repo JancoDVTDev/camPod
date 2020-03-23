@@ -15,18 +15,28 @@ public class UserSignUpLoginViewModel {
     
     public var user: User!
     
+    var helpingHand: ObjcHelper = ObjcHelper()
+    
     public init(repo: UserModelProtocol) { //
         self.repo = repo
     }
     
     public func login(with email: String, and password: String,
-                      _ compeltion: @escaping (_ success: Bool, _ user: User?) -> Void) {
-        actualRepo.login(email: email, password: password, { (success, user) in
-            if success {
-                let user = user
-                compeltion(true, user) // can send complete user through
-            }
-        })
+                      _ compeltion: @escaping (_ success: Bool,_ error: String, _ user: User?) -> Void) {
+        
+        let valid = helpingHand.validateLoginFields(email, password)
+        var error = helpingHand.getLoginErrorMessage(email, password)
+        if valid {
+            actualRepo.login(email: email, password: password, { (success, user) in
+                if success {
+                    let user = user
+                    error = ""
+                    compeltion(true, error!, user) // can send complete user through
+                }
+            })
+        } else {
+            compeltion(false, error!, nil)
+        }
     }
     
     public func signUp(firstName: String, lastName: String, email: String, password: String,

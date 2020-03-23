@@ -20,7 +20,7 @@ public protocol UserModelProtocol: class {
 public class UserModel: UserModelProtocol {
     
     var user: User?
-    
+        
     public init() {
         
     }
