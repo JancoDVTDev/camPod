@@ -27,18 +27,18 @@
 }
 
 -(BOOL) validateSignUpFields:(NSString *)firstName :(NSString *)lastName :(NSString *)email :(NSString *)password {
-    BOOL flag = FALSE;
+    BOOL success = FALSE;
     if (([firstName  isEqual: @""]) && ([lastName  isEqual: @""]) && ([email  isEqual: @""]) && ([password  isEqual: @""])) {
-        flag = FALSE;
+        success = FALSE;
     } else {
-        flag = TRUE;
+        success = TRUE;
     }
     
-    return flag;
+    return success;
 }
 
 -(BOOL) validateLoginFields:(NSString *)email :(NSString *)password {
-    BOOL flag = FALSE;
+    BOOL success = FALSE;
     
     // Multiple parameters https://stackoverflow.com/questions/1692005/returning-multiple-values-from-a-method-in-objective-c
     BOOL isValidPassword = NO;
@@ -49,17 +49,17 @@
     if (isValidPassword) {
         //Paswword is of right format
         if (([email isEqual:@""]) && ([password isEqual:@""])) {
-            flag = FALSE;
+            success = FALSE;
             NSLog(@"Please fill in both fields"); // Also have error variable to send back
         } else {
-            flag = TRUE;
+            success = TRUE;
         }
     } else {
         // Password was not of right format
-        flag = FALSE;
+        success = FALSE;
         NSLog(@"%@", error); // Also have error varibale to send back
     }
-    return flag;
+    return success;
 }
 
 -(NSString *) getLoginErrorMessage:(NSString *)email :(NSString *)password {
