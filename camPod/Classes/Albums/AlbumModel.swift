@@ -10,6 +10,9 @@ import FirebaseDatabase
 import FirebaseAuth
 import FirebaseStorage
 
+
+
+
 public protocol AlbumModelProtocol: class {
     func downloadAlbumFromFirebaseStorage(albumID: String, _ completion: @escaping (_ album: SingleAlbum) -> Void)
     func addNewAlbum(user: User, albumID: String, albumName: String,
