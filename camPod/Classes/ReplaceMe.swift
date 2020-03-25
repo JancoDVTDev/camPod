@@ -5,8 +5,7 @@ import FirebaseAnalytics
 import FirebaseCore
 
 class ReplaceMe {
-    
-    
+
     func signIn () {
         
     }

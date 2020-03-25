@@ -8,7 +8,7 @@
 import Foundation
 
 public class SingleAlbum {
-    
+
     public let albumID: String
     public let name: String
     public let dateCreated: String
