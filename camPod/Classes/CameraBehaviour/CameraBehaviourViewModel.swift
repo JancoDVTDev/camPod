@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseStorage
 import FirebaseAuth
+import FirebaseDatabase
 
 public class CameraBehaviourViewModel {
     public init() {
@@ -16,10 +17,11 @@ public class CameraBehaviourViewModel {
     
     let currentUser = UserModel()
     // Note to self: When an albumis created write to the user the uniqueAlbumID and the albumName
-    public func saveTakenImage(image: UIImage, albumPath: String, albumName: String) {
+    public func saveTakenImage(image: UIImage, albumID: String, imagePaths: [String]) {
         let randomPicName = UUID.init().uuidString
-        let uploadRef = Storage.storage().reference(withPath: "\(albumPath)/\(albumName)/\(randomPicName).jpg")
-        guard let imageData = image.jpegData(compressionQuality: 0.75) else { return }
+        var newImageRefPaths = imagePaths
+        let uploadRef = Storage.storage().reference(withPath: "\(albumID)/\(randomPicName)/\(randomPicName)")
+        guard let imageData = image.jpegData(compressionQuality: 0.5) else { return }
         let uploadMetaData = StorageMetadata.init()
         uploadMetaData.contentType = "image/jpeg"
         
@@ -28,6 +30,9 @@ public class CameraBehaviourViewModel {
                 print("Oh no error \(error.localizedDescription)")
             } else {
                 print("put is complete and I got this back: \(String(describing: downloadMetadata))")
+                let databaseRef = Database.database().reference()
+                newImageRefPaths.append(randomPicName)
+                databaseRef.child("AllAlbumsExisting").child(albumID).child("ImagePaths").setValue(newImageRefPaths)
             }
         }
     }

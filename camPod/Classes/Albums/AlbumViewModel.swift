@@ -76,12 +76,16 @@ public class AlbumViewModel {
         }
     }
     
-    public func getAlbumNew(albumID: String, _ completion: @escaping (_ album: [UIImage]) -> Void) {
+    public func getAlbumNew(albumID: String, _ completion: @escaping (_ album: SingleAlbum) -> Void) {
         let databaseRef = Database.database().reference()
         var currentAlbum = [UIImage]()
         databaseRef.child("AllAlbumsExisting").child(albumID).observeSingleEvent(of: .value) { (snapshot) in
             let value = snapshot.value as! NSDictionary
+            let createdBy = value["Created By"] as? String ?? ""
+            let date = value["Date"] as? String ?? ""
             let imagePaths = value["ImagePaths"] as? [String] ?? [""]
+            let name = value["Name"] as? String ?? ""
+            let time = value["Time"] as? String ?? ""
             for imagePath in imagePaths {
                 let storageRef = Storage.storage().reference(withPath: "\(albumID)/\(imagePath)/\(imagePath)")
                 storageRef.getData(maxSize: 4 * 1024 * 1024) { (data, err) in
@@ -93,7 +97,8 @@ public class AlbumViewModel {
                         print("Appending image data")
                         if imagePath == imagePaths[imagePaths.endIndex - 1] {
                             print("Album: \(albumID) completed")
-                            completion(currentAlbum)
+                            let currAlbum = SingleAlbum(albumID: albumID, name: name, dateCreated: date, timeCreated: time, createdBy: createdBy, thumbnail: currentAlbum[0], imagePaths: imagePaths)
+                            completion(currAlbum)
                         }
                     }
                 }
