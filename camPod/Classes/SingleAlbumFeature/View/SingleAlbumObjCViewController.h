@@ -11,15 +11,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SingleAlbumObjCViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface SingleAlbumObjCViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate>
 
 @property (strong, nonatomic) NSArray *albumImages;
 @property (strong, nonatomic) SingleAlbumObjCViewModel *viewModel;
 @property (strong, nonatomic) NSString *albumID;
 @property (strong, nonatomic) NSArray *imagePathReferences;
 @property (strong,nonatomic) NSString *albumName;
-
-//- (instancetype)initWithViewModel: (SingleAlbumObjCViewModel *) viewModel;
+@property (strong, nonatomic) SingleAlbumModelObjc *album;
 
 @end
 

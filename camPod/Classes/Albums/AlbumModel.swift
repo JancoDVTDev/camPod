@@ -10,9 +10,6 @@ import FirebaseDatabase
 import FirebaseAuth
 import FirebaseStorage
 
-
-
-
 public protocol AlbumModelProtocol: class {
     func downloadAlbumFromFirebaseStorage(albumID: String, _ completion: @escaping (_ album: SingleAlbum) -> Void)
     func addNewAlbum(user: User, albumID: String, albumName: String,
@@ -20,16 +17,16 @@ public protocol AlbumModelProtocol: class {
 }
 
 public class AlbumModel: AlbumModelProtocol {
-    
+
     var user: User!
-    
+
     public init() {
         
     }
 
     public func addNewAlbum(user: User, albumID: String, albumName: String,
                             _ completion: @escaping (_ success: Bool, _ album: SingleAlbum) -> ()) {
-        
+
         // Metadata
         let date = Date()
         let calendar = Calendar.current
@@ -59,13 +56,13 @@ public class AlbumModel: AlbumModelProtocol {
             print("Data saved successfully!")
           }
         }
-        
+
         //Step 3 - albumID needs to be added as a storage url in Firebase Storage
         let uploadRef = Storage.storage().reference(withPath: "\(albumID)/\(defaultImagePath)/\(defaultImagePath)")
         guard let imageData = UIImage(named: "placeholder")?.jpegData(compressionQuality: 0.75) else {return}
         let uploadMetadata = StorageMetadata.init()
         uploadMetadata.contentType = "image/jpeg"
-        
+
         uploadRef.putData(imageData, metadata: uploadMetadata) { (downloadMetadata, err) in
             if let err = err {
                 print("Error creating reference to storage \(err.localizedDescription)")
@@ -74,7 +71,7 @@ public class AlbumModel: AlbumModelProtocol {
             }
         }
     }
-    
+
     public func downloadAlbumFromFirebaseStorage(albumID: String,
                                                  _ completion: @escaping (_ album: SingleAlbum) -> Void) {
         // Download all images that belong to albumID, on completion send back a SingleAlbum
@@ -96,7 +93,7 @@ public class AlbumModel: AlbumModelProtocol {
             }
         }
     }
-    
+
     func getImageFromFirebaseStorage(albumID: String, imagePath: String,
                                      _ completion: @escaping (_ image: UIImage) -> Void) {
         let storageRef = Storage.storage().reference(withPath: "\(albumID)/\(imagePath)/\(imagePath)")
@@ -112,7 +109,7 @@ public class AlbumModel: AlbumModelProtocol {
             }
         }
     }
-    
+
     func getAlbumMetaDataFromFirebase(albumID: String, _ completion: @escaping (_ albumName: String,_ dateCreated: String,
         _ timeCreated: String,_ createdBy: String,_ imagePaths: [String]) -> Void) {
         let ref = Database.database().reference()
@@ -129,14 +126,14 @@ public class AlbumModel: AlbumModelProtocol {
             print(error.localizedDescription)
         }
     }
-    
+
     // MARK: HELPER FUNCTIONS
     func validateAlbumID(albumID: String) -> Bool {
         let ref = Database.database().reference()
         ref.child("AllExistingAlbums").observeSingleEvent(of: .value) { (snapshot) in
             let value = snapshot.value as! String
             if value == albumID {
-                
+
             }
         }
         return true

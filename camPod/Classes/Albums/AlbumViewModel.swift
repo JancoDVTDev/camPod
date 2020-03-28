@@ -11,12 +11,12 @@ import FirebaseDatabase
 import FirebaseStorage
 
 public class AlbumViewModel {
-    
+
     var albumModelRepo: AlbumModelProtocol?
     var actualAlbumModelRepo = AlbumModel()
 //    var user: User?
     let userRepo = UserModel()
-    
+
     var lyngens: [UIImage] = [UIImage(named: "LynOne")!,UIImage(named: "LynTwo")!,UIImage(named: "LynThree")!,
                               UIImage(named: "LynFour")!,UIImage(named: "LynFive")!,UIImage(named: "LynSix")!,
                               UIImage(named: "LynSeven")!,UIImage(named: "LynEight")!,UIImage(named: "LynNine")!]
@@ -30,10 +30,10 @@ public class AlbumViewModel {
                            UIImage(named: "MeraSeven")!,UIImage(named: "MeraEight")!,UIImage(named: "MeraNine")!,UIImage(named: "MeraTen")!]
 
     var other: [UIImage] = [UIImage(named: "image-1")!,UIImage(named: "image-2")!,UIImage(named: "image-3")!,UIImage(named: "image-4")!]
-    
+
     var allAlbums: [Album] = []
     var albums: [SingleAlbum] = []
-    
+
     public init() {
         let lyn = Album(title: "Lyngens", thumbnail: self.lyngens[0],images: self.lyngens)
         let cair = Album(title: "Cair", thumbnail: self.cairngorms[0],images: self.cairngorms)
@@ -45,7 +45,7 @@ public class AlbumViewModel {
         allAlbums.append(mera)
         allAlbums.append(other)
     }
-    
+
     public init(user: User) {
 //        self.user = user
         self.albumModelRepo = AlbumModel()
@@ -59,7 +59,7 @@ public class AlbumViewModel {
         allAlbums.append(mera)
         allAlbums.append(other)
     }
-    
+
     public func getAllAlbums(albumIDs: [String], _ completion: @escaping (_ albums: [SingleAlbum]) -> Void) {
         populateAlbums(albumIDs: albumIDs) { (success) in
             if success {
@@ -67,7 +67,7 @@ public class AlbumViewModel {
             }
         }
     }
-    
+
     func populateAlbums(albumIDs: [String], _ completion: @escaping (_ success: Bool) -> Void) {
         for albumID in albumIDs {
             actualAlbumModelRepo.downloadAlbumFromFirebaseStorage(albumID: albumID, { (singleAlbum) in
@@ -75,7 +75,7 @@ public class AlbumViewModel {
             })
         }
     }
-    
+
     public func getAlbumNew(albumID: String, _ completion: @escaping (_ album: SingleAlbum) -> Void) {
         let databaseRef = Database.database().reference()
         var currentAlbum = [UIImage]()
@@ -105,7 +105,7 @@ public class AlbumViewModel {
             }
         }
     }
-    
+
     public func getUserData(_ completion: @escaping (_ success: Bool, _ isNewUser: Bool, _ user: User) -> Void) {
         var albumNames = [String]()
         let ref: DatabaseReference = Database.database().reference()
@@ -132,7 +132,7 @@ public class AlbumViewModel {
             }
         }
     }
-    
+
     public func addNewAlbum(albumName: String, _ completion: @escaping (_ album: SingleAlbum) -> Void) {
         let helpingHand: ObjcHelper = ObjcHelper()
         let newAlbumIDFromObjC = helpingHand.generateUniqueID()
@@ -146,7 +146,7 @@ public class AlbumViewModel {
             })
         }
     }
-    
+
     func getAlbumNameFromFirebase(albumID: String, _ completion: @escaping (_ albumName: String) -> Void) {
         let databaseRef: DatabaseReference = Database.database().reference()
         databaseRef.child("AllAlbumsExisting").child(albumID).observeSingleEvent(of: .value, with: { (snapshot) in
@@ -157,12 +157,12 @@ public class AlbumViewModel {
             print(error.localizedDescription)
         }
     }
-    
+
     func generateUniqueAlbumID() -> String {
         let uniqueString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0987654321abcdefghijklmnopqrstuvwxyz"
         let uniqueChars = Array(uniqueString)
         var compiledUniqueString: String = ""
-        
+
 //        repeat {
             for _ in 0..<25 {
                 let randomNumber = Int.random(in: 0..<uniqueChars.count)
@@ -171,33 +171,33 @@ public class AlbumViewModel {
 //        } while (isIDUnique(generatedID: compiledUniqueString) == false)
         return compiledUniqueString
     }
-    
+
     public func getAlbumsCount() -> Int {
         return albums.count
     }
-    
+
     //Old Functions
-    
+
     public func getCount() -> Int {
         return allAlbums.count
     }
-    
+
     public func getThumbnail(index: Int) -> UIImage {
         return allAlbums[index].getThumbnail()
     }
-    
+
     public func getSingleImage(selectedAlbum: Int, index: Int) -> UIImage {
         return allAlbums[selectedAlbum].getSingleImage(index: index)
     }
-    
+
     public func getAlbumSize(index: Int) -> Int {
         return allAlbums[index].getAlbumSize()
     }
-    
+
     public func appendToAlbum(albumIndex: Int, image: UIImage) {
         allAlbums[albumIndex].appendImage(image: image)
     }
-    
+
     public func getAlbum(index: Int) -> Album {
         return allAlbums[index]
     }

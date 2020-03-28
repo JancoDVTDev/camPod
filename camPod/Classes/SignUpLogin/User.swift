@@ -14,14 +14,14 @@ public class User {
     public let lastName: String
     public let email: String
     public var albumIDs: [String]
-    
+
     public init(firstName: String, lastName: String, email: String, albumIDs: [String]) {
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
         self.albumIDs = albumIDs
     }
-    
+
     public func appendAlbumIDs(albumID: String) {
         albumIDs.append(albumID)
     }

@@ -13,8 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property NSString *albumID;
 @property NSArray *images;
+@property NSArray *imagePathReferences;
 
-- (instancetype) initWithAlbumID: (NSString *) albumID images: (NSArray *) images;
+- (instancetype) initWithAlbumID: (NSString *) albumID images: (NSArray *) images imagePathReferences: (NSArray *) imagePathReference;
+- (void) updateAlbum: (NSString *) albumID images: (NSArray *) images imagePathReferences: (NSArray *) imagePathReference;
 
 @end
 

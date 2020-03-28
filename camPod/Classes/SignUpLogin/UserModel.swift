@@ -18,16 +18,16 @@ public protocol UserModelProtocol: class {
 }
 
 public class UserModel: UserModelProtocol {
-    
+
     var user: User?
-        
+
     public init() {
         
     }
 
     public func login(email: String, password: String, _ completion: @escaping (_ success: Bool, _ user: User?) -> Void) {
         var albumNames = [String]()
-        
+
         Auth.auth().signIn(withEmail: email, password: password) { (result, err) in
             if err != nil {
                 let alert = UIAlertController(title: "Error", message: "Cannot Log In", preferredStyle: .alert)
@@ -60,7 +60,7 @@ public class UserModel: UserModelProtocol {
             }
         } 
     }
-    
+
     public func signUp(firstName: String, lastName: String, email: String, password: String,
                        _ completion: @escaping (_ user: User?) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
@@ -86,7 +86,7 @@ public class UserModel: UserModelProtocol {
             print(error.localizedDescription)
         }
     }
-    
+
     func createUserInRealtimeDatabase(firstName: String, lastName: String, _ completion: @escaping (_ val: Bool) -> Void) {
         let databaseRef = Database.database().reference()
         databaseRef.child("Users").child(Auth.auth().currentUser!.uid).setValue(["firstName": firstName,
@@ -94,7 +94,7 @@ public class UserModel: UserModelProtocol {
                                                                                  "Albums": [""]])
         completion(true)
     }
-    
+
     public func getUser() -> User? {
         return self.user
     }
