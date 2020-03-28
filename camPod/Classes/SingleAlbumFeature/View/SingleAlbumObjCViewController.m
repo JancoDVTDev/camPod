@@ -10,16 +10,18 @@
 
 @interface SingleAlbumObjCViewController ()
 @property (strong, nonatomic) IBOutlet UICollectionView *myCollectionView;
+@property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
+
 @end
 
 @implementation SingleAlbumObjCViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     // MARK: Add Navigation Item
     UIBarButtonItem *cameraButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(cameraTapped:)];
     self.navigationItem.rightBarButtonItem = cameraButton;
+    self.title = self.albumName;
     
     self.viewModel = [[SingleAlbumObjCViewModel alloc] init];
     [self.viewModel downloadImagesFromFirebaseStorage:self.albumID :self.imagePathReferences :^(SingleAlbumModelObjc * _Nonnull album) {
@@ -28,6 +30,29 @@
         [self.myCollectionView reloadData];
     }];
 }
+- (IBAction)shareTapped:(id)sender {
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"Share Album" message:self.album.albumID preferredStyle:UIAlertControllerStyleActionSheet];
+    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Using QR Code" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //Create QR code: Display inside Custom view
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Copy Album ID" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //Copy Album ID to clipboard
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    [self presentViewController:actionSheet animated:YES completion:nil];
+}
+
+- (IBAction)deleteTapped:(id)sender {
+    
+}
+
 
 -(IBAction)cameraTapped:(id)sender {
     NSLog(@"Camera button tapped");
