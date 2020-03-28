@@ -36,7 +36,7 @@ public class AlbumModel: AlbumModelProtocol {
         let defaultImagePath = UUID.init().uuidString
         let currentDate = "\(calendar.component(.day, from: date))/\(calendar.component(.month, from: date))/\(calendar.component(.year, from: date))"
         let currentTime = "\(calendar.component(.hour, from: date)):\(calendar.component(.minute, from: date))"
-        let album = SingleAlbum(albumID: albumID, name: albumName, dateCreated: currentDate, timeCreated: currentTime, createdBy: Auth.auth().currentUser!.uid, thumbnail: UIImage(named: "placeholder")!, imagePaths: [defaultImagePath], images: [])
+        let album = SingleAlbum(albumID: albumID, name: albumName, dateCreated: currentDate, timeCreated: currentTime, createdBy: Auth.auth().currentUser!.uid, thumbnail: UIImage(named: "placeholder")!, imagePaths: [defaultImagePath])
         
         let ref = Database.database().reference()
         //Step 1 - album needs to be added to AllAlbumsExisting in Firebase and validated for existence
@@ -90,7 +90,7 @@ public class AlbumModel: AlbumModelProtocol {
                         thumbnail = image
                     }
                     if pathIndex == imageCount - 1 {
-                        completion(SingleAlbum(albumID: albumID, name: albumName, dateCreated: date, timeCreated: time, createdBy: createdBy, thumbnail: thumbnail, imagePaths: imagePaths, images: albumImages))
+                        completion(SingleAlbum(albumID: albumID, name: albumName, dateCreated: date, timeCreated: time, createdBy: createdBy, thumbnail: thumbnail, imagePaths: imagePaths))
                     }
                 }
             }
@@ -99,7 +99,7 @@ public class AlbumModel: AlbumModelProtocol {
     
     func getImageFromFirebaseStorage(albumID: String, imagePath: String,
                                      _ completion: @escaping (_ image: UIImage) -> Void) {
-        let storageRef = Storage.storage().reference(withPath: "\(albumID)/\(imagePath)/\(imagePath).jpg")
+        let storageRef = Storage.storage().reference(withPath: "\(albumID)/\(imagePath)/\(imagePath)")
         storageRef.getData(maxSize: 4 * 1024 * 1024) { (data, error) in
             if let data = data {
                 if let image = UIImage(data: data) {

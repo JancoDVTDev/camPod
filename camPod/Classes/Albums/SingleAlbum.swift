@@ -16,9 +16,9 @@ public class SingleAlbum {
     public let createdBy: String
     public let thumbnail: UIImage
     public let imagePaths: [String]
-    public let images: [UIImage]
+    //public let images: [UIImage]
     
-    public init(albumID: String, name: String, dateCreated: String, timeCreated: String, createdBy: String, thumbnail: UIImage, imagePaths: [String], images: [UIImage]) {
+    public init(albumID: String, name: String, dateCreated: String, timeCreated: String, createdBy: String, thumbnail: UIImage, imagePaths: [String]) {
         self.albumID = albumID
         self.name = name
         self.dateCreated = dateCreated
@@ -26,7 +26,7 @@ public class SingleAlbum {
         self.createdBy = createdBy
         self.thumbnail = thumbnail
         self.imagePaths = imagePaths
-        self.images = images
+        //self.images = images
     }
     
 }
