@@ -42,24 +42,24 @@
 		2D18E03D2008696CF7390C54A3E62C07 /* camPod-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "camPod-prefix.pch"; sourceTree = "<group>"; };
 		2DE9F11A03EA48E03E13B0E257C858F5 /* ReplaceMe.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReplaceMe.swift; path = camPod/Classes/ReplaceMe.swift; sourceTree = "<group>"; };
 		3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		38197A4B5DA2500D1CAA1C7F591446D3 /* camPod.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = camPod.framework; path = camPod.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38197A4B5DA2500D1CAA1C7F591446D3 /* camPod.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = camPod.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A84A8365554B71F708750AEDD1687D1 /* Pods-camPod_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-camPod_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		3F4BFD93F7676F008C1BED52F584BEBA /* camPod-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "camPod-dummy.m"; sourceTree = "<group>"; };
 		40AF8E4B3AD031C93219F5BE04C68CDF /* Pods-camPod_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-camPod_Example-acknowledgements.plist"; sourceTree = "<group>"; };
-		44DE27196D8B87C58C71F70E4C61F8AA /* Pods_camPod_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_camPod_Tests.framework; path = "Pods-camPod_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		44DE27196D8B87C58C71F70E4C61F8AA /* Pods_camPod_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_camPod_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5364478F5AE52C45D686EC71B2D8F16D /* Pods-camPod_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-camPod_Example.modulemap"; sourceTree = "<group>"; };
 		554393BD36B1F987A830882EB9DAD138 /* camPod-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "camPod-umbrella.h"; sourceTree = "<group>"; };
 		633178EE68DFDFD57B80A51022924766 /* Pods-camPod_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-camPod_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		633AB81A71246F6BC5D03EB32B8D043A /* Pods-camPod_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-camPod_Example.release.xcconfig"; sourceTree = "<group>"; };
 		7B0201494C5D433E9289AF24960DE835 /* camPod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = camPod.xcconfig; sourceTree = "<group>"; };
-		7B34154710DC66BCEC9B74DB14BEF65E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		7B34154710DC66BCEC9B74DB14BEF65E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7C9443E1FF805B242A01B03C79AEA31E /* Pods-camPod_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-camPod_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		8A6ED244BF719C819FCB3698EACFD4E5 /* Pods-camPod_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-camPod_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		9285E3DC689A490687C0D85DE8E5DB32 /* Pods-camPod_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-camPod_Example-Info.plist"; sourceTree = "<group>"; };
-		9469E71A5AAF46146159DAA1EEDE4E34 /* camPod.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = camPod.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9469E71A5AAF46146159DAA1EEDE4E34 /* camPod.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = camPod.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		949AAD248015831F17887F078C27A8FB /* Pods-camPod_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-camPod_Tests-Info.plist"; sourceTree = "<group>"; };
-		9C51B2A6BB066F83CF69F3ED4D7F2669 /* Pods_camPod_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_camPod_Example.framework; path = "Pods-camPod_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9C51B2A6BB066F83CF69F3ED4D7F2669 /* Pods_camPod_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_camPod_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A20D2AFCC6C5E9166FB787D4AE616CAB /* Pods-camPod_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-camPod_Example-dummy.m"; sourceTree = "<group>"; };
 		AB23E2FCA4AABB11740593674BA067BC /* Pods-camPod_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-camPod_Example-umbrella.h"; sourceTree = "<group>"; };
 		B2044DCE89AF0F9CE2C65A1FCDE59540 /* camPod-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "camPod-Info.plist"; sourceTree = "<group>"; };
@@ -68,7 +68,7 @@
 		D2E3B9C56A893D053A1E82E9CB2B8F72 /* Pods-camPod_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-camPod_Tests-umbrella.h"; sourceTree = "<group>"; };
 		DF2ED849A800410A170B367A9FA08BCF /* Pods-camPod_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-camPod_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		E523A920FD434AB75225EF8CB4CAB245 /* Pods-camPod_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-camPod_Tests-dummy.m"; sourceTree = "<group>"; };
-		FDA6BD29812C87B35A28A0A668CA375D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		FDA6BD29812C87B35A28A0A668CA375D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -589,8 +589,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};

@@ -9,12 +9,12 @@ import Foundation
 import FirebaseStorage
 import FirebaseAuth
 import FirebaseDatabase
-
+// MARK: Funcrion is moved to SingleAlbumViewModel
 public class CameraBehaviourViewModel {
     public init() {
         
     }
-    
+
     let currentUser = UserModel()
     // Note to self: When an albumis created write to the user the uniqueAlbumID and the albumName
     public func saveTakenImage(image: UIImage, albumID: String, imagePaths: [String]) {

@@ -10,16 +10,16 @@
 @implementation Helper
 
 -(NSString*) generateUniqueID {
-    
+
     NSString *chars = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz";
     NSString *uniqueID;
-    
+
     for (int i = 0; i < 25; i++) {
         int randomNumber = arc4random_uniform(chars.length);
         NSString *randomChar = [NSString stringWithFormat:@"%C",[chars characterAtIndex:randomNumber]];
         uniqueID = [NSString stringWithFormat:@"%@%@", uniqueID, randomChar];
     }
-    
+
     //NSLog(@"%@", uniqueID);
     NSString *newStr = [uniqueID substringFromIndex:6];
     NSLog(@"%lu", (unsigned long)newStr.length);
@@ -33,7 +33,7 @@
     } else {
         flag = TRUE;
     }
-    
+
     return flag;
 }
 
@@ -43,9 +43,9 @@
     // Multiple parameters https://stackoverflow.com/questions/1692005/returning-multiple-values-from-a-method-in-objective-c
     BOOL isValidPassword = NO;
     NSString *error = [self validPassword:password isValid:&isValidPassword];
-    
+
     isValidPassword = isValidPassword; // recieve isValid parameter back from validPassword function
-    
+
     if (isValidPassword) {
         //Paswword is of right format
         if (([email isEqual:@""]) && ([password isEqual:@""])) {
@@ -67,7 +67,7 @@
     NSCharacterSet *special = [NSCharacterSet characterSetWithCharactersInString:@"!~`@#$%^&*-+();:={}[],.<>?\\/\"\'"];
     NSCharacterSet *capital = [NSCharacterSet characterSetWithCharactersInString:@"ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
     NSCharacterSet *number = [NSCharacterSet characterSetWithCharactersInString:@"1234567890"];
-    
+
     NSString *error = nil;
     if (password.length > 7) {
         *valid = YES;

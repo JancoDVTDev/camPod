@@ -10,11 +10,11 @@ import FirebaseAuth
 import FirebaseDatabase
 
 public class ShowingAllUserAlbumsViewModel {
-    
+
     public init () {
         
     }
-    
+
     public let user = Auth.auth().currentUser
     public var allAlbumId = ["1","SomeID","AnotherID"]
     public func addNewAlbum(newAlbumName: String) {
@@ -35,7 +35,7 @@ public class ShowingAllUserAlbumsViewModel {
             }
         }
     }
-    
+
     public func getUserAlbumsArray(_ completion: @escaping (_ array: [String]) -> Void) {
         var uniqueAlbumIdArray = [String]()
         let databaseRef: DatabaseReference!
@@ -50,12 +50,12 @@ public class ShowingAllUserAlbumsViewModel {
             completion(uniqueAlbumIdArray)
         }
     }
-    
+
     public func generateUniqueAlbumID() -> String {
         let uniqueString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0987654321abcdefghijklmnopqrstuvwxyz"
         let uniqueChars = Array(uniqueString)
         var compiledUniqueString: String = ""
-        
+
         repeat {
             for _ in 0..<25 {
                 let randomNumber = Int.random(in: 0..<uniqueChars.count)
@@ -64,7 +64,7 @@ public class ShowingAllUserAlbumsViewModel {
         } while (isIDUnique(generatedID: compiledUniqueString) == false)
         return compiledUniqueString
     }
-    
+
     func isIDUnique(generatedID: String) -> Bool {
         var generatedStringIsUnique = false
         for item in allAlbumId {

@@ -6,9 +6,5 @@ import FirebaseCore
 
 class ReplaceMe {
 
-    func signIn () {
-        
-    }
 }
 
-//Code to be done

@@ -13,7 +13,7 @@
     
     NSString *chars = @"ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz";
     NSString *uniqueID;
-    
+
     for (int i = 0; i < 25; i++) {
         int randomNumber = arc4random_uniform(chars.length);
         NSString *randomChar = [NSString stringWithFormat:@"%C",[chars characterAtIndex:randomNumber]];
@@ -33,19 +33,19 @@
     } else {
         success = TRUE;
     }
-    
+
     return success;
 }
 
 -(BOOL) validateLoginFields:(NSString *)email :(NSString *)password {
     BOOL success = FALSE;
-    
+
     // Multiple parameters https://stackoverflow.com/questions/1692005/returning-multiple-values-from-a-method-in-objective-c
     BOOL isValidPassword = NO;
     NSString *error = [self validPassword:password isValid:&isValidPassword];
-    
+
     isValidPassword = isValidPassword; // recieve isValid parameter back from validPassword function
-    
+
     if (isValidPassword) {
         //Paswword is of right format
         if (([email isEqual:@""]) && ([password isEqual:@""])) {
@@ -65,7 +65,7 @@
 -(NSString *) getLoginErrorMessage:(NSString *)email :(NSString *)password {
     BOOL isValidPassword = NO;
     NSString *error = [self validPassword:password isValid:&isValidPassword];
-    
+
     return error;
 }
 
@@ -74,7 +74,7 @@
     NSCharacterSet *special = [NSCharacterSet characterSetWithCharactersInString:@"!~`@#$%^&*-+();:={}[],.<>?\\/\"\'"];
     NSCharacterSet *capital = [NSCharacterSet characterSetWithCharactersInString:@"ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
     NSCharacterSet *number = [NSCharacterSet characterSetWithCharactersInString:@"1234567890"];
-    
+
     NSString *error = nil;
     if (password.length > 7) {
         *valid = YES;
@@ -102,6 +102,5 @@
     }
     return error;
 }
-
 
 @end

@@ -13,8 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SingleAlbumObjCView : UIViewController
 
-- (instancetype)initWithViewModel: (SingleAlbumObjCViewModel *) viewModel;
-
 @end
 
 NS_ASSUME_NONNULL_END

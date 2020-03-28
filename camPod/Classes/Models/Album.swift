@@ -17,19 +17,19 @@ public class Album {
         self.thumbnail = thumbnail
         self.images = images
     }
-    
+
     func getThumbnail() -> UIImage {
         return thumbnail
     }
-    
+
     func getSingleImage(index: Int) -> UIImage {
         return images[index]
     }
-    
+
     func getAlbumSize() -> Int {
         return images.count
     }
-    
+
     func appendImage(image: UIImage) {
         images.append(image)
     }
