@@ -7,19 +7,23 @@
 
 #import "SingleAlbumObjCViewController.h"
 #import "PhotoCellCollectionViewCell.h"
+#import "QRCodeGeneratorObjCViewController.h"
+#import "SelectedImageObjCViewController.h"
 
 @interface SingleAlbumObjCViewController ()
 @property (strong, nonatomic) IBOutlet UICollectionView *myCollectionView;
+@property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
+
 @end
 
 @implementation SingleAlbumObjCViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     // MARK: Add Navigation Item
     UIBarButtonItem *cameraButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(cameraTapped:)];
     self.navigationItem.rightBarButtonItem = cameraButton;
+    self.title = self.albumName;
     
     self.viewModel = [[SingleAlbumObjCViewModel alloc] init];
     [self.viewModel downloadImagesFromFirebaseStorage:self.albumID :self.imagePathReferences :^(SingleAlbumModelObjc * _Nonnull album) {
@@ -28,6 +32,42 @@
         [self.myCollectionView reloadData];
     }];
 }
+- (IBAction)shareTapped:(id)sender {
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"Share Album" message:self.album.albumID preferredStyle:UIAlertControllerStyleActionSheet];
+    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Generate QR Code" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //Create QR code: Display inside Custom view
+        [self performSegueWithIdentifier:@"goToQRCode" sender:self];
+        //[self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Copy Album ID" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //Copy Album ID to clipboard
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    [self presentViewController:actionSheet animated:YES completion:nil];
+}
+
+- (IBAction)deleteTapped:(id)sender {
+    
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"goToQRCode"]) {
+        QRCodeGeneratorObjCViewController *qrCodeView = [segue destinationViewController];
+        qrCodeView.albumID = self.album.albumID;
+    }
+    
+    if ([[segue identifier] isEqualToString:@"loadPhoto"]) {
+        SelectedImageObjCViewController *selectedImageView = [segue destinationViewController];
+        selectedImageView.selectedImage = self.selectedImage;
+    }
+}
+
 
 -(IBAction)cameraTapped:(id)sender {
     NSLog(@"Camera button tapped");
@@ -48,11 +88,6 @@
         [self.myCollectionView reloadData];
         [picker dismissViewControllerAnimated:YES completion:nil];
     }];
-}
-
--(IBAction)imageTapped:(id)sender {
-    //perform segue to single image view
-    NSLog(@"Perform segue to Single image view");
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -84,6 +119,13 @@
     cell.imageView.image = image;
 
     return cell;
+}
+
+-(IBAction)imageTapped:(UITapGestureRecognizer*)sender {
+    NSLog(@"Perform segue to Single image view");
+    int selectedIndex = sender.view.tag;
+    self.selectedImage = self.album.images[selectedIndex];
+    [self performSegueWithIdentifier:@"loadPhoto" sender:self];
 }
 
 @end

@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSArray *imagePathReferences;
 @property (strong,nonatomic) NSString *albumName;
 @property (strong, nonatomic) SingleAlbumModelObjc *album;
+@property (strong, nonatomic) UIImage *selectedImage;
 
 @end
 
