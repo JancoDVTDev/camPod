@@ -7,6 +7,8 @@
 
 #import "SingleAlbumObjCViewController.h"
 #import "PhotoCellCollectionViewCell.h"
+#import "QRCodeGeneratorObjCViewController.h"
+#import "SelectedImageObjCViewController.h"
 
 @interface SingleAlbumObjCViewController ()
 @property (strong, nonatomic) IBOutlet UICollectionView *myCollectionView;
@@ -32,9 +34,10 @@
 }
 - (IBAction)shareTapped:(id)sender {
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"Share Album" message:self.album.albumID preferredStyle:UIAlertControllerStyleActionSheet];
-    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Using QR Code" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Generate QR Code" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         //Create QR code: Display inside Custom view
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self performSegueWithIdentifier:@"goToQRCode" sender:self];
+        //[self dismissViewControllerAnimated:YES completion:nil];
     }]];
     
     [actionSheet addAction:[UIAlertAction actionWithTitle:@"Copy Album ID" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -51,6 +54,18 @@
 
 - (IBAction)deleteTapped:(id)sender {
     
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"goToQRCode"]) {
+        QRCodeGeneratorObjCViewController *qrCodeView = [segue destinationViewController];
+        qrCodeView.albumID = self.album.albumID;
+    }
+    
+    if ([[segue identifier] isEqualToString:@"loadPhoto"]) {
+        SelectedImageObjCViewController *selectedImageView = [segue destinationViewController];
+        selectedImageView.selectedImage = self.selectedImage;
+    }
 }
 
 
@@ -73,11 +88,6 @@
         [self.myCollectionView reloadData];
         [picker dismissViewControllerAnimated:YES completion:nil];
     }];
-}
-
--(IBAction)imageTapped:(id)sender {
-    //perform segue to single image view
-    NSLog(@"Perform segue to Single image view");
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -109,6 +119,13 @@
     cell.imageView.image = image;
 
     return cell;
+}
+
+-(IBAction)imageTapped:(UITapGestureRecognizer*)sender {
+    NSLog(@"Perform segue to Single image view");
+    int selectedIndex = sender.view.tag;
+    self.selectedImage = self.album.images[selectedIndex];
+    [self performSegueWithIdentifier:@"loadPhoto" sender:self];
 }
 
 @end

@@ -132,6 +132,12 @@ public class AlbumViewModel {
             }
         }
     }
+    
+    public func updateUserAlbumIDs(newAlbumIDs: [String]) {
+        let databaseRef = Database.database().reference()
+        databaseRef.child("Users").child(Auth.auth().currentUser!.uid)
+            .child("Albums").setValue(newAlbumIDs)
+    }
 
     public func addNewAlbum(albumName: String, _ completion: @escaping (_ album: SingleAlbum) -> Void) {
         let helpingHand: ObjcHelper = ObjcHelper()
@@ -144,6 +150,30 @@ public class AlbumViewModel {
                     completion(album)
                 }
             })
+        }
+    }
+    
+    public func getExistingAlbumFromFirebase(albumID: String,_ completion: @escaping (_ album: SingleAlbum) -> Void) {
+        let databaseRef = Database.database().reference()
+        databaseRef.child("AllAlbumsExisting").child(albumID).observeSingleEvent(of: .value) { (snapshot) in
+            let value = snapshot.value as! NSDictionary
+            let createdBy = value["Created By"] as? String ?? ""
+            let date = value["Date"] as? String ?? ""
+            let imagePaths = value["ImagePaths"] as? [String] ?? [""]
+            let name = value["Name"] as? String ?? ""
+            let time = value["Time"] as? String ?? ""
+            // get the thubnail
+            let thumbnailPath = "\(albumID)/\(imagePaths[0])/\(imagePaths[0])"
+            let storageRef = Storage.storage().reference(withPath: thumbnailPath)
+            storageRef.getData(maxSize: 4 * 1024 * 1024) { (data, error) in
+                if error != nil {
+                    print("Error adding From getExistingAlbumFromFirebase WITH \(error!.localizedDescription)")
+                }
+                if let data = data {
+                    let thumbnailImage = UIImage(data: data)
+                    completion(SingleAlbum(albumID: albumID, name: name, dateCreated: date, timeCreated: time, createdBy: createdBy, thumbnail: thumbnailImage!, imagePaths: imagePaths))
+                }
+            }
         }
     }
 
