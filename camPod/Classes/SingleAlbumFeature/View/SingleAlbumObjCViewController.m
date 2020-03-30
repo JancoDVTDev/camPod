@@ -9,6 +9,7 @@
 #import "PhotoCellCollectionViewCell.h"
 #import "QRCodeGeneratorObjCViewController.h"
 #import "SelectedImageObjCViewController.h"
+//#import "camPod/camPod-Swift.h"
 
 @interface SingleAlbumObjCViewController ()
 @property (strong, nonatomic) IBOutlet UICollectionView *myCollectionView;
@@ -34,18 +35,23 @@
 }
 - (IBAction)shareTapped:(id)sender {
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"Share Album" message:self.album.albumID preferredStyle:UIAlertControllerStyleActionSheet];
+    [FIRAnalytics logEventWithName:@"share_album" parameters:nil];
     [actionSheet addAction:[UIAlertAction actionWithTitle:@"Generate QR Code" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         //Create QR code: Display inside Custom view
+        [FIRAnalytics logEventWithName:@"generate_gr_code_tapped" parameters:@{@"albumID" : self.album.albumID}];
         [self performSegueWithIdentifier:@"goToQRCode" sender:self];
         //[self dismissViewControllerAnimated:YES completion:nil];
     }]];
     
     [actionSheet addAction:[UIAlertAction actionWithTitle:@"Copy Album ID" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        //Copy Album ID to clipboard
+        UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+        pasteboard.string = self.album.albumID;
+        [FIRAnalytics logEventWithName:@"copy_album_id_tapped" parameters:@{@"albumID" : self.album.albumID}];
         [self dismissViewControllerAnimated:YES completion:nil];
     }]];
     
     [actionSheet addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [FIRAnalytics logEventWithName:@"cancel_share_tapped" parameters:nil];
         [self dismissViewControllerAnimated:YES completion:nil];
     }]];
     
