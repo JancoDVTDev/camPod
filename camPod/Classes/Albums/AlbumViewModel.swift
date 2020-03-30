@@ -16,48 +16,16 @@ public class AlbumViewModel {
     var actualAlbumModelRepo = AlbumModel()
 //    var user: User?
     let userRepo = UserModel()
-
-    var lyngens: [UIImage] = [UIImage(named: "LynOne")!,UIImage(named: "LynTwo")!,UIImage(named: "LynThree")!,
-                              UIImage(named: "LynFour")!,UIImage(named: "LynFive")!,UIImage(named: "LynSix")!,
-                              UIImage(named: "LynSeven")!,UIImage(named: "LynEight")!,UIImage(named: "LynNine")!]
-
-    var cairngorms: [UIImage] = [UIImage(named: "CairOne")!,UIImage(named: "CairTwo")!,UIImage(named: "CairThree")!,
-                                 UIImage(named: "CairFour")!,UIImage(named: "CairFive")!,UIImage(named: "CairSix")!,
-                                 UIImage(named: "CairSeven")!,UIImage(named: "CairEight")!]
-
-    var mera: [UIImage] = [UIImage(named: "MeraOne")!,UIImage(named: "MeraTwo")!,UIImage(named: "MeraThree")!,
-                           UIImage(named: "MeraFour")!,UIImage(named: "MeraFive")!,UIImage(named: "MeraSix")!,
-                           UIImage(named: "MeraSeven")!,UIImage(named: "MeraEight")!,UIImage(named: "MeraNine")!,UIImage(named: "MeraTen")!]
-
-    var other: [UIImage] = [UIImage(named: "image-1")!,UIImage(named: "image-2")!,UIImage(named: "image-3")!,UIImage(named: "image-4")!]
-
     var allAlbums: [Album] = []
     var albums: [SingleAlbum] = []
 
     public init() {
-        let lyn = Album(title: "Lyngens", thumbnail: self.lyngens[0],images: self.lyngens)
-        let cair = Album(title: "Cair", thumbnail: self.cairngorms[0],images: self.cairngorms)
-        let mera = Album(title: "Mera", thumbnail: self.mera[0],images: self.mera)
-        let other = Album(title: "Other", thumbnail: self.other[1], images: self.other)
 
-        allAlbums.append(lyn)
-        allAlbums.append(cair)
-        allAlbums.append(mera)
-        allAlbums.append(other)
     }
 
     public init(user: User) {
 //        self.user = user
         self.albumModelRepo = AlbumModel()
-        let lyn = Album(title: "Lyngens", thumbnail: self.lyngens[0],images: self.lyngens)
-        let cair = Album(title: "Cair", thumbnail: self.cairngorms[0],images: self.cairngorms)
-        let mera = Album(title: "Mera", thumbnail: self.mera[0],images: self.mera)
-        let other = Album(title: "Other", thumbnail: self.other[1], images: self.other)
-
-        allAlbums.append(lyn)
-        allAlbums.append(cair)
-        allAlbums.append(mera)
-        allAlbums.append(other)
     }
 
     public func getAllAlbums(albumIDs: [String], _ completion: @escaping (_ albums: [SingleAlbum]) -> Void) {
@@ -78,7 +46,7 @@ public class AlbumViewModel {
 
     public func getAlbumNew(albumID: String, _ completion: @escaping (_ album: SingleAlbum) -> Void) {
         let databaseRef = Database.database().reference()
-        var currentAlbum = [UIImage]()
+        var thumbnail = UIImage()
         databaseRef.child("AllAlbumsExisting").child(albumID).observeSingleEvent(of: .value) { (snapshot) in
             let value = snapshot.value as! NSDictionary
             let createdBy = value["Created By"] as? String ?? ""
@@ -86,21 +54,17 @@ public class AlbumViewModel {
             let imagePaths = value["ImagePaths"] as? [String] ?? [""]
             let name = value["Name"] as? String ?? ""
             let time = value["Time"] as? String ?? ""
-            for imagePath in imagePaths {
-                let storageRef = Storage.storage().reference(withPath: "\(albumID)/\(imagePath)/\(imagePath)")
-                storageRef.getData(maxSize: 4 * 1024 * 1024) { (data, err) in
-                    if let err = err {
-                        print("Error with image \(err.localizedDescription)")
-                    }
-                    if let data = data {
-                        currentAlbum.append(UIImage(data: data)!)
-                        print("Appending image data")
-                        if imagePath == imagePaths[imagePaths.endIndex - 1] {
-                            print("Album: \(albumID) completed")
-                            let currAlbum = SingleAlbum(albumID: albumID, name: name, dateCreated: date, timeCreated: time, createdBy: createdBy, thumbnail: currentAlbum[0], imagePaths: imagePaths)
-                            completion(currAlbum)
-                        }
-                    }
+            let storageRef = Storage.storage().reference(withPath: "\(albumID)/\(imagePaths[0])/\(imagePaths[0])")
+            storageRef.getData(maxSize: 4 * 1024 * 1024) { (data, err) in
+                if let err = err {
+                    print("Error with image \(err.localizedDescription)")
+                }
+                if let data = data {
+                    thumbnail = (UIImage(data: data)!)
+                    print("Appending image data")
+                    print("Album: \(albumID) completed")
+                    let currAlbum = SingleAlbum(albumID: albumID, name: name, dateCreated: date, timeCreated: time, createdBy: createdBy, thumbnail: thumbnail, imagePaths: imagePaths)
+                    completion(currAlbum)
                 }
             }
         }
@@ -131,6 +95,13 @@ public class AlbumViewModel {
                 }
             }
         }
+    }
+    
+    public func deleteAlbum(albumIDs: [String], selectedAlbumIndex: Int, _ completion: (_ albumIDs: [String]) -> Void) {
+        var newAlbumIDs = albumIDs
+        newAlbumIDs.remove(at: selectedAlbumIndex)
+        updateUserAlbumIDs(newAlbumIDs: newAlbumIDs)
+        completion(newAlbumIDs)
     }
     
     public func updateUserAlbumIDs(newAlbumIDs: [String]) {
@@ -207,28 +178,4 @@ public class AlbumViewModel {
     }
 
     //Old Functions
-
-    public func getCount() -> Int {
-        return allAlbums.count
-    }
-
-    public func getThumbnail(index: Int) -> UIImage {
-        return allAlbums[index].getThumbnail()
-    }
-
-    public func getSingleImage(selectedAlbum: Int, index: Int) -> UIImage {
-        return allAlbums[selectedAlbum].getSingleImage(index: index)
-    }
-
-    public func getAlbumSize(index: Int) -> Int {
-        return allAlbums[index].getAlbumSize()
-    }
-
-    public func appendToAlbum(albumIndex: Int, image: UIImage) {
-        allAlbums[albumIndex].appendImage(image: image)
-    }
-
-    public func getAlbum(index: Int) -> Album {
-        return allAlbums[index]
-    }
 }

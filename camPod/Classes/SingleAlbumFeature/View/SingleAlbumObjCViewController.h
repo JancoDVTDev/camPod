@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong,nonatomic) NSString *albumName;
 @property (strong, nonatomic) SingleAlbumModelObjc *album;
 @property (strong, nonatomic) UIImage *selectedImage;
+@property (strong, nonatomic) NSArray *observedImagePaths;
 //@property TrackFirebaseAnalytics *track;
 
 @end

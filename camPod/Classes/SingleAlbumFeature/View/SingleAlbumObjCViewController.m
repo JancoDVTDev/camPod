@@ -32,6 +32,17 @@
         self.albumImages = self.album.images;
         [self.myCollectionView reloadData];
     }];
+    
+    self.observedImagePaths = [self.viewModel observedImagePaths];
+//    BOOL equal = [self.album.imagePathReferences isEqualToArray:self.observedImagePaths];
+//    if (equal == NO) {
+//        [self.viewModel downloadImagesFromFirebaseStorage:self.albumID :self.imagePathReferences :^(SingleAlbumModelObjc * _Nonnull album) {
+//            self.album = album;
+//            self.albumImages = self.album.images;
+//            [self.myCollectionView reloadData];
+//        }];
+//    }
+    
 }
 - (IBAction)shareTapped:(id)sender {
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"Share Album" message:self.album.albumID preferredStyle:UIAlertControllerStyleActionSheet];
@@ -59,7 +70,15 @@
 }
 
 - (IBAction)deleteTapped:(id)sender {
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"Delete Album" message:@"Are you sure you want to delete this album ?" preferredStyle:UIAlertControllerStyleActionSheet];
     
+    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        //DeleteAlbum
+    }]];
+    
+    [actionSheet addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+    
+    [self presentViewController:actionSheet animated:YES completion:nil];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -89,8 +108,8 @@
     NSLog(@"Picture was taken");
     UIImage *takenPhoto = info[UIImagePickerControllerEditedImage];
     if (!takenPhoto) takenPhoto = info[UIImagePickerControllerOriginalImage];
-    [self.viewModel saveTakenPhotoToDatabase:self.album :takenPhoto :^(SingleAlbumModelObjc * _Nonnull album) {
-        self.album = album;
+    //self.album.images = [self.viewModel appendToLocalAlbum:self.album.images :takenPhoto];
+    [self.viewModel saveImageToFirebase:self.album :takenPhoto :^(BOOL success) {
         [self.myCollectionView reloadData];
         [picker dismissViewControllerAnimated:YES completion:nil];
     }];
