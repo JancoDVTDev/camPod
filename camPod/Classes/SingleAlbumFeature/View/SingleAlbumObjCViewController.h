@@ -7,7 +7,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SingleAlbumObjCViewModel.h"
-
+//@class TrackFirebaseAnalytics;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong,nonatomic) NSString *albumName;
 @property (strong, nonatomic) SingleAlbumModelObjc *album;
 @property (strong, nonatomic) UIImage *selectedImage;
+//@property TrackFirebaseAnalytics *track;
 
 @end
 
