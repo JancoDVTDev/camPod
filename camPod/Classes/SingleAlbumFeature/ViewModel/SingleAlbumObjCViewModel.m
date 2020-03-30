@@ -53,7 +53,7 @@
     for (int i = 0; i < album.images.count; i++) {
         [theNewImages addObject:album.images[i]];
     }
-    NSData *imageData = UIImageJPEGRepresentation(takenPhoto,0.5);
+    NSData *imageData = UIImageJPEGRepresentation(takenPhoto,0.01);
     FIRStorageMetadata *metaData = [[FIRStorageMetadata alloc] init];
     metaData.contentType = @"image/jpeg";
     
@@ -72,6 +72,62 @@
             completion(self.album);
             //return a new album
         }
+    }];
+}
+
+-(NSArray *) appendToLocalAlbum: (NSArray *) images : (UIImage *) takenPhoto {
+     NSMutableArray *theNewImages = [[NSMutableArray alloc] init];
+    
+    for (int i = 0; i < images.count; i++) {
+        [theNewImages addObject:images[i]];
+    }
+    
+    [theNewImages addObject:takenPhoto];
+    
+    return theNewImages;
+}
+
+-(void) saveImageToFirebase: (SingleAlbumModelObjc *) album : (UIImage *) takenPhoto : (void (^) (BOOL success))completion {
+    //Make a unique string ID - uuid
+    NSString *newPhotoName = [[NSUUID UUID] UUIDString];
+    NSMutableArray *theNewImagePathReferences = [[NSMutableArray alloc] init];
+    NSMutableArray *theNewImages = [[NSMutableArray alloc] init];
+    
+    for (int i = 0; i < album.imagePathReferences.count; i++) {
+        [theNewImagePathReferences addObject:album.imagePathReferences[i]];
+    }
+    
+    for (int i = 0; i < album.images.count; i++) {
+        [theNewImages addObject:album.images[i]];
+    }
+    NSData *imageData = UIImageJPEGRepresentation(takenPhoto,0.5);
+    FIRStorageMetadata *metaData = [[FIRStorageMetadata alloc] init];
+    metaData.contentType = @"image/jpeg";
+    
+    FIRStorage *storageRef = [FIRStorage storage];
+    NSString *path = [NSString stringWithFormat:@"%@/%@/%@",album.albumID,newPhotoName,newPhotoName];
+    FIRStorageReference *newImageStorageRef = [storageRef referenceWithPath:path];
+    [newImageStorageRef putData:imageData metadata:metaData completion:^(FIRStorageMetadata * _Nullable metadata, NSError * _Nullable error) {
+        if (error != nil) {
+            NSLog(@"Error");
+        } else {
+            FIRDatabaseReference *databaseRef = [[FIRDatabase database] reference];
+            [theNewImagePathReferences addObject:newPhotoName];
+            [theNewImages addObject:takenPhoto];
+            [[[[databaseRef child:@"AllAlbumsExisting"] child:album.albumID] child:@"ImagePaths"] setValue:theNewImagePathReferences];
+            [self.album updateAlbum:album.albumID images:theNewImages imagePathReferences:theNewImagePathReferences];
+            completion(YES);
+            //return a new album
+        }
+    }];
+}
+
+-(void) observeAlbum: (NSString *) albumID : (void (^) (NSArray *observedImagePaths))completion {
+    self.observedImagePaths = [[NSArray alloc] init];
+    FIRDatabaseReference *databaseRef = [[FIRDatabase database] reference];
+    [[[databaseRef child:@"AllAlbumsExisting"] child:albumID] observeEventType:FIRDataEventTypeChildAdded withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+        self.observedImagePaths = snapshot.value[@"ImagePaths"];
+        completion(self.observedImagePaths);
     }];
 }
 
