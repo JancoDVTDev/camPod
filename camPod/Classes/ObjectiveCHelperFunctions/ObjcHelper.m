@@ -57,6 +57,7 @@
     } else {
         // Password was not of right format
         success = FALSE;
+        error = @"Email not valid format";
         NSLog(@"%@", error); // Also have error varibale to send back
     }
     return success;
@@ -86,15 +87,15 @@
                     *valid = YES;
                 } else {
                     *valid = NO;
-                    error = @"Password has to contain a NUMBER";
+                    error = @"No NUMBER";
                 }
             } else {
                 *valid = NO;
-                error = @"Password has to contain a CAPITAL LETTER";
+                error = @"No CAPITAL LETTER";
             }
         } else {
             *valid = NO;
-            error = @"Password has to contain a SPECIAL CHARACTER";
+            error = @"No SPECIAL CHARACTER";
         }
     } else {
         *valid = NO;
