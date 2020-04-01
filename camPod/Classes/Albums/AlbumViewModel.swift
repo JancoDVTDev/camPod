@@ -51,7 +51,7 @@ public class AlbumViewModel {
             let value = snapshot.value as! NSDictionary
             let createdBy = value["Created By"] as? String ?? ""
             let date = value["Date"] as? String ?? ""
-            let imagePaths = value["ImagePaths"] as? [String] ?? [""]
+            let imagePaths = value["ImagePaths"] as? [String] ?? ["3B3A44E7-F387-4318-BD16-DA9985394C54"]
             let name = value["Name"] as? String ?? ""
             let time = value["Time"] as? String ?? ""
             let storageRef = Storage.storage().reference(withPath: "\(albumID)/\(imagePaths[0])/\(imagePaths[0])")
