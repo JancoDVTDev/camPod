@@ -26,41 +26,17 @@ public class UserSignUpLoginViewModel {
         
         let valid = helpingHand.validateLoginFields(email, password)
         var error = helpingHand.getLoginErrorMessage(email, password)
-        var emailValidationAPIResponseBool = true
-        let emailValidation = APICall(request: email)
-
-        emailValidation.validateEmail { [weak self] result in
-            switch result {
-            case .failure(let error):
-                print(error)
-            case .success(let result):
-                print(result)
-                if result == "Nothing Wrong With Email!" {
-                    emailValidationAPIResponseBool = true
-                    if valid && emailValidationAPIResponseBool {
-                        self!.actualRepo.login(email: email, password: password, { (success, user) in
-                            if success {
-                                let user = user
-                                error = ""
-                                let welcome = APICall(post: user!.firstName, with: user!.lastName)
-                                welcome.postFunctionality { [weak self] result in
-                                    print(result)
-                                    compeltion(true, error!, user) // can send complete user through
-                                }
-                                
-                            }
-                        })
-                    } else {
-                        compeltion(false, error!, nil)
-                    }
-                } else {
-                    emailValidationAPIResponseBool = false
-                    error = result
-                    compeltion(false, error!, nil)
+        if valid  {
+            self.actualRepo.login(email: email, password: password, { (success, user) in
+                if success {
+                    let user = user
+                    error = ""
+                    compeltion(true, error!, user)
                 }
-            }
+            })
+        } else {
+            compeltion(false, error!, nil)
         }
-
     }
 
     public func signUp(firstName: String, lastName: String, email: String, password: String,
