@@ -7,4 +7,3 @@ import FirebaseCore
 class ReplaceMe {
 
 }
-
