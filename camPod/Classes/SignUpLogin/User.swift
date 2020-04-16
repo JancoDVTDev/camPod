@@ -6,8 +6,6 @@
 //
 
 import Foundation
-
-
 // MARK: DTO
 public class User {
     public let firstName: String

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class Album {
+public class AlbumOld {
     //Read from Firebase the title of the Album, its thumnail image and the images array
     var title: String
     var thumbnail: UIImage
