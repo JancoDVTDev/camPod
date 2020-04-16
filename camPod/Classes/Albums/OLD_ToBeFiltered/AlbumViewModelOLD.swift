@@ -10,13 +10,12 @@ import FirebaseAuth
 import FirebaseDatabase
 import FirebaseStorage
 
-public class AlbumViewModel {
+public class AlbumViewModelOLD {
 
     var albumModelRepo: AlbumModelProtocol?
     var actualAlbumModelRepo = AlbumModel()
 //    var user: User?
     let userRepo = UserModel()
-    var allAlbums: [Album] = []
     var albums: [SingleAlbum] = []
 
     public init() {
