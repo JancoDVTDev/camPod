@@ -93,9 +93,9 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let numberOfColumns: CGFloat = 4
         let width = collectionView.frame.size.width
-        let xInsets: CGFloat = 5
-        let cellSpacing: CGFloat = 10
-        return CGSize(width: (width/numberOfColumns) - (xInsets + cellSpacing), height: (width/numberOfColumns) -
+        let xInsets: CGFloat = 2
+        let cellSpacing: CGFloat = 5
+        return CGSize(width: (width/numberOfColumns) - (cellSpacing), height: (width/numberOfColumns) -
             (xInsets + cellSpacing))
     }
 }
@@ -151,7 +151,9 @@ extension PhotosViewController: PhotoViewProtocol {
     }
     
     public func displayError(error: String) {
-        
+        let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     public func updateCollectionViewSource(images: [UIImage]) {
