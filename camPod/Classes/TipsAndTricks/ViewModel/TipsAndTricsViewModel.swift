@@ -8,8 +8,28 @@
 import Foundation
 
 public class TipsAndTricsViewModel {
-
+    
+    public weak var view: TipsAndTricksViewType?
+    public var getRepo: camshareAPIGetType?
+    
     public init() {
+        
+    }
+    
+    public func loadTipsAndTricks() {
+        getRepo?.fetchTipsAndTricks({ (content, error) in
+            if let error = error {
+                self.view?.didFinishLoading()
+                self.view?.displayError(error: error)
+            } else {
+                self.view?.updateTableViewCardsSource(content: content!)
+                self.view?.didFinishLoading()
+                self.view?.reloadTableView()
+            }
+        })
+    }
+    
+    public func loadYouTubeVideos() {
         
     }
 

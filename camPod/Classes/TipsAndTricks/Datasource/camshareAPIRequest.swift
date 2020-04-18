@@ -14,7 +14,7 @@ struct camshareAPIRequest {
     
     init(request: String, type: String, model: TipsAndTricksModel?) {
         self.request = request
-        let resourceString = "http://localhost:8080/\(request)"
+        let resourceString = "https://camshareapi.herokuapp.com/\(request)"
         guard let resourceURL = URL(string: resourceString) else {fatalError()}
         self.resourceURL = resourceURL
         
