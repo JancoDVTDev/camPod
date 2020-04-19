@@ -23,15 +23,12 @@ public class PhotosViewController: UIViewController, UIImagePickerControllerDele
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.title = albumName
-        
+
         photoViewModel.view = self
         photoViewModel.repo = PhotosDatasource()
-        
-//        let celNib = UINib(nibName: "PhotoCollectionViewCell", bundle: Bundle(for: PhotoCollectionViewCell.self))
-//        collectionView.register(celNib, forCellWithReuseIdentifier: "PhotoCollectionCell")
-        
+
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .camera,
         target: self, action: #selector(cameraButtonTapped))
         
@@ -114,7 +111,6 @@ extension PhotosViewController: UICollectionViewDataSource {
         cell.photoImageView.addGestureRecognizer(imageTapGesture)
         cell.photoImageView.isUserInteractionEnabled = true
         cell.photoImageView.tag = indexPath.item
-        
         cell.photoImageView.image = collectionViewSource[indexPath.item]
         
         return cell
