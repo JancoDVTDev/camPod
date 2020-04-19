@@ -9,6 +9,8 @@ import Foundation
 
 public protocol TipsAndTricksViewType: class {
     func updateTableViewCardsSource(content: [TipsAndTricksModel])
+    func updateTableViewVideosSource(videoCodes: [String])
+    func updateTableViewYoutubeSource(youtubeTipsModels: [YoutubeTipsModel])
     func didFinishLoading()
     func displayError(error: String)
     func reloadTableView()

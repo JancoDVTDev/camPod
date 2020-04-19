@@ -11,6 +11,7 @@ public class TipsAndTricsViewModel {
     
     public weak var view: TipsAndTricksViewType?
     public var getRepo: camshareAPIGetType?
+    public var youtubeRepo: YoutubeDataAPIType?
     
     public init() {
         
@@ -29,8 +30,33 @@ public class TipsAndTricsViewModel {
         })
     }
     
+    public func fetchVideosFromYoutube() {
+        var snippets = [SnippetModel]()
+        var IDs = [IDModel]()
+        var youtubeTipsModels = [YoutubeTipsModel]()
+        youtubeRepo?.fetchYoutubeTips({ (youtubeResult, error) in
+            if let error = error {
+                self.view?.displayError(error: error)
+            } else {
+                for count in 0..<youtubeResult!.count {
+                    snippets.append(youtubeResult![count].snippet)
+                    IDs.append(youtubeResult![count].id)
+                    youtubeTipsModels.append(YoutubeTipsModel(title: snippets[count].title,
+                                                              channeId: snippets[count].channelId,
+                                                              kind: IDs[count].kind,
+                                                              videoId: IDs[count].videoId))
+                }
+                self.view?.updateTableViewYoutubeSource(youtubeTipsModels: youtubeTipsModels)
+                self.view?.didFinishLoading()
+            }
+        })
+    }
+    
     public func loadYouTubeVideos() {
+        let videoCodes = ["HXIVNdp_SoM", "RAZtIIe-XHs", "dFz5E1rZqR4",
+        "GFy4jb51kQ", "KfVG_2n-iTM", "QxXtdhfprts", "FeaDZj_Nv_g", "OldTVOQPg78"]
         
+        self.view?.updateTableViewVideosSource(videoCodes: videoCodes)
     }
 
     public func getTipsTricks(request: String, completion: @escaping (_ model: [TipsAndTricksModel]) -> Void) {

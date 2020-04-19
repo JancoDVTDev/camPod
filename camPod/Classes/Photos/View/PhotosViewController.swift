@@ -14,7 +14,7 @@ public class PhotosViewController: UIViewController, UIImagePickerControllerDele
 
     public var albumID: String = ""
     public var userImagePaths = [String]()
-    public var albumName: String = ""
+    public var albumName: String = "^&%"
     
     var collectionViewSource = [UIImage]()
     var selectedPhotoIndex = 0
@@ -23,6 +23,8 @@ public class PhotosViewController: UIViewController, UIImagePickerControllerDele
 
     public override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.title = albumName
         
         photoViewModel.view = self
         photoViewModel.repo = PhotosDatasource()
@@ -111,6 +113,7 @@ extension PhotosViewController: UICollectionViewDataSource {
         let imageTapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
         cell.photoImageView.addGestureRecognizer(imageTapGesture)
         cell.photoImageView.isUserInteractionEnabled = true
+        cell.photoImageView.tag = indexPath.item
         
         cell.photoImageView.image = collectionViewSource[indexPath.item]
         
