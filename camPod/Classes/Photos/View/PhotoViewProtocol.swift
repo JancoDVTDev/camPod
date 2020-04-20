@@ -12,5 +12,6 @@ public protocol PhotoViewProtocol: class {
     func didFinishLoading()
     func displayError(error: String)
     func updateCollectionViewSource(images: [UIImage])
+    func updatePhotoModels(photoModels: [PhotoModel])
     func updateImagePaths(imagePaths: [String])
 }

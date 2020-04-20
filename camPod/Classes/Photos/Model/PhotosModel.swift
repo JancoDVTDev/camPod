@@ -7,10 +7,12 @@
 
 import Foundation
 
-class PhotosModel {
-    var images: [UIImage]
+public class PhotoModel {
+    var name: String
+    var image: UIImage
 
-    init(images: [UIImage]) {
-        self.images = images
+    public init(name: String, image: UIImage) {
+        self.name = name
+        self.image = image
     }
 }
