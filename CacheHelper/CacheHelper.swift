@@ -20,7 +20,6 @@ public class CacheHelper {
 
         guard let data = image.jpegData(compressionQuality: 1) else { return }
 
-
         if (FileManager.default.fileExists(atPath: fileURL.path)) {
             do {
                 try FileManager.default.removeItem(atPath: fileURL.path)
@@ -37,14 +36,15 @@ public class CacheHelper {
         }
     }
 
-    func loadImageFromDisk(fileName: String,_ completion: @escaping (_ notUpToDate: String?,_ image: UIImage?) -> Void) {
+    func loadImageFromDisk(fileName: String, _ completion: @escaping (_ notUpToDate: String?,
+        _ image: UIImage?) -> Void) {
 
         guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory,
                                                                 in: .userDomainMask).first else { return }
 
         let fileURL = documentsDirectory.appendingPathComponent(fileName)
 
-        if (FileManager.default.fileExists(atPath: fileURL.path)) {
+        if FileManager.default.fileExists(atPath: fileURL.path) {
             if let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
                 let fileURL = documentsUrl.appendingPathComponent(fileName)
                 do {
@@ -53,7 +53,7 @@ public class CacheHelper {
                     completion(nil, image)
                 } catch {
                     print("Not able to load image")
-                    completion(fileName,nil)
+                    completion(fileName, nil)
                 }
             }
         } else {
