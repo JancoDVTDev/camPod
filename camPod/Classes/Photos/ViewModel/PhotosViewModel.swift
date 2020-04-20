@@ -13,7 +13,8 @@ public class PhotosViewModel {
     public var cacheHelper: CacheHelper?
 
     func loadCachedImages(imagePaths: [String],
-                          _ completion: @escaping (_ imagePathsToUpdate: [String], _ cachedPhotoModels: [PhotoModel]) -> Void) {
+                          _ completion: @escaping (_ imagePathsToUpdate: [String],
+        _ cachedPhotoModels: [PhotoModel]) -> Void) {
         var cachedPhotoModels = [PhotoModel]()
         var imagePathsToUpdate = [String]()
         var count = 0
