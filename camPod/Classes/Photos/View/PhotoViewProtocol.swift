@@ -14,4 +14,5 @@ public protocol PhotoViewProtocol: class {
     func updateCollectionViewSource(images: [UIImage])
     func updatePhotoModels(photoModels: [PhotoModel])
     func updateImagePaths(imagePaths: [String])
+    func startDownloading()
 }

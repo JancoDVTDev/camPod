@@ -8,10 +8,10 @@
 import Foundation
 
 public class LoginViewModel {
-    
+
     public weak var view: LoginViewProtocol?
     public var repo: LoginDataSourceProtocol?
-    
+
     public init() { }
 
     public func login(email: String, password: String) {
