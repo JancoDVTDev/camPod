@@ -13,13 +13,13 @@ public class PhotosViewModel {
     public var coreDataRepo = CoreDataRepo()
     public var cacheHelper: CacheHelper?
 
-    func loadSavedImages(imagePaths: [String],
-                         _ completion: @escaping (_ cachedPhotoModels: [PhotoModel], _ imagePathsToUpdate: [String]) -> Void) {
+    func loadSavedImages(imagePaths: [String], _ completion: @escaping (_ cachedPhotoModels: [PhotoModel],
+        _ imagePathsToUpdate: [String]) -> Void) {
 
         var savedPhotoModels = [PhotoModel]()
         var imagePathsToUpdate = [String]()
-        self.coreDataRepo.fetchSavedImagesInCoreData(imagePaths: imagePaths) { (photoModels,
-            newPhotoPaths, error) in
+        self.coreDataRepo.fetchSavedImagesInCoreData(imagePaths: imagePaths)
+        { (photoModels, newPhotoPaths, error) in
             if let error = error {
                 self.view?.displayError(error: error)
                 self.view?.didFinishLoading()
@@ -47,8 +47,8 @@ public class PhotosViewModel {
             if !(newPhotoPaths.isEmpty) {
                 //var newPhotoModels = [PhotoModel]()
                 for imagePath in toBeUpdatedImagePaths {
-                    self.repo?.fetchPhotosFromStorage(albumID: albumID, imagePath: imagePath, { (image,
-                        error) in
+                    self.repo?.fetchPhotosFromStorage(albumID: albumID, imagePath: imagePath,
+                                                      { (image, error) in
                         self.view?.startDownloading()
                         count += 1
                         if let error = error {

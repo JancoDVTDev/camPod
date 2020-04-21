@@ -37,9 +37,13 @@ public class CoreDataRepo {
         }
 
         for image in images {
+            //swiftlint:disable all
             let imageName = image.value(forKey: "name") as! String
+            //swiftlint:enable all
             allImageNames.append(imageName)
+            //swiftlint:disable all
             let imageData = image.value(forKey: "image") as! NSData
+            //swiftlint:enable all
             let image = UIImage(data: imageData as Data)
             allImages.append(image!)
         }
