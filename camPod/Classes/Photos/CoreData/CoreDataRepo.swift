@@ -58,7 +58,7 @@ public class CoreDataRepo {
             error = "\(errorCount) Images could not load."
         }
 
-        completion(albumRealtedPhotoModels,newPhotosPaths, error)
+        completion(albumRealtedPhotoModels, newPhotosPaths, error)
     }
 
     func saveImageToCoreData(photoModel: PhotoModel) {
