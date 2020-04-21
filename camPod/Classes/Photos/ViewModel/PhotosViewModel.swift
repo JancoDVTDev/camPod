@@ -10,68 +10,58 @@ import Foundation
 public class PhotosViewModel {
     public weak var view: PhotoViewProtocol?
     public var repo: PhotosDatasourceProtocol?
+    public var coreDataRepo = CoreDataRepo()
     public var cacheHelper: CacheHelper?
 
-    func loadCachedImages(imagePaths: [String],
-                          _ completion: @escaping (_ imagePathsToUpdate: [String],
-        _ cachedPhotoModels: [PhotoModel]) -> Void) {
-        var cachedPhotoModels = [PhotoModel]()
-        var imagePathsToUpdate = [String]()
-        var count = 0
-        for imagePath in imagePaths {
-            cacheHelper?.loadImageFromDisk(fileName: imagePath, { (imagePathToUpdate, cachedImage) in
-                count += 1
-                if let imagePathToUpdate = imagePathToUpdate {
-                    imagePathsToUpdate.append(imagePathToUpdate)
-                } else {
-                    cachedPhotoModels.append(PhotoModel(name: imagePath, image: cachedImage!))
-                }
-                if count == imagePaths.count {
-                    completion(imagePathsToUpdate, cachedPhotoModels)
-                }
-            })
-        }
-    }
+    func loadSavedImages(imagePaths: [String], _ completion: @escaping (_ cachedPhotoModels: [PhotoModel],
+        _ imagePathsToUpdate: [String]) -> Void) {
 
-    func saveImagesToCache(photos: [PhotoModel]) {
-        for index in 0..<photos.count {
-            cacheHelper?.saveImage(imageName: photos[index].name, image: photos[index].image)
+        var savedPhotoModels = [PhotoModel]()
+        var imagePathsToUpdate = [String]()
+        self.coreDataRepo.fetchSavedImagesInCoreData(imagePaths: imagePaths)
+        {(photoModels, newPhotoPaths, error) in
+            if let error = error {
+                self.view?.displayError(error: error)
+                self.view?.didFinishLoading()
+            } else {
+                savedPhotoModels = photoModels
+                imagePathsToUpdate = newPhotoPaths
+                completion(savedPhotoModels, imagePathsToUpdate)
+            }
         }
     }
 
     func loadPhotos(albumID: String, imagePaths: [String]) {
         var toBeUpdatedImagePaths = [String]()
-        var onTheDiskPhotoModels = [PhotoModel]()
+        var onDiskPhotoModels = [PhotoModel]()
+        var count = 0
 
-        loadCachedImages(imagePaths: imagePaths) { (imagePathsInCloud, onDiskPhotoModels) in
-            toBeUpdatedImagePaths = imagePathsInCloud
-            onTheDiskPhotoModels = onDiskPhotoModels
-            self.view?.didFinishLoading()
+        loadSavedImages(imagePaths: imagePaths) { (savedPhotoModels, newPhotoPaths) in
+            onDiskPhotoModels = savedPhotoModels
+            toBeUpdatedImagePaths = newPhotoPaths
+
             self.view?.updatePhotoModels(photoModels: onDiskPhotoModels)
             self.view?.updateCollectionView()
-            var count = 0
-            var tempImages = [UIImage]()
-            var photoModels = [PhotoModel]()
-            if toBeUpdatedImagePaths.contains("") {
-                self.view?.didFinishLoading()
-            } else {
+            self.view?.didFinishLoading()
+
+            if !(newPhotoPaths.isEmpty) {
+                //var newPhotoModels = [PhotoModel]()
                 for imagePath in toBeUpdatedImagePaths {
-                    self.repo?.fetchPhotosFromStorage(albumID: albumID, imagePath: imagePath, { (image, error) in
+                    self.repo?.fetchPhotosFromStorage(albumID: albumID, imagePath: imagePath,
+                                                      {(image, error) in
+                        self.view?.startDownloading()
+                        count += 1
                         if let error = error {
                             self.view?.displayError(error: error)
+                            self.view?.didFinishLoading()
                         } else {
-                            if let image = image {
-                                count += 1
-                                tempImages.append(image)
-                                photoModels.append(PhotoModel(name: imagePath, image: image))
-                                if count == toBeUpdatedImagePaths.count {
-                                    self.saveImagesToCache(photos: photoModels)
-                                    photoModels.append(contentsOf: onTheDiskPhotoModels)
-                                    self.view?.didFinishLoading()
-                                    self.view?.updatePhotoModels(photoModels: photoModels)
-                                    self.view?.updateCollectionViewSource(images: tempImages)
-                                    self.view?.updateCollectionView()
-                                }
+                            let newPhoto = PhotoModel(name: imagePath, image: image!)
+                            onDiskPhotoModels.append(newPhoto)
+                            self.coreDataRepo.saveImageToCoreData(photoModel: newPhoto)
+                            if count == toBeUpdatedImagePaths.count {
+                                self.view?.updatePhotoModels(photoModels: onDiskPhotoModels)
+                                self.view?.updateCollectionView()
+                                self.view?.didFinishLoading()
                             }
                         }
                     })
@@ -90,7 +80,7 @@ public class PhotosViewModel {
         }
 
         let newPhoto = PhotoModel(name: formattedImagePath, image: reducedImage!)
-        saveImagesToCache(photos: [newPhoto])
+        coreDataRepo.saveImageToCoreData(photoModel: newPhoto)
 
         var updatedImagesPath: [String]
         if imagePaths.contains("") {
@@ -123,18 +113,6 @@ public class PhotosViewModel {
             }
         })
     }
-
-    func compareDiskImagesToCloudImages(cloudImagePaths: [String], onDiskImagePaths: [String]) -> [String]? {
-        var toBeUpdatedImagePaths = [String]()
-
-        if cloudImagePaths.count == onDiskImagePaths.count {
-            return toBeUpdatedImagePaths
-        } else {
-            toBeUpdatedImagePaths = cloudImagePaths.difference(from: onDiskImagePaths)
-        }
-
-        return toBeUpdatedImagePaths
-    }
 }
 extension UIImage {
     enum JPEGQuality: CGFloat {
@@ -147,13 +125,5 @@ extension UIImage {
 
     func jpeg(_ jpegQuality: JPEGQuality) -> Data? {
         return jpegData(compressionQuality: jpegQuality.rawValue)
-    }
-}
-
-extension Array where Element: Hashable {
-    func difference(from other: [Element]) -> [Element] {
-        let thisSet = Set(self)
-        let otherSet = Set(other)
-        return Array(thisSet.symmetricDifference(otherSet))
     }
 }

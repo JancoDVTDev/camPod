@@ -86,7 +86,7 @@ public class PhotosViewController: UIViewController, UIImagePickerControllerDele
         shareActionSheet.addAction(cancel)
         present(shareActionSheet, animated: true, completion: nil)
     }
-    
+
     @IBAction func tipsAndTricksButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: "loadTipsAndTricks", sender: self)
     }
@@ -140,6 +140,11 @@ extension PhotosViewController: UICollectionViewDataSource {
 }
 
 extension PhotosViewController: PhotoViewProtocol {
+    public func startDownloading() {
+        self.activityLoader.startAnimating()
+        self.activityLoader.isHidden = false
+    }
+
     public func updatePhotoModels(photoModels: [PhotoModel]) {
         self.photoModels = photoModels
     }
