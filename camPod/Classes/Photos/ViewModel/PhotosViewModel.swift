@@ -19,7 +19,7 @@ public class PhotosViewModel {
         var savedPhotoModels = [PhotoModel]()
         var imagePathsToUpdate = [String]()
         self.coreDataRepo.fetchSavedImagesInCoreData(imagePaths: imagePaths)
-        {(photoModels, newPhotoPaths, error) in
+        { (photoModels, newPhotoPaths, error) in
             if let error = error {
                 self.view?.displayError(error: error)
                 self.view?.didFinishLoading()
@@ -48,7 +48,7 @@ public class PhotosViewModel {
                 //var newPhotoModels = [PhotoModel]()
                 for imagePath in toBeUpdatedImagePaths {
                     self.repo?.fetchPhotosFromStorage(albumID: albumID, imagePath: imagePath,
-                                                      {(image, error) in
+                                                      { (image, error) in
                         self.view?.startDownloading()
                         count += 1
                         if let error = error {
