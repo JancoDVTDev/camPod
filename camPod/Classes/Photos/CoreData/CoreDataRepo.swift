@@ -78,7 +78,7 @@ public class CoreDataRepo {
         do {
             try managedContext?.save()
         } catch {
-            let _ = error.localizedDescription
+
         }
     }
 }
