@@ -21,8 +21,9 @@ public class PhotoEditorViewModel {
     func changeFilter(index: Int) {
         currentFilterIndex = index
     }
-
+    //swiftlint:disable all
     func applyPredefinedFilter(image: UIImage, selectedFilter: Int) {
+    //swiftlint:enable all
         switch selectedFilter {
         case 0:
             print("camShare")

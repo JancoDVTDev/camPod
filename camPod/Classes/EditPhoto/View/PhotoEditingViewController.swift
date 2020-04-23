@@ -8,9 +8,9 @@
 import UIKit
 import CoreImage
 import CoreImage.CIFilterBuiltins
-
+//swiftlint:disable all
 @objcMembers public class PhotoEditingViewController: UIViewController {
-
+//swiftlint:enable all
     @IBOutlet var inEditPhotoImageView: UIImageView!
     @IBOutlet var currentFilterLabel: UILabel!
     @IBOutlet var firstFilterButton: UIButton!
@@ -33,7 +33,7 @@ import CoreImage.CIFilterBuiltins
     var sliderValue: Float?
     var currentFilterIndex: Int?
     var uiButtonCollection = [UIButton]()
-    var modeSelected: editingMode!
+    var modeSelected: EditingMode!
 
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -133,7 +133,7 @@ import CoreImage.CIFilterBuiltins
         currentFilterIndex = 4
         filterChanged()
     }
-
+    //swiftlint:disable all
     @IBAction func sliderValueChanged(_ sender: Any) {
         var value = applyAmountSlider.value - 0.5
         value = value * 2
@@ -179,8 +179,8 @@ import CoreImage.CIFilterBuiltins
             if #available(iOS 13.0, *) {
                 let filter = CIFilter.temperatureAndTint()
                 filter.inputImage = ciImageCandidate
-                value = value + 0.5
-                value = value*2
+                value += 0.5
+                value *= 2
                 filter.neutral = CIVector(x: 6500, y: 0)
                 print("\(CIVector(x: CGFloat(value*10000), y: 0)) value: \(value)")
                 filter.targetNeutral = CIVector(x: CGFloat(value*10000), y: 0)
@@ -189,24 +189,25 @@ import CoreImage.CIFilterBuiltins
         default:
             currentFilterLabel.text = "No Adjustment Selected"
         }
+    //swiftlint:enable all
     }
 
     @available(iOS 13.0, *)
     @IBAction func manualEditingTapped(_ sender: Any) {
-        modeChanged(mode: editingMode.manual)
-        modeSelected = editingMode.manual
+        modeChanged(mode: EditingMode.manual)
+        modeSelected = EditingMode.manual
     }
 
     @available(iOS 13.0, *)
     @IBAction func predefinedEditingTapped(_ sender: Any) {
-        modeChanged(mode: editingMode.predefined)
-        modeSelected = editingMode.predefined
+        modeChanged(mode: EditingMode.predefined)
+        modeSelected = EditingMode.predefined
     }
 
     @available(iOS 13.0, *)
     @IBAction func cropEditingTapped(_ sender: Any) {
-        modeChanged(mode: editingMode.crop)
-        modeSelected = editingMode.crop
+        modeChanged(mode: EditingMode.crop)
+        modeSelected = EditingMode.crop
     }
 
     @IBAction func doneButtonTapped(_ sender: Any) {
@@ -264,7 +265,7 @@ import CoreImage.CIFilterBuiltins
         roundAndSetBackgroundColorButtons()
         placeIconsOnAdjustButtons()
     }
-    
+
     func placeIconsOnAdjustButtons() {
         firstFilterButton.setImage(UIImage(named: "Vibrance Icon"), for: .normal)
         secondFilterButton.setImage(UIImage(named: "Exposure Icon"), for: .normal)
@@ -283,14 +284,14 @@ import CoreImage.CIFilterBuiltins
     }
 
     @available(iOS 13.0, *)
-    func modeChanged(mode: editingMode) {
+    func modeChanged(mode: EditingMode) {
         switch mode {
-        case editingMode.manual:
+        case EditingMode.manual:
             currentFilterLabel.text = "ADJUST"
             applyAmountSlider.alpha = 1
             sliderValueLabel.alpha = 1
             roundAndSetBackgroundColorButtons()
-        case editingMode.predefined:
+        case EditingMode.predefined:
             currentFilterLabel.text = "CHOOSE A FILTER"
             let thumbnails = [viewModel.createCamShareCustionFilter(image: inEditPhoto),
                               viewModel.createColdFilter(image: inEditPhoto),
@@ -306,7 +307,7 @@ import CoreImage.CIFilterBuiltins
             }
             applyAmountSlider.alpha = 0
             sliderValueLabel.alpha = 0
-        case editingMode.crop:
+        case EditingMode.crop:
             currentFilterLabel.text = "CROP"
         }
     }
@@ -317,7 +318,7 @@ extension PhotoEditingViewController: PhotoEditorViewType {
     }
 }
 
-enum editingMode {
+enum EditingMode {
     case manual
     case predefined
     case crop
