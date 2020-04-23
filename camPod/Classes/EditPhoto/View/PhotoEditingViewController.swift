@@ -242,7 +242,7 @@ import CoreImage.CIFilterBuiltins
             present(alert, animated: true, completion: nil)
         }
     }
-    
+
     func filterChanged() {
         for index in 0..<uiButtonCollection.count {
             if index == currentFilterIndex {
