@@ -182,7 +182,6 @@ import CoreImage.CIFilterBuiltins
                 value += 0.5
                 value *= 2
                 filter.neutral = CIVector(x: 6500, y: 0)
-                print("\(CIVector(x: CGFloat(value*10000), y: 0)) value: \(value)")
                 filter.targetNeutral = CIVector(x: CGFloat(value*10000), y: 0)
                 inEditPhotoImageView.image = UIImage(ciImage: filter.outputImage!)
             }

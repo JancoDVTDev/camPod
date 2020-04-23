@@ -26,37 +26,32 @@ public class PhotoEditorViewModel {
     //swiftlint:enable all
         switch selectedFilter {
         case 0:
-            print("camShare")
             if #available(iOS 13.0, *) {
                 let result = createCamShareCustionFilter(image: image)
                 view?.updateImageView(image: result)
             }
         case 1:
-            print("Cold")
             if #available(iOS 13.0, *) {
                 let result = createColdFilter(image: image)
                 view?.updateImageView(image: result)
             }
         case 2:
-            print("Vivid Cold")
             if #available(iOS 13.0, *) {
                 let result = createColdVividFilter(image: image)
                 view?.updateImageView(image: result)
             }
         case 3:
-            print("")
             if #available(iOS 13.0, *) {
                 let result = createWarmFilter(image: image)
                 view?.updateImageView(image: result)
             }
         case 4:
-            print("")
             if #available(iOS 13.0, *) {
                 let result = createWarmVididFilter(image: image)
                 view?.updateImageView(image: result)
             }
         default:
-            print("")
+            break
         }
     }
 
