@@ -6,6 +6,9 @@
 //
 
 #import "SelectedImageObjCViewController.h"
+#import "camPod-umbrella.h"
+#import "camPod-Swift.h"
+#import "Pods-camshare-umbrella.h"
 
 @interface SelectedImageObjCViewController ()
 @property (strong, nonatomic) IBOutlet UIImageView *selectedImageImageView;
@@ -15,7 +18,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemEdit target:self action:@selector(editTapped)];
+    self.navigationItem.rightBarButtonItem = editButton;
+    
     self.selectedImageImageView.image = self.selectedImage;
+}
+
+-(void) editTapped {
+    [self performSegueWithIdentifier:@"photoEditor" sender:self];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"photoEditor"]) {
+        PhotoEditingViewController *photoEditViewController = (PhotoEditingViewController*)[segue destinationViewController];
+        photoEditViewController.inEditPhoto = self.selectedImageImageView.image;
+    }
 }
 
 @end
