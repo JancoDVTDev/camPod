@@ -23,7 +23,7 @@ import CoreImage.CIFilterBuiltins
     @IBOutlet var adjustButton: UIBarButtonItem!
     @IBOutlet var filterButton: UIBarButtonItem!
     @IBOutlet var cropButton: UIBarButtonItem!
-    
+
     @objc public var inEditPhoto = UIImage(named: "image-2")!
     @objc public var name = ""
 
@@ -214,7 +214,7 @@ import CoreImage.CIFilterBuiltins
         
         let alert = UIAlertController(title: "Export Image",
                                       message: "Save image to photos ?", preferredStyle: .alert)
-        
+
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Save", style: .default, handler: { (_) in
             guard let image = self.inEditPhotoImageView.image else {return}
@@ -226,7 +226,7 @@ import CoreImage.CIFilterBuiltins
         }))
         present(alert, animated: true, completion: nil)
     }
-    
+
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
             let alert = UIAlertController(title: "Save Error",
