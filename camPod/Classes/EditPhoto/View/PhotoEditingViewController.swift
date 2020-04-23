@@ -139,7 +139,7 @@ import CoreImage.CIFilterBuiltins
         value = value * 2
         sliderValue = value
         sliderValueLabel.text = String((value*100).rounded(.up))
-        
+
         var ciImageCandidate = CIImage()
         if let imageData = inEditPhoto.jpegData(compressionQuality: 1) {
             ciImageCandidate = CIImage(data: imageData)!
@@ -211,7 +211,7 @@ import CoreImage.CIFilterBuiltins
     }
 
     @IBAction func doneButtonTapped(_ sender: Any) {
-        
+
         let alert = UIAlertController(title: "Export Image",
                                       message: "Save image to photos ?", preferredStyle: .alert)
 
