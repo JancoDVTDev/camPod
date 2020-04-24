@@ -106,7 +106,8 @@ import CoreImage.CIFilterBuiltins
             //viewModel.applyPredefinedFilter(image: inEditPhoto, selectedFilter: 2)
         case .crop:
             currentFilterLabel.text = "SQUARE"
-            viewModel.presetCropView(image: inEditPhotoImageView.image!, imageView: inEditPhotoImageView, preset: .square)
+            viewModel.presetCropView(image: inEditPhotoImageView.image!,
+                                     imageView: inEditPhotoImageView, preset: .square)
         case .none:
             currentFilterLabel.text = "Mode not avaialable"
         }
@@ -391,10 +392,10 @@ import CoreImage.CIFilterBuiltins
         isResizingUL = touchStart.x < CGFloat(kResizeThumbSize) && touchStart.y <
             CGFloat(kResizeThumbSize)
         isResizingUR = (croppingViewUIView.self.bounds.size.width-touchStart.x <
-            CGFloat(kResizeThumbSize) && touchStart.y < CGFloat(kResizeThumbSize));
+            CGFloat(kResizeThumbSize) && touchStart.y < CGFloat(kResizeThumbSize))
         isResizingLL = (touchStart.x < CGFloat(kResizeThumbSize) &&
             croppingViewUIView.self.bounds.size.height - touchStart.y <
-            CGFloat(kResizeThumbSize));
+            CGFloat(kResizeThumbSize))
     }
 
     public override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -435,7 +436,7 @@ extension PhotoEditingViewController: PhotoEditorViewType {
     func displayPresetCropView(rect: CGRect) {
         croppingViewUIView.frame = rect
     }
-    
+
     func updateImageView(image: CIImage) {
         inEditPhotoImageView.image = UIImage(ciImage: image)
     }

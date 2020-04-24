@@ -191,7 +191,7 @@ public class PhotoEditorViewModel {
         let croppedImage = cgCropImage?.cropping(to: rect)
         view?.updateImageView(image: CIImage(cgImage: croppedImage!))
     }
-    
+
     func presetCropView(image: UIImage, imageView: UIImageView, preset: CropPresets) {
         guard let imageData = image.jpegData(compressionQuality: 1) else {return}
         guard let newImage = UIImage(data: imageData) else {return}
@@ -216,8 +216,8 @@ public class PhotoEditorViewModel {
 
         let widthMiddle = scaledWidth/2
         let heightMiddle = scaledHeight/2
-        var rectOriginX : CGFloat!
-        var rectOriginY : CGFloat!
+        var rectOriginX: CGFloat!
+        var rectOriginY: CGFloat!
 
         switch preset {
         case .square:
