@@ -11,6 +11,7 @@ import CoreImage.CIFilterBuiltins
 //swiftlint:disable all
 @objcMembers public class PhotoEditingViewController: UIViewController {
 //swiftlint:enable all
+    @IBOutlet var croppingViewUIView: UIView!
     @IBOutlet var inEditPhotoImageView: UIImageView!
     @IBOutlet var currentFilterLabel: UILabel!
     @IBOutlet var firstFilterButton: UIButton!
@@ -25,7 +26,14 @@ import CoreImage.CIFilterBuiltins
     @IBOutlet var cropButton: UIBarButtonItem!
 
     @objc public var inEditPhoto = UIImage(named: "image-2")!
-    @objc public var name = ""
+    @objc public var originalImage = UIImage(named: "image-2")!
+
+    var kResizeThumbSize = 45.0
+    var isResizingLR: Bool!
+    var isResizingUL: Bool!
+    var isResizingUR: Bool!
+    var isResizingLL: Bool!
+    var touchStart: CGPoint!
 
     var viewModel = PhotoEditorViewModel()
 
@@ -47,6 +55,7 @@ import CoreImage.CIFilterBuiltins
                               fifthFilterButton]
 
         setupAdjustButtons()
+        setupToolBarItems()
     }
 
     @IBAction func firstFilterButtonTapped(_ sender: Any) {
@@ -58,7 +67,10 @@ import CoreImage.CIFilterBuiltins
             inEditPhotoImageView.image = fifthFilterButton.backgroundImage(for: .normal)
             //viewModel.applyPredefinedFilter(image: inEditPhoto, selectedFilter: 0)
         case .crop:
-            currentFilterLabel.isHidden = true
+            currentFilterLabel.text = "APPLY"
+            viewModel.cropImageWithCGRect(image: inEditPhotoImageView.image!,
+                                          cropView: croppingViewUIView.self,
+                                          imageView: inEditPhotoImageView!)
         case .none:
             currentFilterLabel.text = "Mode not avaialable"
         }
@@ -75,7 +87,8 @@ import CoreImage.CIFilterBuiltins
             inEditPhotoImageView.image = secondFilterButton.backgroundImage(for: .normal)
             //viewModel.applyPredefinedFilter(image: inEditPhoto, selectedFilter: 1)
         case .crop:
-            currentFilterLabel.isHidden = true
+            currentFilterLabel.text = "RESET"
+            inEditPhotoImageView.image = originalImage
         case .none:
             currentFilterLabel.text = "Mode not avaialable"
         }
@@ -92,7 +105,9 @@ import CoreImage.CIFilterBuiltins
             inEditPhotoImageView.image = thirdFilterButton.backgroundImage(for: .normal)
             //viewModel.applyPredefinedFilter(image: inEditPhoto, selectedFilter: 2)
         case .crop:
-            currentFilterLabel.isHidden = true
+            currentFilterLabel.text = "SQUARE"
+            viewModel.presetCropView(image: inEditPhotoImageView.image!,
+                                     imageView: inEditPhotoImageView, preset: .square)
         case .none:
             currentFilterLabel.text = "Mode not avaialable"
         }
@@ -109,7 +124,7 @@ import CoreImage.CIFilterBuiltins
             inEditPhotoImageView.image = fourthFIlterButton.backgroundImage(for: .normal)
             //viewModel.applyPredefinedFilter(image: inEditPhoto, selectedFilter: 3)
         case .crop:
-            currentFilterLabel.isHidden = true
+            currentFilterLabel.text = "LANDSCAPE"
         case .none:
             currentFilterLabel.text = "Mode not avaialable"
         }
@@ -126,7 +141,7 @@ import CoreImage.CIFilterBuiltins
             inEditPhotoImageView.image = fifthFilterButton.backgroundImage(for: .normal)
             //viewModel.applyPredefinedFilter(image: inEditPhoto, selectedFilter: 4)
         case .crop:
-            currentFilterLabel.isHidden = true
+            currentFilterLabel.text = "PORTRAIT"
         case .none:
             currentFilterLabel.text = "Mode not avaialable"
         }
@@ -243,19 +258,71 @@ import CoreImage.CIFilterBuiltins
     }
 
     func filterChanged() {
-        for index in 0..<uiButtonCollection.count {
-            if index == currentFilterIndex {
-                let button = uiButtonCollection[index]
-                button.layer.borderColor = UIColor.green.cgColor
-                button.layer.borderWidth = 2
-                button.tintColor = UIColor.green
-            } else {
-                let button = uiButtonCollection[index]
-                button.layer.borderColor = UIColor.darkGray.cgColor
-                button.layer.borderWidth = 2
-                button.tintColor = UIColor.white
+        if modeSelected == EditingMode.manual || modeSelected == EditingMode.predefined {
+            for index in 0..<uiButtonCollection.count {
+                if index == currentFilterIndex {
+                    let button = uiButtonCollection[index]
+                    button.layer.borderColor = UIColor.green.cgColor
+                    button.layer.borderWidth = 2
+                    button.tintColor = UIColor.green
+                } else {
+                    let button = uiButtonCollection[index]
+                    button.layer.borderColor = UIColor.darkGray.cgColor
+                    button.layer.borderWidth = 2
+                    button.tintColor = UIColor.white
+                }
             }
         }
+    }
+
+    @available(iOS 13.0, *)
+    func setupCropView() {
+        croppingViewUIView.self.frame.size.width = 80
+        croppingViewUIView.self.frame.size.height = 80
+        croppingViewUIView.self.layer.borderColor = UIColor.white.cgColor
+        croppingViewUIView.layer.borderWidth = 2
+        croppingViewUIView.backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.1)
+        croppingViewUIView.isHidden = false
+        croppingViewUIView.alpha = 1
+
+        for index in 0..<uiButtonCollection.count {
+            let button = uiButtonCollection[index]
+            button.layer.cornerRadius = 3
+            button.setBackgroundImage(.none, for: .normal)
+            button.tintColor = UIColor.black
+            if index == 0 {
+                button.setImage(.none, for: .normal)
+                button.setImage(UIImage(systemName: "crop"), for: .normal)
+                button.tintColor = UIColor.systemGreen
+            } else if index == 1 {
+                button.setImage(.none, for: .normal)
+                button.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
+                button.tintColor = UIColor.systemPink
+            } else if index  == 2 {
+                button.setImage(UIImage(systemName: "square"), for: .normal)
+            } else if index == 3 {
+                button.setImage(.none, for: .normal)
+                button.setImage(UIImage(systemName: "rectangle"), for: .normal)
+            } else {
+                button.setImage(.none, for: .normal)
+                button.setImage(UIImage(systemName: "person.crop.rectangle"), for: .normal)
+            }
+        }
+
+        applyAmountSlider.alpha = 0
+        sliderValueLabel.alpha = 0
+    }
+
+    func setupToolBarItems() {
+        adjustButton.title = ""
+        adjustButton.setBackgroundImage(UIImage(named: "Adjust Icon")?.withRenderingMode(.alwaysOriginal),
+                                        for: .normal, barMetrics: .default)
+        filterButton.title = ""
+        filterButton.setBackgroundImage(UIImage(named: "Filters Icon")?.withRenderingMode(.alwaysOriginal),
+                                        for: .normal, barMetrics: .default)
+        cropButton.title = ""
+        cropButton.setBackgroundImage(UIImage(named: "Crop Icon 2")?.withRenderingMode(.alwaysOriginal),
+                                        for: .normal, barMetrics: .default)
     }
 
     func setupAdjustButtons() {
@@ -279,6 +346,7 @@ import CoreImage.CIFilterBuiltins
             button.layer.borderColor = UIColor.black.cgColor
             button.layer.borderWidth = 2
             button.layer.backgroundColor = UIColor.clear.cgColor
+            button.setBackgroundImage(.none, for: .normal)
         }
     }
 
@@ -289,7 +357,7 @@ import CoreImage.CIFilterBuiltins
             currentFilterLabel.text = "ADJUST"
             applyAmountSlider.alpha = 1
             sliderValueLabel.alpha = 1
-            roundAndSetBackgroundColorButtons()
+            setupAdjustButtons()
         case EditingMode.predefined:
             currentFilterLabel.text = "CHOOSE A FILTER"
             let thumbnails = [viewModel.createCamShareCustionFilter(image: inEditPhoto),
@@ -308,10 +376,67 @@ import CoreImage.CIFilterBuiltins
             sliderValueLabel.alpha = 0
         case EditingMode.crop:
             currentFilterLabel.text = "CROP"
+            setupCropView()
+        }
+    }
+
+    public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touchesSet = touches as NSSet
+        let touch = touchesSet.anyObject() as! UITouch
+
+        touchStart = touch.location(in: croppingViewUIView.self)
+
+        isResizingLR = croppingViewUIView.self.bounds.size.width - touchStart.x <
+            CGFloat(kResizeThumbSize) && croppingViewUIView.self.bounds.size.height -
+            touchStart.y < CGFloat(kResizeThumbSize)
+        isResizingUL = touchStart.x < CGFloat(kResizeThumbSize) && touchStart.y <
+            CGFloat(kResizeThumbSize)
+        isResizingUR = (croppingViewUIView.self.bounds.size.width-touchStart.x <
+            CGFloat(kResizeThumbSize) && touchStart.y < CGFloat(kResizeThumbSize))
+        isResizingLL = (touchStart.x < CGFloat(kResizeThumbSize) &&
+            croppingViewUIView.self.bounds.size.height - touchStart.y <
+            CGFloat(kResizeThumbSize))
+    }
+
+    public override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touchesSet = touches as NSSet
+        let touch = touchesSet.anyObject() as! UITouch
+
+        let touchPoint = touch.location(in: croppingViewUIView.self)
+        let previous = touch.previousLocation(in: croppingViewUIView.self)
+
+        let deltaWidth = touchPoint.x - previous.x
+        let deltaHeight = touchPoint.y - previous.y
+
+        let x = croppingViewUIView.self.frame.origin.x
+        let y = croppingViewUIView.self.frame.origin.y
+        let width = croppingViewUIView.self.frame.size.width
+        let height = croppingViewUIView.self.frame.size.height
+
+        if isResizingLR {
+            croppingViewUIView.self.frame = CGRect(x: x, y: y, width: touchPoint.x + deltaWidth,
+                                                   height: touchPoint.y + deltaHeight)
+        } else if isResizingUL {
+            croppingViewUIView.self.frame = CGRect(x: x+deltaWidth, y: y+deltaHeight,
+                                                   width: width-deltaWidth, height: height-deltaHeight)
+        } else if isResizingUR {
+            croppingViewUIView.self.frame = CGRect(x: x, y: y+deltaHeight,
+                                                   width: width+deltaWidth, height: height-deltaHeight)
+        } else if isResizingLL {
+            croppingViewUIView.self.frame = CGRect(x: x+deltaWidth, y: y,
+                                                   width: width-deltaWidth, height: height+deltaHeight)
+        } else {
+            croppingViewUIView.self.center = CGPoint(x: croppingViewUIView.self.center.x +
+                touchPoint.x - touchStart.x, y: croppingViewUIView.self.center.y +
+                    touchPoint.y - touchStart.y)
         }
     }
 }
 extension PhotoEditingViewController: PhotoEditorViewType {
+    func displayPresetCropView(rect: CGRect) {
+        croppingViewUIView.frame = rect
+    }
+
     func updateImageView(image: CIImage) {
         inEditPhotoImageView.image = UIImage(ciImage: image)
     }

@@ -33,6 +33,7 @@
     if ([[segue identifier] isEqualToString:@"photoEditor"]) {
         PhotoEditingViewController *photoEditViewController = (PhotoEditingViewController*)[segue destinationViewController];
         photoEditViewController.inEditPhoto = self.selectedImageImageView.image;
+        photoEditViewController.originalImage = self.selectedImageImageView.image;
     }
 }
 
