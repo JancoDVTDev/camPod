@@ -146,4 +146,104 @@ public class PhotoEditorViewModel {
         result = secondFilter.outputImage
         return result!
     }
+
+    func cropImageWithCGRect(image: UIImage, cropView: UIView, imageView: UIImageView) {
+        guard let imageData = image.jpegData(compressionQuality: 1) else {return}
+        guard let newImage = UIImage(data: imageData) else {return}
+        let cgCropImage = newImage.cgImage
+        let originalCGCropImageWidth = cgCropImage!.width
+        let originalCGCropImageHeight = cgCropImage!.height
+        let imageViewWidth = imageView.frame.size.width
+        let imageViewHeight = imageView.frame.size.height
+        var scaledWidth: CGFloat!
+        var scaledHeight: CGFloat!
+        var scaledOriginX: CGFloat = 0
+        var scaledOriginY: CGFloat = 0
+
+        if originalCGCropImageWidth > originalCGCropImageHeight {
+            let scaleFactor = originalCGCropImageWidth
+            let scaleTotal = CGFloat(originalCGCropImageHeight) * CGFloat(imageViewWidth)
+            scaledHeight = scaleTotal/CGFloat(scaleFactor)
+            scaledWidth = CGFloat(imageViewWidth)
+        } else {
+            let scaleFactor = originalCGCropImageHeight
+            let scaleTotal = CGFloat(originalCGCropImageWidth) * CGFloat(imageViewHeight)
+            scaledWidth = scaleTotal/CGFloat(scaleFactor)
+            scaledHeight = CGFloat(imageViewHeight)
+        }
+
+        let scaleFactorX = CGFloat(cgCropImage!.width)/scaledWidth
+        let scaleFactorY = CGFloat(cgCropImage!.height)/scaledHeight
+
+        if originalCGCropImageWidth > originalCGCropImageHeight {
+            scaledOriginY = (cropView.frame.origin.y - (imageViewHeight - scaledHeight)) * scaleFactorY
+            scaledOriginX = cropView.frame.origin.x * scaleFactorX
+        } else {
+            scaledOriginX = (cropView.frame.origin.x - (imageViewWidth/2 - scaledWidth!/2)) * scaleFactorX
+            scaledOriginY = (cropView.frame.origin.y - 152) * scaleFactorY
+            //VERY IMPORTANT NOTE 55 is the value from screen top to imageview also 152
+        }
+
+        let realCropWidth = cropView.frame.size.width * scaleFactorX
+        let realCropHeight = cropView.frame.size.height * scaleFactorY
+        let rect = CGRect(x: scaledOriginX, y: scaledOriginY,
+                          width: realCropWidth, height: realCropHeight)
+        let croppedImage = cgCropImage?.cropping(to: rect)
+        view?.updateImageView(image: CIImage(cgImage: croppedImage!))
+    }
+    
+    func presetCropView(image: UIImage, imageView: UIImageView, preset: CropPresets) {
+        guard let imageData = image.jpegData(compressionQuality: 1) else {return}
+        guard let newImage = UIImage(data: imageData) else {return}
+        let cgCropImage = newImage.cgImage
+        let originalCGCropImageWidth = cgCropImage!.width
+        let originalCGCropImageHeight = cgCropImage!.height
+        let isLandscape = originalCGCropImageWidth > originalCGCropImageHeight ? true : false
+        var scaledWidth: CGFloat!
+        var scaledHeight: CGFloat!
+
+        if isLandscape {
+            let scaleFactor = originalCGCropImageWidth
+            let scaleTotal = CGFloat(originalCGCropImageHeight) * CGFloat(imageView.frame.width)
+            scaledHeight = scaleTotal/CGFloat(scaleFactor)
+            scaledWidth = CGFloat(imageView.frame.width)
+        } else {
+            let scaleFactor = originalCGCropImageHeight
+            let scaleTotal = CGFloat(originalCGCropImageWidth) * CGFloat(imageView.frame.height)
+            scaledWidth = scaleTotal/CGFloat(scaleFactor)
+            scaledHeight = CGFloat(imageView.frame.height)
+        }
+
+        let widthMiddle = scaledWidth/2
+        let heightMiddle = scaledHeight/2
+        var rectOriginX : CGFloat!
+        var rectOriginY : CGFloat!
+
+        switch preset {
+        case .square:
+            let rectWidth = isLandscape ? scaledHeight : scaledWidth
+            let rectHeight = isLandscape ? scaledHeight : scaledWidth
+
+            if isLandscape {
+                rectOriginX = CGFloat(widthMiddle) - CGFloat(Int(rectWidth!/2))
+                rectOriginY = CGFloat(imageView.frame.size.height) - scaledHeight
+            } else {
+                rectOriginX = imageView.frame.origin.x + (imageView.frame.size.width - scaledWidth)/2
+                rectOriginY = heightMiddle - scaledHeight/5
+            }
+
+            let rect = CGRect(x: rectOriginX, y: rectOriginY, width: rectWidth!, height: rectHeight!)
+
+            view?.displayPresetCropView(rect: rect)
+        case .landscape:
+            break
+        case .portrait:
+            break
+        }
+    }
+}
+enum CropPresets {
+    case square
+    case landscape
+    case portrait
 }

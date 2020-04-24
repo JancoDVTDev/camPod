@@ -9,4 +9,5 @@ import Foundation
 
 protocol PhotoEditorViewType {
     func updateImageView(image: CIImage)
+    func displayPresetCropView(rect: CGRect)
 }
