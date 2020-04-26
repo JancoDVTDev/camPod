@@ -113,6 +113,28 @@ public class PhotosViewModel {
             }
         })
     }
+    
+    func observeTakenPhotos(albumID: String, imagePaths: [String], photoModels: [PhotoModel]) {
+        var updatedImagePaths = imagePaths
+        var updatedPhotoModels = photoModels
+        repo?.observe(albumID: albumID, { (downloadedImage, imagePath, error) in
+            if let error = error {
+                self.view?.displayError(error: "Observer: \(error)")
+            } else {
+                guard let imagePath = imagePath else {return}
+                guard let downloadedImage = downloadedImage else {return}
+                if !(imagePaths.contains(imagePath)) {
+                    updatedImagePaths.append(imagePath)
+                    updatedPhotoModels.append(PhotoModel(name: imagePath, image: downloadedImage))
+                    self.view?.updateImagePaths(imagePaths: updatedImagePaths)
+                    self.view?.updatePhotoModels(photoModels: updatedPhotoModels)
+                    self.view?.updateCollectionView()
+                } else {
+                    print("Already containing: \(imagePath)")
+                }
+            }
+        })
+    }
 }
 extension UIImage {
     enum JPEGQuality: CGFloat {

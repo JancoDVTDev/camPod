@@ -47,4 +47,20 @@ public class PhotosDatasource: PhotosDatasourceProtocol {
         databaseRef.child("AllAlbumsExisting").child(albumID).child("ImagePaths").setValue(imagePaths)
         completion(true, nil)
     }
+    
+    public func observe(albumID: String,
+                        _ completion: @escaping (_ addedImage: UIImage?,_ imagePath: String?, _ error: String?) -> Void) {
+        let databaseRef = Database.database().reference()
+        databaseRef.child("AllAlbumsExisting").child(albumID).child("ImagePaths").observe(.childAdded, with: { (snapshot) -> Void in
+            let addedPhotoPath = snapshot.value as! String
+            print(addedPhotoPath)
+            self.fetchPhotosFromStorage(albumID: albumID, imagePath: addedPhotoPath) { (downloadedImage, error) in
+                if let error = error {
+                    completion(nil, nil, error)
+                } else {
+                    completion(downloadedImage, addedPhotoPath, nil)
+                }
+            }
+        })
+    }
 }

@@ -14,4 +14,6 @@ public protocol PhotosDatasourceProtocol: class {
                               _ completion: @escaping (_ didUpload: Bool, _ error: String?) -> Void)
     func addImagePathToUserAlbum(albumID: String, imagePaths: [String],
                              _ completion: @escaping (_ didAdd: Bool,_ error: String?) -> Void)
+    func observe(albumID: String, _ completion: @escaping
+        (_ addedImage: UIImage?,_ imagePath: String?, _ error: String?) -> Void)
 }
