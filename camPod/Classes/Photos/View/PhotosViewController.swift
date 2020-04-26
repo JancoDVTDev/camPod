@@ -43,8 +43,6 @@ public class PhotosViewController: UIViewController, UIImagePickerControllerDele
 
         activityLoader.startAnimating()
         activityLoader.isHidden = false
-
-        photoViewModel.loadPhotos(albumID: albumID, imagePaths: userImagePaths)
     }
 
     @objc func cameraButtonTapped() {

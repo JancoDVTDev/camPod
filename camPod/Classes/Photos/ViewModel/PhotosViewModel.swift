@@ -113,7 +113,7 @@ public class PhotosViewModel {
             }
         })
     }
-    
+
     func observeTakenPhotos(albumID: String, imagePaths: [String], photoModels: [PhotoModel]) {
         var updatedImagePaths = imagePaths
         var updatedPhotoModels = photoModels
@@ -129,8 +129,6 @@ public class PhotosViewModel {
                     self.view?.updateImagePaths(imagePaths: updatedImagePaths)
                     self.view?.updatePhotoModels(photoModels: updatedPhotoModels)
                     self.view?.updateCollectionView()
-                } else {
-                    print("Already containing: \(imagePath)")
                 }
             }
         })
