@@ -49,10 +49,11 @@ public class PhotosDatasource: PhotosDatasourceProtocol {
     }
 
     public func observe(albumID: String,
-                        _ completion: @escaping (_ addedImage: UIImage?,_ imagePath: String?,
+                        _ completion: @escaping (_ addedImage: UIImage?, _ imagePath: String?,
         _ error: String?) -> Void) {
         let databaseRef = Database.database().reference()
-        databaseRef.child("AllAlbumsExisting").child(albumID).child("ImagePaths").observe(.childAdded, with: { (snapshot) -> Void in
+        databaseRef.child("AllAlbumsExisting").child(albumID).child("ImagePaths")
+            .observe(.childAdded, with: { (snapshot) -> Void in
             let addedPhotoPath = snapshot.value as! String
             print(addedPhotoPath)
             self.fetchPhotosFromStorage(albumID: albumID, imagePath: addedPhotoPath) { (downloadedImage, error) in
