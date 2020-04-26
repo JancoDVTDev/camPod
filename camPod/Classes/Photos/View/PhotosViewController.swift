@@ -43,8 +43,6 @@ public class PhotosViewController: UIViewController, UIImagePickerControllerDele
 
         activityLoader.startAnimating()
         activityLoader.isHidden = false
-
-        photoViewModel.loadPhotos(albumID: albumID, imagePaths: userImagePaths)
     }
 
     @objc func cameraButtonTapped() {
@@ -77,6 +75,9 @@ public class PhotosViewController: UIViewController, UIImagePickerControllerDele
 
         let copyAlbumID = UIAlertAction(title: "Copy Album ID", style: .default) { (_) in
             UIPasteboard.general.string = self.albumID
+            let alert = UIAlertController(title: "Copied", message: self.albumID, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
 
         let cancel = UIAlertAction(title: "Cancel", style: .cancel)
@@ -161,6 +162,7 @@ extension PhotosViewController: PhotoViewProtocol {
         activityLoader.isHidden = true
         activityLoader.stopAnimating()
         collectionView.isHidden = false
+        photoViewModel.observeTakenPhotos(albumID: albumID, imagePaths: userImagePaths, photoModels: photoModels)
     }
 
     public func displayError(error: String) {
