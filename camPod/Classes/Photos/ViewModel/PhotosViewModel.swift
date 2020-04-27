@@ -62,6 +62,7 @@ public class PhotosViewModel {
                                 self.view?.updatePhotoModels(photoModels: onDiskPhotoModels)
                                 self.view?.updateCollectionView()
                                 self.view?.didFinishLoading()
+                                self.view?.startDownloading()
                             }
                         }
                     })
@@ -129,6 +130,24 @@ public class PhotosViewModel {
                     self.view?.updateImagePaths(imagePaths: updatedImagePaths)
                     self.view?.updatePhotoModels(photoModels: updatedPhotoModels)
                     self.view?.updateCollectionView()
+                    self.view?.didFinishLoading()
+                }
+            }
+        })
+    }
+
+    func deleteImages(albumID: String, imagePaths: [String], deleteImagePaths: [String]) {
+        coreDataRepo.deleteImagesFromCoreData(imagePaths: deleteImagePaths)
+        repo?.deleteImagesReferencePaths(albumID: albumID, imagePaths: imagePaths, { (error) in
+            if let error = error {
+                self.view?.displayError(error: error)
+            } else {
+                for imagePath in deleteImagePaths {
+                    self.repo?.deleteImageFromStorage(albumID: albumID, imagePath: imagePath, { (error) in
+                        if let error = error {
+                            self.view?.displayError(error: error)
+                        }
+                    })
                 }
             }
         })

@@ -81,4 +81,27 @@ public class CoreDataRepo {
 
         }
     }
+
+    func deleteImagesFromCoreData(imagePaths: [String]) {
+        let appDelegate = UIApplication.shared.delegate as? SavedImagesType
+        let managedContext = appDelegate?.returnContainer().viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Image")
+
+        for imagePath in imagePaths {
+            let predicate = NSPredicate(format: "name == %@", imagePath)
+            fetchRequest.predicate = predicate
+            do {
+                let image = try managedContext?.fetch(fetchRequest)
+                let objectToDelete = image![0] as! NSManagedObject
+                managedContext?.delete(objectToDelete)
+                do {
+                    try managedContext?.save()
+                } catch {
+                    return
+                }
+            } catch {
+                return
+            }
+        }
+    }
 }

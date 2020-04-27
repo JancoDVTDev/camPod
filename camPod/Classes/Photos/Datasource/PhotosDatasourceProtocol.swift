@@ -16,4 +16,8 @@ public protocol PhotosDatasourceProtocol: class {
                              _ completion: @escaping (_ didAdd: Bool,_ error: String?) -> Void)
     func observe(albumID: String, _ completion: @escaping
         (_ addedImage: UIImage?, _ imagePath: String?, _ error: String?) -> Void)
+    func deleteImagesReferencePaths(albumID: String, imagePaths: [String],
+                                    _ compeltion: @escaping (_ error: String?) -> Void)
+    func deleteImageFromStorage(albumID: String, imagePath: String,
+                                _ compeltion: @escaping (_ error: String?) -> Void)
 }

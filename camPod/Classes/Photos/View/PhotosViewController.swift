@@ -11,6 +11,7 @@ public class PhotosViewController: UIViewController, UIImagePickerControllerDele
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var activityLoader: UIActivityIndicatorView!
+    @IBOutlet var activityLabel: UILabel!
     @IBOutlet var progressView: UIProgressView!
 
     public var albumID: String = ""
@@ -20,29 +21,113 @@ public class PhotosViewController: UIViewController, UIImagePickerControllerDele
     var collectionViewSource = [UIImage]()
     var photoModels = [PhotoModel]()
     var selectedPhotoIndex = 0
+    var downloadTrigger = false
 
     var photoViewModel = PhotosViewModel()
+    
+    var indexPathDictionary: [IndexPath: Bool] = [:]
+
+    lazy var selectBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(title: "Select", style: .plain, target: self,
+                                            action: #selector(self.tapSelectBarButton(_:)))
+        return barButtonItem
+    }()
+
+    lazy var deleteBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self,
+                                            action: #selector(self.tapDeleteBarButton(_:)))
+        return barButtonItem
+    }()
+
+    lazy var cameraBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .camera, target: self,
+                                            action: #selector(self.cameraButtonTapped))
+        return barButtonItem
+    }()
+
+    var mode: Mode = .view {
+        didSet {
+            switch mode {
+            case .view:
+                for (key, value) in indexPathDictionary where value{
+                    collectionView.deselectItem(at: key, animated: true)
+                }
+
+                indexPathDictionary.removeAll()
+
+                selectBarButtonItem.title = "Select"
+                collectionView.allowsMultipleSelection = false
+                navigationItem.rightBarButtonItems = [selectBarButtonItem, cameraBarButtonItem]
+                break
+            case .select:
+                selectBarButtonItem.title = "Cancel"
+                collectionView.allowsMultipleSelection = true
+                navigationItem.rightBarButtonItems = [selectBarButtonItem, deleteBarButtonItem]
+            }
+        }
+    }
 
     public override func viewDidLoad() {
         super.viewDidLoad()
 
         self.title = albumName
+        setupBarButtonItems()
 
         photoViewModel.view = self
         photoViewModel.repo = PhotosDatasource()
         photoViewModel.cacheHelper = CacheHelper()
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .camera,
-        target: self, action: #selector(cameraButtonTapped))
-
         collectionView.isHidden = true
         collectionView.delegate = self
         collectionView.dataSource = self
 
-        photoViewModel.loadPhotos(albumID: albumID, imagePaths: userImagePaths)
-
         activityLoader.startAnimating()
         activityLoader.isHidden = false
+
+        photoViewModel.loadPhotos(albumID: albumID, imagePaths: userImagePaths)
+    }
+
+    func setupBarButtonItems() {
+        navigationItem.rightBarButtonItems = [selectBarButtonItem, cameraBarButtonItem]
+    }
+
+    @objc func tapSelectBarButton(_ sender: AnyObject) {
+        mode = mode == .view ? .select: .view
+    }
+
+    @objc func tapDeleteBarButton(_ sender: AnyObject) {
+
+        let alertSheet = UIAlertController(title: "Delete Photos ?",
+                                           message: "Deleting photos will effect the other members photo's too",
+                                           preferredStyle: .actionSheet)
+
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (_) in
+            var deleteIndexPaths = [IndexPath]()
+            var deleteImagePaths = [String]()
+            for (key, value) in self.indexPathDictionary where value{
+                deleteImagePaths.append(self.photoModels[key.item].name)
+                deleteIndexPaths.append(key)
+            }
+
+            for imagePath in deleteImagePaths {
+                self.userImagePaths.removeAll { $0 == imagePath }
+            }
+
+            for index in deleteIndexPaths.sorted(by: { $0.item > $1.item }) {
+                self.photoModels.remove(at: index.item)
+            }
+
+            self.collectionView.deleteItems(at: deleteIndexPaths)
+            self.photoViewModel.deleteImages(albumID: self.albumID, imagePaths: self.userImagePaths,
+                                             deleteImagePaths: deleteImagePaths)
+            self.indexPathDictionary.removeAll()
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+        alertSheet.addAction(deleteAction)
+        alertSheet.addAction(cancelAction)
+        present(alertSheet, animated: true, completion: nil)
     }
 
     @objc func cameraButtonTapped() {
@@ -113,11 +198,7 @@ extension PhotosViewController: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoCollectionCellCollectionViewCell
 
-        let imageTapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
-        cell.photoImageView.addGestureRecognizer(imageTapGesture)
-        cell.photoImageView.isUserInteractionEnabled = true
-        cell.photoImageView.tag = indexPath.item
-        cell.photoImageView.image = photoModels[indexPath.item].image//collectionViewSource[indexPath.item] //
+        cell.photoImageView.image = photoModels[indexPath.item].image
 
         return cell
     }
@@ -138,12 +219,32 @@ extension PhotosViewController: UICollectionViewDataSource {
             qrCodeViewController.albumID = self.albumID
         }
     }
+
+    public func collectionView(_ collectionView: UICollectionView,
+                               didSelectItemAt indexPath: IndexPath) {
+        switch mode {
+        case .view:
+            collectionView.deselectItem(at: indexPath, animated: true)
+            selectedPhotoIndex = indexPath.item
+            self.performSegue(withIdentifier: "displayImage", sender: self)
+        default:
+            indexPathDictionary[indexPath] = true
+        }
+    }
+
+    public func collectionView(_ collectionView: UICollectionView,
+                               didDeselectItemAt indexPath: IndexPath) {
+        if mode == .select {
+            indexPathDictionary[indexPath] = false
+        }
+    }
 }
 
 extension PhotosViewController: PhotoViewProtocol {
     public func startDownloading() {
         self.activityLoader.startAnimating()
         self.activityLoader.isHidden = false
+        downloadTrigger = !downloadTrigger
     }
 
     public func updatePhotoModels(photoModels: [PhotoModel]) {
@@ -162,6 +263,7 @@ extension PhotosViewController: PhotoViewProtocol {
         activityLoader.isHidden = true
         activityLoader.stopAnimating()
         collectionView.isHidden = false
+        activityLabel.isHidden = true
         photoViewModel.observeTakenPhotos(albumID: albumID, imagePaths: userImagePaths, photoModels: photoModels)
     }
 
@@ -174,4 +276,9 @@ extension PhotosViewController: PhotoViewProtocol {
     public func updateCollectionViewSource(images: [UIImage]) {
         collectionViewSource = images
     }
+}
+
+enum Mode {
+    case view
+    case select
 }

@@ -10,9 +10,9 @@ import Foundation
 public class AlbumViewModel {
     public weak var view: AlbumViewProtocol?
     public var repo: AlbumDataSourceProtocol?
-    
+
     public init() { }
-    
+
     public func loadAlbums() {
         self.repo?.fetchUserAlbumIDs({ (albums, error) in
             if let error = error {
@@ -47,7 +47,7 @@ public class AlbumViewModel {
             }
         })
     }
-    
+
     public func createNewAlbum(albumName: String, albumIDs: [String], currentAlbums: [SingleAlbum]) {
         let helpingHand = ObjcHelper()
         let newAlbumID = helpingHand.generateUniqueID()
@@ -65,11 +65,11 @@ public class AlbumViewModel {
             })
         })
     }
-    
+
     public func addExisting(albumID: String, albumIDs: [String], currentAlbums: [SingleAlbum]) {
         var updatedAlbumIDs = albumIDs
         updatedAlbumIDs.append(albumID)
-        
+
         var updatedCollectionViewSource = currentAlbums
 
         repo?.fetchUserSingleAlbum(albumID: albumID, completion: { (singleAlbum, error) in
@@ -85,5 +85,9 @@ public class AlbumViewModel {
                 
             }
         })
+    }
+
+    public func deleteAlbums(updatedAlbumIDs: [String]) {
+        repo?.deleteAlbumsFromUserAlbums(updatedUserAlbums: updatedAlbumIDs)
     }
 }

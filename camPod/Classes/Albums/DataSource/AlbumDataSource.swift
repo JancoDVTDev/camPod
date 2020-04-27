@@ -11,7 +11,7 @@ import FirebaseAuth
 public class AlbumDataSource: AlbumDataSourceProtocol {
 
     public init() { }
-    
+
     public func fetchUserAlbumIDs(_ completion: @escaping ([String]?, String?) -> Void) {
         let databaseRef = Database.database().reference()
         guard let userID = Auth.auth().currentUser?.uid else { return }
@@ -23,7 +23,7 @@ public class AlbumDataSource: AlbumDataSourceProtocol {
             completion(nil, error.localizedDescription)
         }
     }
-    
+
     public func fetchUserSingleAlbum(albumID: String,
                                       completion: @escaping (SingleAlbum?, String?) -> Void) {
         var tempSingleAlbum: SingleAlbum?
@@ -64,9 +64,6 @@ public class AlbumDataSource: AlbumDataSourceProtocol {
         }) { (error) in
             completion(nil,error.localizedDescription)
         }
-//        databaseRef.child("AllAlbumsExisting").child(albumID).observeSingleEvent(of: .value) { (snapshot) in
-//
-//        }
     }
     
     public func createNewAlbum(albumName: String, albumID: String,
@@ -75,9 +72,10 @@ public class AlbumDataSource: AlbumDataSourceProtocol {
         // Metadata
         let date = Date()
         let calendar = Calendar.current
+        //swiftlint:enable all
         let currentDate = "\(calendar.component(.day, from: date))/\(calendar.component(.month, from: date))/\(calendar.component(.year, from: date))"
         let currentTime = "\(calendar.component(.hour, from: date)):\(calendar.component(.minute, from: date))"
-        
+        //swiftlint:enable all
         let databaseRef = Database.database().reference()
         databaseRef.child("AllAlbumsExisting").child(albumID).setValue(["Name" : albumName,
                                                                         "Created by": userID,
@@ -89,10 +87,16 @@ public class AlbumDataSource: AlbumDataSourceProtocol {
                                        thumbnail: UIImage(named: "placeholder")!, imagePaths: [""])
         completion(createdAlbum)
     }
-    
+
     public func addAlbumToUserAlbums(albumIDs: [String],_ completion: @escaping (Bool) -> Void) {
         let databaseRef = Database.database().reference()
         databaseRef.child("Users").child(Auth.auth().currentUser!.uid).child("Albums").setValue(albumIDs)
         completion(true)
+    }
+
+    public func deleteAlbumsFromUserAlbums(updatedUserAlbums: [String]) {
+        let userID = Auth.auth().currentUser?.uid
+        let databaseRef = Database.database().reference()
+        databaseRef.child("Users").child(userID!).child("Albums").setValue(updatedUserAlbums)
     }
 }

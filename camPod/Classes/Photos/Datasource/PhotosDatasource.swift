@@ -65,4 +65,29 @@ public class PhotosDatasource: PhotosDatasourceProtocol {
             }
         })
     }
+    
+    public func deleteImagesReferencePaths(albumID: String, imagePaths: [String],
+                                           _ compeltion: @escaping (_ error: String?) -> Void) {
+        let databaseRef = Database.database().reference()
+        databaseRef.child("AllAlbumsExisting").child(albumID).child("ImagePaths").setValue(imagePaths)
+        { (error, _) in
+            if let error = error {
+                compeltion(error.localizedDescription)
+            } else {
+                compeltion(nil)
+            }
+        }
+    }
+    
+    public func deleteImageFromStorage(albumID: String, imagePath: String,
+                                        _ compeltion: @escaping (_ error: String?) -> Void) {
+        let storageRef = Storage.storage().reference(withPath: "\(albumID)/\(imagePath)")
+        storageRef.delete { (error) in
+            if let error = error {
+                compeltion(error.localizedDescription)
+            } else {
+                compeltion(nil)
+            }
+        }
+    }
 }
