@@ -14,4 +14,5 @@ public protocol AlbumDataSourceProtocol: class {
     func createNewAlbum(albumName: String, albumID: String,
                         _ completion: @escaping(_ singleAlbum: SingleAlbum) -> Void)
     func addAlbumToUserAlbums(albumIDs: [String],_ completion: @escaping (_ completed: Bool) -> Void)
+    func deleteAlbumsFromUserAlbums(updatedUserAlbums: [String])
 }
