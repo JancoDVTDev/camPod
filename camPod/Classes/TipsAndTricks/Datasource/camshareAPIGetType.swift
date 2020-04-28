@@ -8,5 +8,6 @@
 import Foundation
 
 public protocol camshareAPIGetType: class {
-    func fetchTipsAndTricks(_ completion: @escaping (_ content: [TipsAndTricksModel]?,_ error: String?) -> Void)
+    func fetchTipsAndTricks(_ completion: @escaping (_ content: [TipsAndTricksModel]?,
+        _ error: String?) -> Void)
 }

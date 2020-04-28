@@ -8,16 +8,15 @@
 import Foundation
 
 public class camshareAPIGet: camshareAPIGetType {
-    
     var resourceURL: URL
-    
+
     public init() {
         let resourceString = "https://camshareapi.herokuapp.com/tipsandtricks"
         guard let resourceURL = URL(string: resourceString) else {fatalError()}
         self.resourceURL = resourceURL
     }
     
-    public func fetchTipsAndTricks(_ completion: @escaping (_ content: [TipsAndTricksModel]?,_ error: String?) -> Void) {
+    public func fetchTipsAndTricks(_ completion: @escaping (_ content: [TipsAndTricksModel]?, _ error: String?) -> Void) {
         let dataTask = URLSession.shared.dataTask(with: resourceURL) { data, response, error in
             if let error = error {
                 print(error.localizedDescription)

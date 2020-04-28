@@ -11,6 +11,7 @@ public protocol TipsAndTricksViewType: class {
     func updateTableViewCardsSource(content: [TipsAndTricksModel])
     func updateTableViewVideosSource(videoCodes: [String])
     func updateTableViewYoutubeSource(youtubeTipsModels: [YoutubeTipsModel])
+    func updateRatings(ratings: [RatingModel])
     func didFinishLoading()
     func displayError(error: String)
     func reloadTableView()
