@@ -9,5 +9,5 @@ import Foundation
 
 public protocol CamShareAPIPostType: class {
     func postRating(ratingID: Int, rating: Int,
-    _ completion: @escaping (_ ratings: [RatingModel]?, _ error: String?) -> Void)
+                    _ completion: @escaping (_ ratings: [RatingModel]?, _ error: String?) -> Void)
 }

@@ -27,9 +27,9 @@ public class CamshareAPIPOST: CamShareAPIPostType {
     }
 
     public func postRating(ratingID: Int, rating: Int,
-                             _ completion: @escaping (_ ratings: [RatingModel]?, _ error: String?) -> Void) {
+                           _ completion: @escaping (_ ratings: [RatingModel]?, _ error: String?) -> Void) {
         let requestURL = createRequestURL(ratingID: ratingID, rating: rating)!
-        let dataTask = URLSession.shared.dataTask(with: requestURL) { (data, response, error) in
+        let dataTask = URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
             if let error = error {
                 completion(nil, error.localizedDescription)
             } else {

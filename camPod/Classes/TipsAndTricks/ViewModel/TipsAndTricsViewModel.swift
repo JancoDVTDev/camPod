@@ -40,7 +40,7 @@ public class TipsAndTricsViewModel {
     }
 
     public func updateRating(ratingID: Int, rating: Int) {
-        postRepo?.postRating(ratingID: ratingID, rating: rating, { (ratings, error) in
+        postRepo?.postRating(ratingID: ratingID, rating: rating, { (_, error) in
             if let error = error {
                 self.view?.displayError(error: error)
             }
