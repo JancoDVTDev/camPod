@@ -176,11 +176,11 @@ public class PhotoEditorViewModel {
         let scaleFactorY = CGFloat(cgCropImage!.height)/scaledHeight
 
         if originalCGCropImageWidth > originalCGCropImageHeight {
-            scaledOriginY = (cropView.frame.origin.y - (imageViewHeight - scaledHeight)) * scaleFactorY
+            scaledOriginY = (CGFloat(imageViewHeight - scaledHeight!)) * scaleFactorY
             scaledOriginX = cropView.frame.origin.x * scaleFactorX
         } else {
-            scaledOriginX = (cropView.frame.origin.x - (imageViewWidth/2 - scaledWidth!/2)) * scaleFactorX
-            scaledOriginY = (cropView.frame.origin.y - 152) * scaleFactorY
+            scaledOriginX = (CGFloat(imageViewWidth - scaledWidth!)) * scaleFactorX//(cropView.frame.origin.x - (imageViewWidth/2 - scaledWidth!/2)) * scaleFactorX
+            scaledOriginY = (cropView.frame.origin.y) * scaleFactorY
             //VERY IMPORTANT NOTE 55 is the value from screen top to imageview also 152
         }
 
@@ -236,7 +236,23 @@ public class PhotoEditorViewModel {
 
             view?.displayPresetCropView(rect: rect)
         case .landscape:
-            break
+            var rectWidth = isLandscape ? scaledHeight : scaledWidth
+            var rectHeight = isLandscape ? scaledHeight : scaledWidth
+
+            rectWidth! /= 3
+            rectWidth! *= 2
+            rectHeight! /= 3
+            if isLandscape {
+                rectOriginX = CGFloat(widthMiddle) - CGFloat(Int(rectWidth!/2))
+                rectOriginY = CGFloat(imageView.frame.size.height) - scaledHeight
+            } else {
+                rectOriginX = imageView.frame.origin.x + (imageView.frame.size.width - scaledWidth)/2
+                rectOriginY = heightMiddle - scaledHeight/5
+            }
+
+            let rect = CGRect(x: rectOriginX, y: rectOriginY, width: rectWidth!, height: rectHeight!)
+
+            view?.displayPresetCropView(rect: rect)
         case .portrait:
             break
         }
