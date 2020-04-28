@@ -36,6 +36,7 @@ public class PhotosViewController: UIViewController, UIImagePickerControllerDele
     lazy var deleteBarButtonItem: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self,
                                             action: #selector(self.tapDeleteBarButton(_:)))
+        barButtonItem.tintColor = .systemRed
         return barButtonItem
     }()
 

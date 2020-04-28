@@ -59,18 +59,15 @@ import CoreImage.CIFilterBuiltins
     }
 
     @IBAction func firstFilterButtonTapped(_ sender: Any) {
+        inEditPhoto = inEditPhotoImageView.image!
         switch modeSelected {
         case .manual:
             currentFilterLabel.text = "VIBRANCE"
         case .predefined:
             currentFilterLabel.text = "CAMSHARE"
             inEditPhotoImageView.image = fifthFilterButton.backgroundImage(for: .normal)
-            //viewModel.applyPredefinedFilter(image: inEditPhoto, selectedFilter: 0)
         case .crop:
-            currentFilterLabel.text = "APPLY"
-            viewModel.cropImageWithCGRect(image: inEditPhotoImageView.image!,
-                                          cropView: croppingViewUIView.self,
-                                          imageView: inEditPhotoImageView!)
+            break
         case .none:
             currentFilterLabel.text = "Mode not avaialable"
         }
@@ -79,16 +76,18 @@ import CoreImage.CIFilterBuiltins
     }
 
     @IBAction func secondFilterButtonTapped(_ sender: Any) {
+        inEditPhoto = inEditPhotoImageView.image!
         switch modeSelected {
         case .manual:
             currentFilterLabel.text = "EXPOSURE"
         case .predefined:
             currentFilterLabel.text = "COLD"
             inEditPhotoImageView.image = secondFilterButton.backgroundImage(for: .normal)
-            //viewModel.applyPredefinedFilter(image: inEditPhoto, selectedFilter: 1)
         case .crop:
-            currentFilterLabel.text = "RESET"
-            inEditPhotoImageView.image = originalImage
+            currentFilterLabel.text = "APPLY"
+            viewModel.cropImageWithCGRect(image: inEditPhotoImageView.image!,
+                                          cropView: croppingViewUIView.self,
+                                          imageView: inEditPhotoImageView!)
         case .none:
             currentFilterLabel.text = "Mode not avaialable"
         }
@@ -97,13 +96,13 @@ import CoreImage.CIFilterBuiltins
     }
 
     @IBAction func thirdFilterButtonTapped(_ sender: Any) {
+        inEditPhoto = inEditPhotoImageView.image!
         switch modeSelected {
         case .manual:
             currentFilterLabel.text = "GAMMA"
         case .predefined:
             currentFilterLabel.text = "VIVID COLD"
             inEditPhotoImageView.image = thirdFilterButton.backgroundImage(for: .normal)
-            //viewModel.applyPredefinedFilter(image: inEditPhoto, selectedFilter: 2)
         case .crop:
             currentFilterLabel.text = "SQUARE"
             viewModel.presetCropView(image: inEditPhotoImageView.image!,
@@ -116,15 +115,17 @@ import CoreImage.CIFilterBuiltins
     }
 
     @IBAction func fourthFilterButtonTapped(_ sender: Any) {
+        inEditPhoto = inEditPhotoImageView.image!
         switch modeSelected {
         case .manual:
             currentFilterLabel.text = "VIGNETTE"
         case .predefined:
             currentFilterLabel.text = "WARM"
             inEditPhotoImageView.image = fourthFIlterButton.backgroundImage(for: .normal)
-            //viewModel.applyPredefinedFilter(image: inEditPhoto, selectedFilter: 3)
         case .crop:
             currentFilterLabel.text = "LANDSCAPE"
+            viewModel.presetCropView(image: inEditPhotoImageView.image!,
+                                     imageView: inEditPhotoImageView, preset: .landscape)
         case .none:
             currentFilterLabel.text = "Mode not avaialable"
         }
@@ -133,13 +134,13 @@ import CoreImage.CIFilterBuiltins
     }
 
     @IBAction func fifthFilterButtonTapped(_ sender: Any) {
+        inEditPhoto = inEditPhotoImageView.image!
         switch modeSelected {
         case .manual:
             currentFilterLabel.text = "TINT"
         case .predefined:
             currentFilterLabel.text = "VIVID WARM"
             inEditPhotoImageView.image = fifthFilterButton.backgroundImage(for: .normal)
-            //viewModel.applyPredefinedFilter(image: inEditPhoto, selectedFilter: 4)
         case .crop:
             currentFilterLabel.text = "PORTRAIT"
         case .none:
@@ -178,6 +179,8 @@ import CoreImage.CIFilterBuiltins
         case 2:
             if #available(iOS 13.0, *) {
                 let filter = CIFilter.gammaAdjust()
+                value += 0.5
+                value *= 2
                 filter.power = value
                 filter.inputImage = ciImageCandidate
                 inEditPhotoImageView.image = UIImage(ciImage: filter.outputImage!)
@@ -241,6 +244,10 @@ import CoreImage.CIFilterBuiltins
         present(alert, animated: true, completion: nil)
     }
 
+    @IBAction func undoButtonTapped(_ sender: Any) {
+        inEditPhotoImageView.image = originalImage
+    }
+
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
             let alert = UIAlertController(title: "Save Error",
@@ -287,25 +294,22 @@ import CoreImage.CIFilterBuiltins
 
         for index in 0..<uiButtonCollection.count {
             let button = uiButtonCollection[index]
-            button.layer.cornerRadius = 3
+            button.layer.cornerRadius = button.frame.size.width/2
             button.setBackgroundImage(.none, for: .normal)
             button.tintColor = UIColor.black
-            if index == 0 {
+            button.isHidden = true
+            if index == 1 {
+                button.isHidden = false
                 button.setImage(.none, for: .normal)
                 button.setImage(UIImage(systemName: "crop"), for: .normal)
-                button.tintColor = UIColor.systemGreen
-            } else if index == 1 {
-                button.setImage(.none, for: .normal)
-                button.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
-                button.tintColor = UIColor.systemPink
+                button.tintColor = UIColor.systemTeal
             } else if index  == 2 {
                 button.setImage(UIImage(systemName: "square"), for: .normal)
+                button.isHidden = false
             } else if index == 3 {
                 button.setImage(.none, for: .normal)
                 button.setImage(UIImage(systemName: "rectangle"), for: .normal)
-            } else {
-                button.setImage(.none, for: .normal)
-                button.setImage(UIImage(systemName: "person.crop.rectangle"), for: .normal)
+                button.isHidden = false
             }
         }
 
@@ -347,6 +351,7 @@ import CoreImage.CIFilterBuiltins
             button.layer.borderWidth = 2
             button.layer.backgroundColor = UIColor.clear.cgColor
             button.setBackgroundImage(.none, for: .normal)
+            button.isHidden = false
         }
     }
 
@@ -354,11 +359,13 @@ import CoreImage.CIFilterBuiltins
     func modeChanged(mode: EditingMode) {
         switch mode {
         case EditingMode.manual:
+            croppingViewUIView.isHidden = true
             currentFilterLabel.text = "ADJUST"
             applyAmountSlider.alpha = 1
             sliderValueLabel.alpha = 1
             setupAdjustButtons()
         case EditingMode.predefined:
+            croppingViewUIView.isHidden = true
             currentFilterLabel.text = "CHOOSE A FILTER"
             let thumbnails = [viewModel.createCamShareCustionFilter(image: inEditPhoto),
                               viewModel.createColdFilter(image: inEditPhoto),
@@ -371,6 +378,7 @@ import CoreImage.CIFilterBuiltins
                 button.setBackgroundImage(UIImage(ciImage: thumbnails[index]), for: .normal)
                 button.layer.cornerRadius = button.frame.size.width/4
                 button.layer.masksToBounds = true
+                button.isHidden = false
             }
             applyAmountSlider.alpha = 0
             sliderValueLabel.alpha = 0
@@ -441,7 +449,6 @@ extension PhotoEditingViewController: PhotoEditorViewType {
         inEditPhotoImageView.image = UIImage(ciImage: image)
     }
 }
-
 enum EditingMode {
     case manual
     case predefined
