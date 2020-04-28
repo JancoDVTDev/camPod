@@ -237,7 +237,6 @@ public class PhotoEditorViewModel {
         case .landscape:
             var rectWidth = isLandscape ? scaledHeight : scaledWidth
             var rectHeight = isLandscape ? scaledHeight : scaledWidth
-
             rectWidth! /= 3
             rectWidth! *= 2
             rectHeight! /= 3
