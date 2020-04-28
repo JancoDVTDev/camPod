@@ -179,9 +179,8 @@ public class PhotoEditorViewModel {
             scaledOriginY = (CGFloat(imageViewHeight - scaledHeight!)) * scaleFactorY
             scaledOriginX = cropView.frame.origin.x * scaleFactorX
         } else {
-            scaledOriginX = (CGFloat(imageViewWidth - scaledWidth!)) * scaleFactorX//(cropView.frame.origin.x - (imageViewWidth/2 - scaledWidth!/2)) * scaleFactorX
+            scaledOriginX = (CGFloat(imageViewWidth - scaledWidth!)) * scaleFactorX
             scaledOriginY = (cropView.frame.origin.y) * scaleFactorY
-            //VERY IMPORTANT NOTE 55 is the value from screen top to imageview also 152
         }
 
         let realCropWidth = cropView.frame.size.width * scaleFactorX
