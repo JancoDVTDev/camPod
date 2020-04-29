@@ -76,7 +76,6 @@ public class PhotosViewController: UIViewController, UIImagePickerControllerDele
 
         photoViewModel.view = self
         photoViewModel.repo = PhotosDatasource()
-        photoViewModel.cacheHelper = CacheHelper()
 
         collectionView.isHidden = true
         collectionView.delegate = self

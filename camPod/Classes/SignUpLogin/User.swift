@@ -7,7 +7,7 @@
 
 import Foundation
 // MARK: DTO
-public class User {
+public class UserCampod {
     public let firstName: String
     public let lastName: String
     public let email: String
