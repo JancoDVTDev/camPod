@@ -117,7 +117,7 @@ public class PhotosViewModel {
     func observeTakenPhotos(albumID: String, imagePaths: [String], photoModels: [PhotoModel]) {
         var updatedImagePaths = imagePaths
         var updatedPhotoModels = photoModels
-        repo?.observe(albumID: albumID,  { (downloadedImage, imagePath, error) in
+        repo?.observe(albumID: albumID, { (downloadedImage, imagePath, error) in
             if let error = error {
                 self.errorLog.append("Observer \(error)")
                 self.view?.didFinishLoading()
