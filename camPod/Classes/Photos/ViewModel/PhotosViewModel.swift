@@ -11,7 +11,7 @@ public class PhotosViewModel {
     public weak var view: PhotoViewProtocol?
     public var repo: PhotosDatasourceProtocol?
     public var coreDataRepo = CoreDataRepo()
-    public var cacheHelper: CacheHelper?
+    private var errorLog = [String]()
 
     func loadSavedImages(imagePaths: [String], _ completion: @escaping (_ cachedPhotoModels: [PhotoModel],
         _ imagePathsToUpdate: [String]) -> Void) {
@@ -21,7 +21,7 @@ public class PhotosViewModel {
         self.coreDataRepo.fetchSavedImagesInCoreData(imagePaths: imagePaths)
         {(photoModels, newPhotoPaths, error) in
             if let error = error {
-                self.view?.displayError(error: error)
+                self.errorLog.append("Core data \(error)")
                 self.view?.didFinishLoading()
             } else {
                 savedPhotoModels = photoModels
@@ -45,14 +45,13 @@ public class PhotosViewModel {
             self.view?.didFinishLoading()
 
             if !(newPhotoPaths.isEmpty) {
-                //var newPhotoModels = [PhotoModel]()
                 for imagePath in toBeUpdatedImagePaths {
                     self.repo?.fetchPhotosFromStorage(albumID: albumID, imagePath: imagePath,
                                                       {(image, error) in
                         self.view?.startDownloading()
                         count += 1
                         if let error = error {
-                            self.view?.displayError(error: error)
+                            self.errorLog.append("Fetching \(error)")
                             self.view?.didFinishLoading()
                         } else {
                             let newPhoto = PhotoModel(name: imagePath, image: image!)
@@ -100,13 +99,13 @@ public class PhotosViewModel {
 
         repo?.uploadPhotoToStorage(albumID: albumID, imagePath: takenImagePath, takenImage: reducedImage!, { (_, error) in
             if let error = error {
-                self.view?.displayError(error: error)
+                self.errorLog.append("Upload \(error)")
             } else {
                 self.repo?.addImagePathToUserAlbum(albumID: albumID,
                                                    imagePaths: updatedImagesPath,
                                                    { (_, error) -> Void in
                     if let error = error {
-                        self.view?.displayError(error: error)
+                        self.errorLog.append("Saving \(error)")
                     } else {
                         self.view?.didFinishLoading()
                     }
@@ -120,7 +119,8 @@ public class PhotosViewModel {
         var updatedPhotoModels = photoModels
         repo?.observe(albumID: albumID, { (downloadedImage, imagePath, error) in
             if let error = error {
-                self.view?.displayError(error: "Observer: \(error)")
+                self.errorLog.append("Observer \(error)")
+                self.view?.didFinishLoading()
             } else {
                 guard let imagePath = imagePath else {return}
                 guard let downloadedImage = downloadedImage else {return}

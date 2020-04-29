@@ -65,7 +65,7 @@ public class PhotosDatasource: PhotosDatasourceProtocol {
             }
         })
     }
-    
+
     public func deleteImagesReferencePaths(albumID: String, imagePaths: [String],
                                            _ compeltion: @escaping (_ error: String?) -> Void) {
         let databaseRef = Database.database().reference()
@@ -78,7 +78,7 @@ public class PhotosDatasource: PhotosDatasourceProtocol {
             }
         }
     }
-    
+
     public func deleteImageFromStorage(albumID: String, imagePath: String,
                                         _ compeltion: @escaping (_ error: String?) -> Void) {
         let storageRef = Storage.storage().reference(withPath: "\(albumID)/\(imagePath)")
@@ -89,5 +89,12 @@ public class PhotosDatasource: PhotosDatasourceProtocol {
                 compeltion(nil)
             }
         }
+    }
+}
+extension Array where Element: Hashable {
+    func difference(from other: [Element]) -> [Element] {
+        let thisSet = Set(self)
+        let otherSet = Set(other)
+        return Array(thisSet.symmetricDifference(otherSet))
     }
 }
